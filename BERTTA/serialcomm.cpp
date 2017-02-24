@@ -19,12 +19,16 @@ void system_error(char *name) {
 }
 
 
-__declspec(dllexport) string read(string com_port)
+__declspec(dllexport) string read(string com_port, string msg_)
 {
     int ch;
 	string val;
-	char msg[6] = "S\r\n";
-    char buffer[1];
+ //  char buffer[1];
+	char buffer[100];
+	for(int i=0;i<100;i++) buffer[i]=0;
+
+//	char msg = "S\r\n"; 
+	const char * msg = msg_.c_str();
 
     HANDLE file;
     COMMTIMEOUTS timeouts;
@@ -45,6 +49,8 @@ __declspec(dllexport) string read(string com_port)
 
 
     // open the port
+	
+	
     file = CreateFile(port_name,
         GENERIC_READ | GENERIC_WRITE,
         0,
@@ -53,7 +59,10 @@ __declspec(dllexport) string read(string com_port)
         0,
         NULL);
 
+	
+
 /*
+
     if (INVALID_HANDLE_VALUE == file) {
         system_error("missing file");
         return 1;
@@ -68,11 +77,11 @@ __declspec(dllexport) string read(string com_port)
     if (!SetCommState(file, &port)) system_error("Incorrect port configuration");
 
     // Configure the timeouts
-    timeouts.ReadIntervalTimeout = 1;
-    timeouts.ReadTotalTimeoutMultiplier = 1;
-    timeouts.ReadTotalTimeoutConstant = 1;
-    timeouts.WriteTotalTimeoutMultiplier = 1;
-    timeouts.WriteTotalTimeoutConstant = 1;
+    timeouts.ReadIntervalTimeout = 3;
+    timeouts.ReadTotalTimeoutMultiplier = 3;
+    timeouts.ReadTotalTimeoutConstant = 2;
+    timeouts.WriteTotalTimeoutMultiplier = 3;
+    timeouts.WriteTotalTimeoutConstant = 2;
     if (!SetCommTimeouts(file, &timeouts)) system_error("Timeouts could not be configured");
     if (!EscapeCommFunction(file, CLRDTR)) system_error("DTR could not be closed"); Sleep(200);
     if (!EscapeCommFunction(file, SETDTR)) system_error("DTR could not be started");
@@ -81,29 +90,52 @@ __declspec(dllexport) string read(string com_port)
 
     //Duty cycle
     do {
-        //write/read messages
-		WriteFile(file, &msg, sizeof(msg), &written, NULL);
-		Sleep(1);
-        ReadFile(file, buffer, 1, &read, NULL);
-		if (read) {
-			string buff(buffer, 1);
-			if(isdigit(buffer[0])) val += buff; //cout<<buffer;
-			if(buff==".") val += buff;
-			if(buff=="g") ch = 127;
-		}
-    } while (ch != 127);    // ch 127 is ctrl-backspace.
+	//	WriteFile(file, "", 0, &written, NULL);
+		WriteFile(file, &msg, (sizeof(msg) - 1), &written, NULL); // Laudaa varten lyhyempi buffer
+
+		Sleep(200);
+
+		ReadFile(file, buffer, 20, &read, NULL); //vaaka
+
+		Sleep(10);
+		
+		//ch = 127;
+		if (read) { 
+
+			string buff(buffer, 100);
+			cout<<buff<<endl;
+			ch=127;
+				/*
+				if(isdigit(buffer[0])) val += buff; //cout<<buffer;
+				if(buff==".") val += buff;
+				if(buff=="O") val += buff;
+				if(buff=="K") {val += buff; ch = 127;}
+				if(buff=="E") val += buff;
+				if(buff=="R") val += buff;
+				if(buff=="_") {val += buff; ch=127;}
+				if(buff=="g") ch = 127;
+				*/
+
+		} 
+    } while(ch != 127);    // ch 127 is ctrl-backspace.
+
+	Sleep(100);
 
     CloseHandle(file);
 	
 	return val;
 }
-/*
+
 
 int main() {
 
-	for(int i=0;i<1000;i++) {
-		cout<<read("7")<<endl;
+//	char const msg[] = "R100\r"; // Heidolph
+//	char const msg[] = "S\r\n"; //vaaka
+//	char const msg[] = "OUT_SP_00_23.33\r"; //Lauda
+
+	for(int i=0;i<10;i++) {
+		cout<<read("6", "S\r\n")<<endl;
 	}
 
+	getch();
 }
-*/

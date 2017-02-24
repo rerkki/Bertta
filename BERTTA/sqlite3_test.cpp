@@ -219,7 +219,7 @@ __declspec(dllexport) void db_readtext(char *db_name, char *tb_name){
 
 } 
 
-
+/*
 
 int main()
 {
@@ -259,3 +259,4 @@ getch();
 return 0;
 }
 
+*/
