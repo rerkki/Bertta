@@ -18,8 +18,7 @@ void system_error(char *name) {
     LocalFree(ptr);
 }
 
-
-__declspec(dllexport) string read(string com_port, string msg_)
+__declspec(dllexport) string read(int com_port, int device, int value)
 {
     int ch;
 	string val;
@@ -27,8 +26,15 @@ __declspec(dllexport) string read(string com_port, string msg_)
 	char buffer[100];
 	for(int i=0;i<100;i++) buffer[i]=0;
 
-//	char msg = "S\r\n"; 
-	const char * msg = msg_.c_str();
+	char * msg_;
+
+	if(device==1)  msg_ = "S\n\r";
+
+	char msg[sizeof(msg_)];
+
+	strcpy(msg, msg_);
+
+	
 
     HANDLE file;
     COMMTIMEOUTS timeouts;
@@ -38,12 +44,12 @@ __declspec(dllexport) string read(string com_port, string msg_)
     DWORD mode;
 
 	LPCWSTR port_name;
-	if(com_port=="3") port_name = L"\\\\.\\COM3";
-	if(com_port=="4") port_name = L"\\\\.\\COM4";
-	if(com_port=="5") port_name = L"\\\\.\\COM5";
-	if(com_port=="6") port_name = L"\\\\.\\COM6";
-	if(com_port=="7") port_name = L"\\\\.\\COM7";
-	if(com_port=="8") port_name = L"\\\\.\\COM8";
+	if(com_port==3) port_name = L"\\\\.\\COM3";
+	if(com_port==4) port_name = L"\\\\.\\COM4";
+	if(com_port==5) port_name = L"\\\\.\\COM5";
+	if(com_port==6) port_name = L"\\\\.\\COM6";
+	if(com_port==7) port_name = L"\\\\.\\COM7";
+	if(com_port==8) port_name = L"\\\\.\\COM8";
 
     char init[] = "";
 
@@ -134,7 +140,7 @@ int main() {
 //	char const msg[] = "OUT_SP_00_23.33\r"; //Lauda
 
 	for(int i=0;i<10;i++) {
-		cout<<read("6", "S\r\n")<<endl;
+		cout<<read(6,1,0)<<endl;
 	}
 
 	getch();
