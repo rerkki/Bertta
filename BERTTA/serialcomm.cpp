@@ -18,7 +18,12 @@ void system_error(char *name) {
     LocalFree(ptr);
 }
 
-__declspec(dllexport) string read(int com_port, int device, int value)
+__declspec(dllexport) string read2()
+{
+	return("hello world!!!!");
+}
+
+__declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
     int ch;
 	string val;
@@ -26,15 +31,13 @@ __declspec(dllexport) string read(int com_port, int device, int value)
 	char buffer[100];
 	for(int i=0;i<100;i++) buffer[i]=0;
 
-	char * msg_;
+//	char * msg_;
 
-	if(device==1)  msg_ = "S\n\r";
+//	if(device==1)  msg_ = "S\n\r";
 
 	char msg[sizeof(msg_)];
 
 	strcpy(msg, msg_);
-
-	
 
     HANDLE file;
     COMMTIMEOUTS timeouts;
@@ -95,7 +98,7 @@ __declspec(dllexport) string read(int com_port, int device, int value)
     if (written != sizeof(init)) system_error("Some of the data could not be sent through the port");
 
     //Duty cycle
-    do {
+  //  do {
 	//	WriteFile(file, "", 0, &written, NULL);
 		WriteFile(file, &msg, (sizeof(msg) - 1), &written, NULL); // Laudaa varten lyhyempi buffer
 
@@ -123,7 +126,7 @@ __declspec(dllexport) string read(int com_port, int device, int value)
 				*/
 
 		} 
-    } while(ch != 127);    // ch 127 is ctrl-backspace.
+   // } while(ch != 127);    // ch 127 is ctrl-backspace.
 
 	Sleep(100);
 
@@ -132,16 +135,33 @@ __declspec(dllexport) string read(int com_port, int device, int value)
 	return val;
 }
 
-
+/*
 int main() {
 
-//	char const msg[] = "R100\r"; // Heidolph
-//	char const msg[] = "S\r\n"; //vaaka
-//	char const msg[] = "OUT_SP_00_23.33\r"; //Lauda
+	int port;
+	int dev;
+	char * msg;
+	
 
-	for(int i=0;i<10;i++) {
-		cout<<read(6,1,0)<<endl;
+	//Mettler
+	port = 6;
+	dev = 1;
+	msg = "S\r\n"; //vaaka
+
+	//Heidolph
+	//dev = 2;
+	//msg = "R100\r"; // Heidolph
+
+	//Lauda
+	//dev = 3;
+	//msg = "OUT_SP_00_23.33\r"; //Lauda
+
+	for(int i=0;i<2;i++) {
+
+		cout<<read(port,dev,msg)<<endl;
+
 	}
 
 	getch();
 }
+*/

@@ -1,10 +1,11 @@
+
 #include <stdio.h>
 #include <conio.h>
 #include "sqlite3.h"
 #include "serialcomm.h"
 #include <windows.h>
 
-
+/*
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
 	int i;
 	
@@ -219,8 +220,39 @@ __declspec(dllexport) void db_readtext(char *db_name, char *tb_name){
 
 } 
 
-/*
+int main() {
 
+	int port;
+	int dev;
+	char * msg;
+	
+
+	//Mettler
+	port = 6;
+	dev = 1;
+	msg = "S\r\n"; //vaaka
+
+	//Heidolph
+	//dev = 2;
+	//msg = "R100\r"; // Heidolph
+
+	//Lauda
+	//dev = 3;
+	//msg = "OUT_SP_00_23.33\r"; //Lauda
+
+	for(int i=0;i<2;i++) {
+
+	//	cout<<read(port,dev,msg)<<endl;
+		cout<<read2()<<endl;
+
+	}
+
+	getch();
+}
+
+*/
+
+/*
 int main()
 {
 
@@ -236,7 +268,7 @@ int main()
 
 //	db_write("test3.db","measurement",9.784582957486);
 
-	db_write_value(date_time, atof(read("7").c_str()));
+	db_write_value(date_time, atof(read2().c_str()));
 
 //	db_read("test3.db","measurement",results);
 
@@ -252,11 +284,12 @@ int main()
 		printf("%-13.9f \n", results[i]);
 	
 	}
-	cout<<read("7")<<endl;
+	cout<<read2()<<endl;
 
 getch();
 
 return 0;
 }
+
 
 */
