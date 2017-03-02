@@ -26,14 +26,10 @@ __declspec(dllexport) string read2()
 __declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
     int ch;
-	string val;
- //  char buffer[1];
-	char buffer[100];
-	for(int i=0;i<100;i++) buffer[i]=0;
 
-//	char * msg_;
+	char buffer[50];
 
-//	if(device==1)  msg_ = "S\n\r";
+	for(int i=0;i<50;i++) buffer[i]=NULL;
 
 	char msg[sizeof(msg_)];
 
@@ -57,8 +53,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     char init[] = "";
 
 
-    // open the port
-	
+    /////OPEN THE PORT
 	
     file = CreateFile(port_name,
         GENERIC_READ | GENERIC_WRITE,
@@ -68,15 +63,11 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
         0,
         NULL);
 
-	
-
-/*
-
     if (INVALID_HANDLE_VALUE == file) {
         system_error("missing file");
-        return 1;
+        return "1";
     }
-*/
+
     //configure the system
 	//system error messages
     memset(&port, 0, sizeof(port));
@@ -97,71 +88,19 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     if (!WriteFile(file, init, sizeof(init), &written, NULL)) system_error("Data could not be written to the port");
     if (written != sizeof(init)) system_error("Some of the data could not be sent through the port");
 
-    //Duty cycle
-  //  do {
-	//	WriteFile(file, "", 0, &written, NULL);
-		WriteFile(file, &msg, (sizeof(msg) - 1), &written, NULL); // Laudaa varten lyhyempi buffer
+	WriteFile(file, &msg, (sizeof(msg) - 1), &written, NULL); // Laudaa varten lyhyempi buffer
 
-		Sleep(200);
+	Sleep(200);
 
-		ReadFile(file, buffer, 20, &read, NULL); //vaaka
-
-		Sleep(10);
-		
-		//ch = 127;
-		if (read) { 
-
-			string buff(buffer, 100);
-			cout<<buff<<endl;
-			ch=127;
-				/*
-				if(isdigit(buffer[0])) val += buff; //cout<<buffer;
-				if(buff==".") val += buff;
-				if(buff=="O") val += buff;
-				if(buff=="K") {val += buff; ch = 127;}
-				if(buff=="E") val += buff;
-				if(buff=="R") val += buff;
-				if(buff=="_") {val += buff; ch=127;}
-				if(buff=="g") ch = 127;
-				*/
-
-		} 
-   // } while(ch != 127);    // ch 127 is ctrl-backspace.
+	ReadFile(file, buffer, 50, &read, NULL);
 
 	Sleep(100);
 
     CloseHandle(file);
+
+	string buff(buffer,50);
+
+	if(buff.find("\r")==false) buff += "\r";
 	
-	return val;
+	return buff;
 }
-
-/*
-int main() {
-
-	int port;
-	int dev;
-	char * msg;
-	
-
-	//Mettler
-	port = 6;
-	dev = 1;
-	msg = "S\r\n"; //vaaka
-
-	//Heidolph
-	//dev = 2;
-	//msg = "R100\r"; // Heidolph
-
-	//Lauda
-	//dev = 3;
-	//msg = "OUT_SP_00_23.33\r"; //Lauda
-
-	for(int i=0;i<2;i++) {
-
-		cout<<read(port,dev,msg)<<endl;
-
-	}
-
-	getch();
-}
-*/

@@ -13,7 +13,7 @@
 
 using namespace std;
 
-//__declspec(dllexport) string read(string com_port);
+__declspec(dllexport) string read(int com_port, int device, char *msg_);
 __declspec(dllexport) string read2();
 
 
