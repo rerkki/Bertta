@@ -2,6 +2,7 @@
 #include <conio.h>
 #include "sqlite3.h"
 #include "serialcomm.h"
+#include "mainloop.h"
 #include <windows.h>
 
 
@@ -123,14 +124,12 @@ int select_db()
 
 
 
+///// LOOP that communicates with serial devices and writes communication to database
+int mainloop(	int port1, int port2, int port3,
+				int dev1, int dev2, int dev3,
+				char * msg1, char * msg2, char *msg3){
 
-int main()
-{
-	int port1, port2, port3;
-	int dev1, dev2, dev3;
-	char * msg1;
-	char * msg2;
-	char * msg3;
+
 	char mettler[50]; 
 	char heidolph[50];
 	char lauda[50];
@@ -161,8 +160,6 @@ int main()
 
 	strcpy(heidolph, read(port2,dev2,msg2).c_str());
 
-
-
 //	cout<<lauda<<endl;
 //	cout<<heidolph<<endl;
 //	cout<<mettler<<endl;
@@ -179,4 +176,16 @@ return 0;
 }
 
 
+__declspec(dllexport) int testfunc(int a) {
+
+	return a;
+}
+
+int main() {
+
+	mainloop(6,5,8,1,3,2,"S\r\n","OUT_SP_00_032.1\r\n","R120\r\n");
+
+	return 0;
+
+}
 

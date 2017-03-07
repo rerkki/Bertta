@@ -1,3 +1,7 @@
-#include "serialcomm.h"
-#include "sqlite3.h"
-#include "sqlite3ext.h"
+
+
+extern "C" {
+
+__declspec(dllexport) int testfunc(int a);
+
+}
