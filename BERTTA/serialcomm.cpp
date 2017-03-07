@@ -18,20 +18,22 @@ void system_error(char *name) {
     LocalFree(ptr);
 }
 
-__declspec(dllexport) string read2()
-{
-	return("hello world!!!!");
-}
 
 __declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
     int ch;
 
+	int msglen = strlen(msg_);
+
 	char buffer[50];
 
 	for(int i=0;i<50;i++) buffer[i]=NULL;
 
-	char msg[sizeof(msg_)];
+	//cout<<msg_<<endl;
+
+	char msg[16];
+
+	for(int i=0;i<16;i++) msg[i]=0;
 
 	strcpy(msg, msg_);
 
@@ -88,19 +90,31 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     if (!WriteFile(file, init, sizeof(init), &written, NULL)) system_error("Data could not be written to the port");
     if (written != sizeof(init)) system_error("Some of the data could not be sent through the port");
 
-	WriteFile(file, &msg, (sizeof(msg) - 1), &written, NULL); // Laudaa varten lyhyempi buffer
 
-	Sleep(200);
+	if(device !=3) {	
+		WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
+		Sleep(50); 
+		ReadFile(file, buffer, 50, &read, NULL);
+		Sleep(50);
+	}
 
-	ReadFile(file, buffer, 50, &read, NULL);
+	if(device==3) {
+		for(int i=0;i<2;i++) {
+			WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
+			Sleep(50); 
+			ReadFile(file, buffer, 50, &read, NULL);
+		}
+	}
 
-	Sleep(100);
+	Sleep(50);
 
     CloseHandle(file);
 
 	string buff(buffer,50);
 
 	if(buff.find("\r")==false) buff += "\r";
+
+//	free(msg);
 	
 	return buff;
 }
