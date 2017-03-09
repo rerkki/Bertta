@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
+#include <iomanip>
+#include <algorithm>
 #include "sqlite3.h"
 #include "serialcomm.h"
 #include "mainloop.h"
@@ -30,7 +32,7 @@ int create_db()
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("test9.db", &db);
+   rc = sqlite3_open("test10.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -54,7 +56,7 @@ int create_db()
 }
 
 
-int insert_db(char * mettler, char * heidolph, char * lauda)
+int insert_db(double mettler, char * heidolph, char * lauda)
 {
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -62,7 +64,7 @@ int insert_db(char * mettler, char * heidolph, char * lauda)
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("test9.db", &db);
+   rc = sqlite3_open("test10.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -72,7 +74,7 @@ int insert_db(char * mettler, char * heidolph, char * lauda)
 
    /* Create SQL statement */
 
-   sql = sqlite3_mprintf("INSERT INTO BERTTA (METTLER, HEIDOLPH, LAUDA) VALUES ('%q','%q','%q'); ", mettler, heidolph, lauda);
+   sql = sqlite3_mprintf("INSERT INTO BERTTA (METTLER, HEIDOLPH, LAUDA) VALUES ('%.2f', '%q','%q'); ", mettler, heidolph, lauda);
    //cout<<sql<<endl;
 
 
@@ -98,7 +100,7 @@ int select_db()
    const char* data = "Callback function called";
 
    /* Open database */
-   rc = sqlite3_open("test9.db", &db);
+   rc = sqlite3_open("test10.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -118,57 +120,163 @@ int select_db()
       fprintf(stdout, "Operation done successfully\n");
    }
    sqlite3_close(db);
+
    return 0;
+}
+
+
+int strip_db()
+{
+   sqlite3 *db;
+   char *zErrMsg = 0;
+   int rc;
+   char *sql;
+   const char* data = "Callback function called";
+
+   /* Open database */
+   rc = sqlite3_open("test10.db", &db);
+   if( rc ){
+      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      return(0);
+   }else{
+      fprintf(stderr, "Opened database successfully\n");
+   }
+
+   /* Create SQL statement */
+   sql = "UPDATE BERTTA SET METTLER = replace( METTLER, '\n', ' ');";
+
+   /* Execute SQL statement */
+   rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
+   if( rc != SQLITE_OK ){
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+   }else{
+      fprintf(stdout, "Operation done successfully\n");
+   }
+   sqlite3_close(db);
+
+   return 0;
+}
+
+
+int getTableData()
+{
+   sqlite3 *db;
+   char *zErrMsg = 0;
+   int  rc;
+   char *sql;
+
+   /* Open database */
+   rc = sqlite3_open("test10.db", &db);
+   if( rc ){
+      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      return(0);
+   }else{
+      fprintf(stdout, "Opened database successfully\n");
+   }
+	
+	sqlite3_stmt *statement;    
+
+    sql = "SELECT * from BERTTA";
+
+    if ( sqlite3_prepare(db, sql, -1, &statement, 0 ) == SQLITE_OK ) 
+    {
+        int ctotal = sqlite3_column_count(statement);
+        int res = 0;
+
+        while ( 1 )         
+        {
+            res = sqlite3_step(statement);
+
+            if ( res == SQLITE_ROW ) 
+            {
+                for ( int i = 0; i < ctotal; i++ ) 
+                {
+                    string s = (char*)sqlite3_column_text(statement, i);
+
+                    // print or format the output as you want 
+					cout << s << " ";
+                }
+                cout << endl;
+            }
+            
+            if ( res == SQLITE_DONE || res==SQLITE_ERROR)    
+            {
+                cout << "done " << endl;
+                break;
+            }    
+        }
+    }
+	return 0;
 }
 
 
 
 
+double parsedbl(char * msg) {
+
+	int msglen = strlen(msg);
+
+	string val;
+
+	for(int i=0;i<msglen;i++) {
+
+		if(isdigit(msg[i])) val += msg[i];
+		if(msg[i]=='.') val += msg[i];
+		if(msg[i]=='+') val += msg[i];
+		if(msg[i]=='-') val += msg[i];
+
+	}
+	return atof(val.c_str());
+}
+
+
 ///// LOOP that communicates with serial devices and writes communication to database
-int mainloop(	int port1, int port2, int port3,
-				int dev1, int dev2, int dev3,
+int mainloop(	int dev1, int dev2, int dev3,
+				int port1, int port2, int port3,
 				char * msg1, char * msg2, char *msg3){
 
 
-	char mettler[50]; 
+	char mettler_str[50]; 
 	char heidolph[50];
 	char lauda[50];
-	
+	double mettler;
 
-	//Mettler
-	port1 = 6;
-	dev1 = 2;
-	msg1 = "S\r\n"; //vaaka
+	for(int i=0; i<50; i++){
+		mettler_str[i]=0;
+		heidolph[i]=0;
+		lauda[i]=0;
+	}
 
-	//Lauda
-	port3 = 5;
-	dev3 = 3;
-	msg3 = "OUT_SP_00_033.3\r\n"; //Lauda
+	if(dev1 > 0){ 
+		strcpy(mettler_str, read(port1,dev1,msg1).c_str());
+	}else{
+		mettler_str[0]='0';
+	}
 
-	//Heidolph
-	port2 = 8;
-	dev2 = 2;
-	msg2 = "\r\n\R230\r\n"; // Heidolph
+	if(dev2 > 0){
+		strcpy(heidolph, read(port2,dev2,msg2).c_str());
+	}else{
+		heidolph[0]='X';
+	}
 
-//	cout<<read(port2,dev2,msg2)<<endl;
-//	cout<<read(port3,dev3,msg3)<<endl;
-	
+	if(dev3 > 0){
+		strcpy(lauda, read(port3,dev3,msg3).c_str());
+	}else{
+		lauda[0]='X';
+	}
 
-	strcpy(mettler, read(port1,dev1,msg1).c_str());
+	mettler = parsedbl(mettler_str);
 
-	strcpy(lauda, read(port3,dev3,msg3).c_str());
-
-	strcpy(heidolph, read(port2,dev2,msg2).c_str());
-
+//	cout<<mettler<<endl;
 //	cout<<lauda<<endl;
 //	cout<<heidolph<<endl;
-//	cout<<mettler<<endl;
 
 	create_db();
 	insert_db(mettler, heidolph, lauda);
-	select_db();
-
-
+	//select_db();
+	//strip_db();
+	getTableData();
 
 getch();
 
@@ -183,7 +291,8 @@ __declspec(dllexport) int testfunc(int a) {
 
 int main() {
 
-	mainloop(6,5,8,1,3,2,"S\r\n","OUT_SP_00_032.1\r\n","R120\r\n");
+	mainloop(1,0,0,5,8,8,"S\r\n","R120\r\n","OUT_SP_00_022.1\r\n");
+
 
 	return 0;
 
