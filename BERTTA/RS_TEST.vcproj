@@ -169,6 +169,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\math.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\serialcomm.cpp"
 				>
 			</File>

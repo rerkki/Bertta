@@ -56,12 +56,14 @@ int create_db()
 }
 
 
-int insert_db(double mettler, char * heidolph, char * lauda)
+int insert_db(double mettler, int heidolph, int lauda)
 {
    sqlite3 *db;
    char *zErrMsg = 0;
    int rc;
    char *sql;
+
+   cout<<heidolph<<endl;
 
    /* Open database */
    rc = sqlite3_open("test10.db", &db);
@@ -74,7 +76,7 @@ int insert_db(double mettler, char * heidolph, char * lauda)
 
    /* Create SQL statement */
 
-   sql = sqlite3_mprintf("INSERT INTO BERTTA (METTLER, HEIDOLPH, LAUDA) VALUES ('%.2f', '%q','%q'); ", mettler, heidolph, lauda);
+   sql = sqlite3_mprintf("INSERT INTO BERTTA (METTLER, HEIDOLPH, LAUDA) VALUES ('%.2f','%d','%d'); ", mettler, heidolph, lauda);
    //cout<<sql<<endl;
 
 
@@ -213,7 +215,7 @@ int getTableData()
 
 
 
-double parsedbl(char * msg) {
+string parseMsg(char * msg) {
 
 	int msglen = strlen(msg);
 
@@ -227,73 +229,106 @@ double parsedbl(char * msg) {
 		if(msg[i]=='-') val += msg[i];
 
 	}
+	return val.c_str();
+}
+
+double mettler(int port, char * msg) {
+	
+		char mettler_str[50];
+		string val;
+		int msglen;
+
+		for(int i=0;i<50;i++) mettler_str[i]=0;
+
+		try{
+
+			strcpy(mettler_str, read(port,1,msg).c_str());
+			msglen = strlen(mettler_str);
+
+			for(int i=0;i<msglen;i++) {
+
+				if(isdigit(mettler_str[i])) val += mettler_str[i];
+				if(mettler_str[i]=='.') val += mettler_str[i];
+				if(mettler_str[i]=='+') val += mettler_str[i];
+				if(mettler_str[i]=='-') val += mettler_str[i];
+			}
+	}
+
+	catch(...){
+		cout << "Exception occurred" << endl;
+		return 1.0;
+	}
+
 	return atof(val.c_str());
 }
 
 
+int heidolph(int port, char * msg) {
+
+			read(port,2,msg).c_str();
+
+	return 1;
+}
+
+
+
+int lauda(int port, char * msg) {
+
+			read(port,3,msg).c_str();
+
+	return 1;
+}
+
+
 ///// LOOP that communicates with serial devices and writes communication to database
-int mainloop(	int dev1, int dev2, int dev3,
-				int port1, int port2, int port3,
-				char * msg1, char * msg2, char *msg3){
-
-
-	char mettler_str[50]; 
-	char heidolph[50];
-	char lauda[50];
-	double mettler;
-
-	for(int i=0; i<50; i++){
-		mettler_str[i]=0;
-		heidolph[i]=0;
-		lauda[i]=0;
-	}
-
-	if(dev1 > 0){ 
-		strcpy(mettler_str, read(port1,dev1,msg1).c_str());
-	}else{
-		mettler_str[0]='0';
-	}
-
-	if(dev2 > 0){
-		strcpy(heidolph, read(port2,dev2,msg2).c_str());
-	}else{
-		heidolph[0]='X';
-	}
-
-	if(dev3 > 0){
-		strcpy(lauda, read(port3,dev3,msg3).c_str());
-	}else{
-		lauda[0]='X';
-	}
-
-	mettler = parsedbl(mettler_str);
-
-//	cout<<mettler<<endl;
-//	cout<<lauda<<endl;
-//	cout<<heidolph<<endl;
-
-	create_db();
-	insert_db(mettler, heidolph, lauda);
-	//select_db();
-	//strip_db();
-	getTableData();
-
-getch();
-
-return 0;
-}
-
-
-__declspec(dllexport) int testfunc(int a) {
-
-	return a;
-}
 
 int main() {
 
-	mainloop(1,0,0,5,8,8,"S\r\n","R120\r\n","OUT_SP_00_022.1\r\n");
+for(int a=0;a<300;a++) {
+
+	Sleep(300);
+//	cout<<mettler(5,"S\r\n")<<endl;
+//	cout<<heidolph(8,"R120\r\n")<<endl;
+//	cout<<lauda(8,"OUT_SP_00_025.7\r\n")<<endl;
+
+	cout<<a<<endl;
+
+	char newRpm[16]={0};
+	char newTemp[17]={0};
+
+	rpm((100+a), newRpm);
+
+	temp((20 + a/20), newTemp);
+
+	cout<<newTemp<<endl;
+	cout<<strlen(newTemp)<<endl;
+
+	Sleep(200);
+
+	char * mettler_comm = "S\r\n";
+	char * heidolph_comm;
+	char * lauda_comm = "OUT_SP_00_020.0\r\n"; // ALWAYS check the msg length
+
+	Sleep(300);
+	double mettler_ = mettler(6, mettler_comm);
+	Sleep(300);
+	int heidolph_ = heidolph(5, newRpm);
+	Sleep(300);
+	int lauda_ = lauda(8, newTemp);
+
+//	cout<<lauda_<<endl;
+
+//	create_db();
+	insert_db(mettler_, heidolph_, lauda_);
+	getTableData();
 
 
+	
+
+//	getch();
+
+
+}
 	return 0;
 
 }
