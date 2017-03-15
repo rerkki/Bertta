@@ -8,6 +8,13 @@
 #include <windows.h>
 
 
+double Setpoint, Input, Output;
+
+//Specify the links and initial tuning parameters
+double Kp=2, Ki=5, Kd=1;
+PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, 1);
+
+
 
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
@@ -284,7 +291,7 @@ int lauda(int port, char * msg) {
 
 int main() {
 
-for(int a=0;a<300;a++) {
+for(int a=0;a<2;a++) {
 
 	Sleep(300);
 //	cout<<mettler(5,"S\r\n")<<endl;
@@ -298,7 +305,7 @@ for(int a=0;a<300;a++) {
 
 	rpm((100+a), newRpm);
 
-	temp((20 + a/20), newTemp);
+	temp((15 + 5), newTemp);
 
 	cout<<newTemp<<endl;
 	cout<<strlen(newTemp)<<endl;
@@ -307,14 +314,14 @@ for(int a=0;a<300;a++) {
 
 	char * mettler_comm = "S\r\n";
 	char * heidolph_comm;
-	char * lauda_comm = "OUT_SP_00_020.0\r\n"; // ALWAYS check the msg length
+	char * lauda_comm = "OUT_SP_00_035.0\r\n"; // ALWAYS check the msg length
 
 	Sleep(300);
-	double mettler_ = mettler(6, mettler_comm);
+	double mettler_ = mettler(8, mettler_comm);
 	Sleep(300);
 	int heidolph_ = heidolph(5, newRpm);
 	Sleep(300);
-	int lauda_ = lauda(8, newTemp);
+	int lauda_ = lauda(6, newTemp);
 
 //	cout<<lauda_<<endl;
 
@@ -323,7 +330,7 @@ for(int a=0;a<300;a++) {
 	getTableData();
 
 
-	
+	myPID.Compute();
 
 //	getch();
 

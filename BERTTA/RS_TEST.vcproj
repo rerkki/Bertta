@@ -173,6 +173,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PID_v1.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\serialcomm.cpp"
 				>
 			</File>
@@ -192,6 +196,10 @@
 			>
 			<File
 				RelativePath=".\mainloop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PID_v1.h"
 				>
 			</File>
 			<File
