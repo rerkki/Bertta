@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <iomanip>
-#include <algorithm>
+//#include <algorithm>
 #include "sqlite3.h"
 #include "serialcomm.h"
 #include "mainloop.h"
@@ -63,7 +63,7 @@ int create_db()
 }
 
 
-int insert_db(double mettler, int heidolph, int lauda)
+__declspec(dllexport) void insert_db(double mettler, int heidolph, int lauda)
 {
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -76,7 +76,6 @@ int insert_db(double mettler, int heidolph, int lauda)
    rc = sqlite3_open("test10.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      return(0);
    }else{
       fprintf(stderr, "Opened database successfully\n");
    }
@@ -96,7 +95,7 @@ int insert_db(double mettler, int heidolph, int lauda)
       fprintf(stdout, "Records created successfully\n");
    }
    sqlite3_close(db);
-   return 0;
+ 
 }
 
 
@@ -239,65 +238,108 @@ string parseMsg(char * msg) {
 	return val.c_str();
 }
 
-double mettler(int port, char * msg) {
+__declspec(dllexport) double mettler(int port, int msg) {
+
+	char * msg_;
+
+	if (msg == 1) msg_ = "S\r\n";
 	
-		char mettler_str[50];
-		string val;
-		int msglen;
+	char mettler_str[50] = { 0 };
+	string val;
+	int msglen;
 
-		for(int i=0;i<50;i++) mettler_str[i]=0;
+	//for(int i=0;i<50;i++) mettler_str[i]=0;
 
-		try{
+	strcpy(mettler_str, read(port,1,msg_).c_str());
+	msglen = strlen(mettler_str);
 
-			strcpy(mettler_str, read(port,1,msg).c_str());
-			msglen = strlen(mettler_str);
+	int v = 0;
 
-			for(int i=0;i<msglen;i++) {
+	//cout << mettler_str << endl;
 
-				if(isdigit(mettler_str[i])) val += mettler_str[i];
-				if(mettler_str[i]=='.') val += mettler_str[i];
-				if(mettler_str[i]=='+') val += mettler_str[i];
-				if(mettler_str[i]=='-') val += mettler_str[i];
-			}
+	//cout << read(port,1,msg_) << endl;
+
+	for(int i=0;i<msglen;i++) {
+		if (isdigit(mettler_str[i])) {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '.') {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '+') {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '-') {
+			val += mettler_str[i]; v += 1;
+		}
+//		cout << val << endl;
 	}
-
-	catch(...){
-		cout << "Exception occurred" << endl;
-		return 1.0;
-	}
-
+	val[v] = '\0';
+	
 	return atof(val.c_str());
+	
 }
 
 
-int heidolph(int port, char * msg) {
+__declspec(dllexport) void heidolph(int port, int speed, char * output) {
 
-			read(port,2,msg).c_str();
+	char rpm_[16] = { 0 };
 
-	return 1;
+	rpm(speed, rpm_);
+
+	read(port, 2, rpm_);
+
+	Sleep(60);
+
+	strcpy(output, read(port, 2, rpm_).c_str());
 }
 
 
 
-int lauda(int port, char * msg) {
+__declspec(dllexport) void lauda(int port, double set_temp) {
 
-			read(port,3,msg).c_str();
+	char temp_[18] = { 0 };
 
-	return 1;
+	temp(set_temp, temp_);
+
+	cout << temp_ << endl;
+
+			read(port,3,temp_);
 }
 
-
-///// LOOP that communicates with serial devices and writes communication to database
+/*
 
 int main() {
+
+	char out[50] = { 0 };
+
+	double w;
+
+	heidolph(4, 50, out);
+	w = mettler(5, 1);
+
+	cout << out << "   "  << w <<endl;
+
+//	lauda(4, 33.1);
+
+//	cout << read(4, 3, "OUT_SP_00_033.0\r\n") << endl;
+
+	getch();
+}
+
+*/
+///// LOOP that communicates with serial devices and writes communication to database
+/*
+int main() {
+
 
 for(int a=0;a<2;a++) {
 
 	Sleep(300);
-//	cout<<mettler(5,"S\r\n")<<endl;
-//	cout<<heidolph(8,"R120\r\n")<<endl;
+//	cout<<mettler(4,"S\r\n")<<endl;
+//	cout<<heidolph(4,"R125\r\n")<<endl;
 //	cout<<lauda(8,"OUT_SP_00_025.7\r\n")<<endl;
-
+	cout << read(4, 1, "S\r\n") << endl;
 	cout<<a<<endl;
 
 	char newRpm[16]={0};
@@ -317,17 +359,17 @@ for(int a=0;a<2;a++) {
 	char * lauda_comm = "OUT_SP_00_035.0\r\n"; // ALWAYS check the msg length
 
 	Sleep(300);
-	double mettler_ = mettler(8, mettler_comm);
+	double mettler_ = mettler(4, mettler_comm);
 	Sleep(300);
-	int heidolph_ = heidolph(5, newRpm);
+//	int heidolph_ = heidolph(4, newRpm);
 	Sleep(300);
-	int lauda_ = lauda(6, newTemp);
+//	int lauda_ = lauda(5, newTemp);
 
-//	cout<<lauda_<<endl;
+	cout<<mettler_<<endl;
 
 //	create_db();
-	insert_db(mettler_, heidolph_, lauda_);
-	getTableData();
+//	insert_db(mettler_, heidolph_, lauda_);
+//	getTableData();
 
 
 	myPID.Compute();
@@ -336,7 +378,8 @@ for(int a=0;a<2;a++) {
 
 
 }
-	return 0;
+	return 2;
 
 }
 
+*/
