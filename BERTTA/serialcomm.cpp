@@ -97,6 +97,8 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 		ReadFile(file, buffer, 50, &read, NULL);
 		Sleep(50);
 	//	cout << buffer << endl;
+
+
 	}
 
 	if(device==3) {
