@@ -21,20 +21,13 @@ void system_error(char *name) {
 
 __declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
+
     int ch;
-
 	int msglen = strlen(msg_);
-
 	char buffer[50];
-
 	for(int i=0;i<50;i++) buffer[i]=NULL;
-
-//	cout<<msg_<<endl;
-
 	char msg[17];
-
 	for(int i=0;i<17;i++) msg[i]=0;
-
 	strcpy(msg, msg_);
 
     HANDLE file;
@@ -54,9 +47,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 
     char init[] = "";
 
-
     /////OPEN THE PORT
-	
     file = CreateFile(port_name,
         GENERIC_READ | GENERIC_WRITE,
         0,
@@ -96,9 +87,6 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 		Sleep(50); 
 		ReadFile(file, buffer, 50, &read, NULL);
 		Sleep(50);
-	//	cout << buffer << endl;
-
-
 	}
 
 	if(device==3) {
@@ -106,7 +94,6 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 			WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
 			Sleep(50); 
 			ReadFile(file, buffer, 50, &read, NULL);
-
 		}
 	}
 
@@ -117,8 +104,6 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	string buff(buffer,50);
 
 	if(buff.find("\r")==false) buff += "\r";
-
-//	free(msg);
 	
 	return buff;
 }

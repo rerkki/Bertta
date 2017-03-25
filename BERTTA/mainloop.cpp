@@ -31,7 +31,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
 	return 0;
 }
 
-int create_db()
+__declspec(dllexport) int create_db(void)
 {
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -39,31 +39,31 @@ int create_db()
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("test10.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
    if( rc ){
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      return(0);
+  //    fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      return(rc);
    }else{
-      fprintf(stdout, "Opened database successfully\n");
+  //    fprintf(stdout, "Opened database successfully\n");
    }
 
    /* Create SQL statement */
-   sql = "CREATE TABLE BERTTA(METTLER, HEIDOLPH, LAUDA); ";
+   sql = "CREATE TABLE BERTTA(HEIDOLPH, LAUDA, METTLER); ";
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
    if( rc != SQLITE_OK ){
-   fprintf(stderr, "SQL error: %s\n", zErrMsg);
+//   fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
    }else{
-      fprintf(stdout, "Table created successfully\n");
+ //     fprintf(stdout, "Table created successfully\n");
    }
    sqlite3_close(db);
    return 0;
 }
 
 
-__declspec(dllexport) void insert_db(double mettler, int heidolph, int lauda)
+__declspec(dllexport) void insert_db(int heidolph, double lauda, double mettler)
 {
    sqlite3 *db;
    char *zErrMsg = 0;
@@ -73,7 +73,7 @@ __declspec(dllexport) void insert_db(double mettler, int heidolph, int lauda)
    cout<<heidolph<<endl;
 
    /* Open database */
-   rc = sqlite3_open("test10.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
    }else{
@@ -82,9 +82,8 @@ __declspec(dllexport) void insert_db(double mettler, int heidolph, int lauda)
 
    /* Create SQL statement */
 
-   sql = sqlite3_mprintf("INSERT INTO BERTTA (METTLER, HEIDOLPH, LAUDA) VALUES ('%.2f','%d','%d'); ", mettler, heidolph, lauda);
+   sql = sqlite3_mprintf("INSERT INTO BERTTA (HEIDOLPH, LAUDA, METTLER) VALUES ('%d','%.2f','%.2f'); ", heidolph, lauda, mettler);
    //cout<<sql<<endl;
-
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -108,7 +107,7 @@ int select_db()
    const char* data = "Callback function called";
 
    /* Open database */
-   rc = sqlite3_open("test10.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -142,7 +141,7 @@ int strip_db()
    const char* data = "Callback function called";
 
    /* Open database */
-   rc = sqlite3_open("test10.db", &db);
+   rc = sqlite3_open("test11.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -175,7 +174,7 @@ int getTableData()
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("test10.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -241,23 +240,16 @@ string parseMsg(char * msg) {
 __declspec(dllexport) double mettler(int port, int msg) {
 
 	char * msg_;
-
-	if (msg == 1) msg_ = "S\r\n";
-	
 	char mettler_str[50] = { 0 };
 	string val;
 	int msglen;
 
-	//for(int i=0;i<50;i++) mettler_str[i]=0;
-
+	if (msg == 1) msg_ = "S\r\n";
 	strcpy(mettler_str, read(port,1,msg_).c_str());
+	Sleep(60);
 	msglen = strlen(mettler_str);
 
 	int v = 0;
-
-	//cout << mettler_str << endl;
-
-	//cout << read(port,1,msg_) << endl;
 
 	for(int i=0;i<msglen;i++) {
 		if (isdigit(mettler_str[i])) {
@@ -272,26 +264,23 @@ __declspec(dllexport) double mettler(int port, int msg) {
 		if (mettler_str[i] == '-') {
 			val += mettler_str[i]; v += 1;
 		}
-//		cout << val << endl;
+
 	}
 	val[v] = '\0';
-	
 	return atof(val.c_str());
 	
 }
 
-
-__declspec(dllexport) void heidolph(int port, int speed, char * output) {
+//muutetaan: palauttaa rpm_arvon (int)
+//samanlainen funktio momentille
+//__declspec(dllexport) void heidolph(int port, int speed, char * output) {
+__declspec(dllexport) void heidolph(int port, int speed) {
 
 	char rpm_[16] = { 0 };
-
 	rpm(speed, rpm_);
-
 	read(port, 2, rpm_);
-
 	Sleep(60);
-
-	strcpy(output, read(port, 2, rpm_).c_str());
+//	strcpy(output, read(port, 2, rpm_).c_str());
 }
 
 
@@ -299,35 +288,34 @@ __declspec(dllexport) void heidolph(int port, int speed, char * output) {
 __declspec(dllexport) void lauda(int port, double set_temp) {
 
 	char temp_[18] = { 0 };
-
 	temp(set_temp, temp_);
-
 	cout << temp_ << endl;
-
-			read(port,3,temp_);
+	read(port,3,temp_);
 }
 
-/*
+
 
 int main() {
 
+	/*
 	char out[50] = { 0 };
-
 	double w;
-
-	heidolph(4, 50, out);
+	heidolph(4, 50);
 	w = mettler(5, 1);
-
 	cout << out << "   "  << w <<endl;
+	lauda(4, 33.1);
+	cout << read(4, 3, "OUT_SP_00_033.0\r\n") << endl;
+	*/
 
-//	lauda(4, 33.1);
+//	create_db();
+//	getTableData();
 
-//	cout << read(4, 3, "OUT_SP_00_033.0\r\n") << endl;
+	select_db();
 
 	getch();
 }
 
-*/
+
 ///// LOOP that communicates with serial devices and writes communication to database
 /*
 int main() {
