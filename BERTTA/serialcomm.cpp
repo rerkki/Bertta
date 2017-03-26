@@ -1,7 +1,7 @@
 #include "serialcomm.h"
 #include "sqlite3.h"
 
-void system_error(char *name) {
+void sys_err(char *name) {
 
     WCHAR ptr[1024];
     FormatMessage(
@@ -57,7 +57,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
         NULL);
 
     if (INVALID_HANDLE_VALUE == file) {
-     //   system_error("missing file");
+        sys_err("ERR_INVALID_HANDLE_VALUE");
         return "1";
     }
 
@@ -65,9 +65,9 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	//system error messages
     memset(&port, 0, sizeof(port));
     port.DCBlength = sizeof(port);
-    if (!GetCommState(file, &port)) cout<<"Port error "<<endl;// system_error("Could not open the port");
-    if (!BuildCommDCB(L"baud=9600 parity=n data=8 stop=1", &port)) cout << "DCB error " << endl;// system_error("DCB blocked");
-    if (!SetCommState(file, &port)) cout << "Port configuration error " << endl; // system_error("Incorrect port configuration");
+    if (!GetCommState(file, &port)) sys_err("ERR_GetCommState");
+    if (!BuildCommDCB(L"baud=9600 parity=n data=8 stop=1", &port)) sys_err("ERR_BuildCommDCB");
+    if (!SetCommState(file, &port)) sys_err("ERR_SetCommState");
 
     // Configure the timeouts
     timeouts.ReadIntervalTimeout = 3;
@@ -75,11 +75,11 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     timeouts.ReadTotalTimeoutConstant = 2;
     timeouts.WriteTotalTimeoutMultiplier = 3;
     timeouts.WriteTotalTimeoutConstant = 2;
-    if (!SetCommTimeouts(file, &timeouts)) cout << "Timeout error " << endl;// system_error("Timeouts could not be configured");
-    if (!EscapeCommFunction(file, CLRDTR)) cout << "DTR close error " << endl; //system_error("DTR could not be closed"); Sleep(200);
-    if (!EscapeCommFunction(file, SETDTR)) cout << "DTR start error " << endl; //system_error("DTR could not be started");
-    if (!WriteFile(file, init, sizeof(init), &written, NULL)) cout << "Data write error " << endl;// system_error("Data could not be written to the port");
-    if (written != sizeof(init)) cout << "Data Communication error " << endl;// system_error("Some of the data could not be sent through the port");
+    if (!SetCommTimeouts(file, &timeouts)) sys_err("ERR_SetCommTImeouts");
+    if (!EscapeCommFunction(file, CLRDTR)) sys_err("ERR_CLRDTR"); Sleep(200);
+    if (!EscapeCommFunction(file, SETDTR)) sys_err("ERR_SETDTR");
+    if (!WriteFile(file, init, sizeof(init), &written, NULL)) sys_err("ERR_WriteFile");
+    if (written != sizeof(init)) sys_err("ERR_sizeof(init)");
 
 
 	if(device !=3) {	

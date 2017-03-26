@@ -1,8 +1,8 @@
 ﻿  mainloop.cpp
-mainloop.cpp(248): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+mainloop.cpp(210): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
-mainloop.cpp(291): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(315): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+mainloop.cpp(253): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(277): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\conio.h(452): note: see declaration of 'getch'
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.

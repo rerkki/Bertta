@@ -7,16 +7,17 @@
 #include "mainloop.h"
 #include <windows.h>
 
+#include <iostream>
+#include <fstream>
 
+// PID parameters
 double Setpoint, Input, Output;
 
-//Specify the links and initial tuning parameters
+// Specify the links and initial tuning parameters
 double Kp=2, Ki=5, Kd=1;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, 1);
 
-
-
-
+// SQLITE Callback
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
 	int i;
 	
@@ -107,7 +108,7 @@ int select_db()
    const char* data = "Callback function called";
 
    /* Open database */
-   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test10.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -116,7 +117,7 @@ int select_db()
    }
 
    /* Create SQL statement */
-   sql = "SELECT * from BERTTA";
+   sql = "SELECT METTLER from BERTTA";
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
@@ -132,49 +133,20 @@ int select_db()
 }
 
 
-int strip_db()
-{
-   sqlite3 *db;
-   char *zErrMsg = 0;
-   int rc;
-   char *sql;
-   const char* data = "Callback function called";
-
-   /* Open database */
-   rc = sqlite3_open("test11.db", &db);
-   if( rc ){
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      return(0);
-   }else{
-      fprintf(stderr, "Opened database successfully\n");
-   }
-
-   /* Create SQL statement */
-   sql = "UPDATE BERTTA SET METTLER = replace( METTLER, '\n', ' ');";
-
-   /* Execute SQL statement */
-   rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
-   if( rc != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-   }else{
-      fprintf(stdout, "Operation done successfully\n");
-   }
-   sqlite3_close(db);
-
-   return 0;
-}
-
+// Function that prints selected columns to console and to file
 
 int getTableData()
 {
+	ofstream myfile;
+	myfile.open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\example.csv");
+
    sqlite3 *db;
    char *zErrMsg = 0;
    int  rc;
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test10.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -184,7 +156,7 @@ int getTableData()
 	
 	sqlite3_stmt *statement;    
 
-    sql = "SELECT * from BERTTA";
+    sql = "SELECT METTLER from BERTTA";
 
     if ( sqlite3_prepare(db, sql, -1, &statement, 0 ) == SQLITE_OK ) 
     {
@@ -203,13 +175,18 @@ int getTableData()
 
                     // print or format the output as you want 
 					cout << s << " ";
+
+					myfile << s << ";";
+					
                 }
                 cout << endl;
+				myfile << "\n";
             }
             
             if ( res == SQLITE_DONE || res==SQLITE_ERROR)    
             {
                 cout << "done " << endl;
+				myfile.close();
                 break;
             }    
         }
@@ -220,23 +197,7 @@ int getTableData()
 
 
 
-string parseMsg(char * msg) {
-
-	int msglen = strlen(msg);
-
-	string val;
-
-	for(int i=0;i<msglen;i++) {
-
-		if(isdigit(msg[i])) val += msg[i];
-		if(msg[i]=='.') val += msg[i];
-		if(msg[i]=='+') val += msg[i];
-		if(msg[i]=='-') val += msg[i];
-
-	}
-	return val.c_str();
-}
-
+// Function to call Mettler balance, returns weight in grams
 __declspec(dllexport) double mettler(int port, int msg) {
 
 	char * msg_;
@@ -245,6 +206,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	int msglen;
 
 	if (msg == 1) msg_ = "S\r\n";
+
 	strcpy(mettler_str, read(port,1,msg_).c_str());
 	Sleep(60);
 	msglen = strlen(mettler_str);
@@ -308,9 +270,9 @@ int main() {
 	*/
 
 //	create_db();
-//	getTableData();
+	getTableData();
 
-	select_db();
+//	select_db();
 
 	getch();
 }
