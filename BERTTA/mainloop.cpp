@@ -40,7 +40,7 @@ __declspec(dllexport) int create_db(void)
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
    if( rc ){
   //    fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(rc);
@@ -49,7 +49,7 @@ __declspec(dllexport) int create_db(void)
    }
 
    /* Create SQL statement */
-   sql = "CREATE TABLE BERTTA(HEIDOLPH, LAUDA, METTLER); ";
+   sql = "CREATE TABLE BERTTA(HEIDOLPH, LAUDA, METTLER1, METTLER2); ";
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -64,37 +64,37 @@ __declspec(dllexport) int create_db(void)
 }
 
 
-__declspec(dllexport) void insert_db(int heidolph, double lauda, double mettler)
+__declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1, double mettler2)
 {
    sqlite3 *db;
    char *zErrMsg = 0;
    int rc;
    char *sql;
 
-   cout<<heidolph<<endl;
-
    /* Open database */
-   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test11.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
    if( rc ){
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+    //  fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
    }else{
-      fprintf(stderr, "Opened database successfully\n");
+    //  fprintf(stderr, "Opened database successfully\n");
    }
 
    /* Create SQL statement */
 
-   sql = sqlite3_mprintf("INSERT INTO BERTTA (HEIDOLPH, LAUDA, METTLER) VALUES ('%d','%.2f','%.2f'); ", heidolph, lauda, mettler);
+   sql = sqlite3_mprintf("INSERT INTO BERTTA (HEIDOLPH, LAUDA, METTLER1, METTLER2) VALUES ('%d','%.2f','%.2f','%.2f'); ", heidolph, lauda, mettler1, mettler2);
    //cout<<sql<<endl;
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
    if( rc != SQLITE_OK ){
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+//      fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
    }else{
-      fprintf(stdout, "Records created successfully\n");
+//      fprintf(stdout, "Records created successfully\n");
    }
    sqlite3_close(db);
+
+   return rc;
  
 }
 
@@ -108,7 +108,7 @@ int select_db()
    const char* data = "Callback function called";
 
    /* Open database */
-   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test10.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -135,7 +135,13 @@ int select_db()
 
 // Function that prints selected columns to console and to file
 
-int getTableData()
+__declspec(dllexport) void TableSave(int exec)
+{
+	if (exec == 1) getTableData();
+}
+
+
+__declspec(dllexport) int getTableData()
 {
 	ofstream myfile;
 	myfile.open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\example.csv");
@@ -146,7 +152,7 @@ int getTableData()
    char *sql;
 
    /* Open database */
-   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test10.db", &db);
+   rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
    if( rc ){
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
@@ -156,7 +162,7 @@ int getTableData()
 	
 	sqlite3_stmt *statement;    
 
-    sql = "SELECT METTLER from BERTTA";
+    sql = "SELECT * from BERTTA";
 
     if ( sqlite3_prepare(db, sql, -1, &statement, 0 ) == SQLITE_OK ) 
     {
@@ -257,7 +263,7 @@ __declspec(dllexport) void lauda(int port, double set_temp) {
 
 
 
-int main() {
+//int main() {
 
 	/*
 	char out[50] = { 0 };
@@ -270,12 +276,13 @@ int main() {
 	*/
 
 //	create_db();
-	getTableData();
+//	getTableData();
 
 //	select_db();
+//	TableSave(1);
 
-	getch();
-}
+//	getch();
+//}
 
 
 ///// LOOP that communicates with serial devices and writes communication to database

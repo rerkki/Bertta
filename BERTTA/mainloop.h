@@ -9,6 +9,8 @@ __declspec(dllexport) void heidolph(int port, int speed);
 __declspec(dllexport) double mettler(int port, int msg);
 __declspec(dllexport) void lauda(int port, double set_temp);
 __declspec(dllexport) int create_db(void);
-__declspec(dllexport) void insert_db(int heidolph, double lauda, double mettler);
+__declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1, double mettler2);
+__declspec(dllexport) int getTableData();
+__declspec(dllexport) void TableSave(int exec);
 
 }
