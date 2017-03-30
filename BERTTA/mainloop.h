@@ -12,5 +12,8 @@ __declspec(dllexport) int create_db(void);
 __declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1, double mettler2);
 __declspec(dllexport) int getTableData();
 __declspec(dllexport) void TableSave(int exec);
+__declspec(dllexport) double pt100(double temp);
+__declspec(dllexport) double Compute_PID(double errSum, double lastErr, double Input, double Output_, double Setpoint, double kp, double ki, double kd);
+__declspec(dllexport) unsigned int elapsed(long unsigned int time_now);
 
 }

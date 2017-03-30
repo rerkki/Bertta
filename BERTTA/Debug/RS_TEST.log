@@ -1,26 +1,14 @@
 ﻿  mainloop.cpp
-mainloop.cpp(216): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+mainloop.cpp(237): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\conio.h(452): note: see declaration of 'getch'
+mainloop.cpp(250): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\conio.h(452): note: see declaration of 'getch'
+mainloop.cpp(252): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
-mainloop.cpp(259): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  math.cpp
-math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
-math.cpp(36): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-  PID_v1.cpp
-PID_v1.cpp(19): warning C4244: 'initializing': conversion from 'time_t' to 'long double', possible loss of data
-PID_v1.cpp(48): warning C4244: '=': conversion from 'long double' to 'unsigned long', possible loss of data
-PID_v1.cpp(61): warning C4244: 'initializing': conversion from 'long double' to 'unsigned long', possible loss of data
-  serialcomm.cpp
-serialcomm.cpp(31): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+mainloop.cpp(302): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
-serialcomm.cpp(38): warning C4101: 'mode': unreferenced local variable
-serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
-  sqlite3_test.cpp
-  Generating Code...
-  sqlite3.c
-sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\um\sysinfoapi.h(442): note: see declaration of 'GetVersionExA'
-     Creating library C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.lib and object C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.exp
-  RS_TEST.vcxproj -> C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.dll
+mainloop.cpp(345): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(379): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\conio.h(452): note: see declaration of 'getch'
+  RS_TEST.vcxproj -> C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.exe
   RS_TEST.vcxproj -> C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.pdb (Full PDB)

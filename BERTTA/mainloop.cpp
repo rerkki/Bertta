@@ -201,6 +201,92 @@ __declspec(dllexport) int getTableData()
 }
 
 
+__declspec(dllexport) int getColData(int col1, int col2, int col3, int col4)
+{
+	string col1_, col2_, col3_, col4_;
+
+	if (col1 == 1) col1_ = "HEIDOLPH";
+	if (col1 == 2) col1_ = "LAUDA";
+	if (col1 == 3) col1_ = "METTLER1";
+	if (col1 == 4) col1_ = "METTLER2";
+
+
+	if (col2 == 0) col2_ = "";
+	if (col2 == 2) col2_ = ", LAUDA";
+	if (col2 == 3) col2_ = ", METTLER1";
+	if (col2 == 4) col2_ = ", METTLER2";
+
+	if (col3 == 0) col3_ = "";
+	if (col3 == 3) col3_ = ", METTLER1";
+	if (col3 == 4) col3_ = ", METTLER2";
+
+	if (col4 == 0) col4_ = "";
+	if (col4 == 4) col4_ = ", METTLER2";
+
+
+	ofstream myfile;
+	myfile.open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\example.csv");
+
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int  rc;
+	char sql[60] = { 0 };
+	string sql_ = "SELECT " + col1_ + col2_ + col3_ + col4_ + " FROM BERTTA";
+
+	cout << sql_ << endl;
+	getch();
+
+	/* Open database */
+	rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
+	if (rc) {
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	}
+	else {
+		fprintf(stdout, "Opened database successfully\n");
+	}
+
+	sqlite3_stmt *statement;
+	getch();
+	//sql = "SELECT HEIDOLPH, LAUDA, METTLER1, METTLER2 FROM BERTTA";
+	strcpy(sql, sql_.c_str());
+
+	if (sqlite3_prepare(db, sql, -1, &statement, 0) == SQLITE_OK)
+	{
+		int ctotal = sqlite3_column_count(statement);
+		int res = 0;
+
+		while (1)
+		{
+			res = sqlite3_step(statement);
+
+			if (res == SQLITE_ROW)
+			{
+				for (int i = 0; i < ctotal; i++)
+				{
+					string s = (char*)sqlite3_column_text(statement, i);
+
+					// print or format the output as you want 
+					cout << s << " ";
+
+					myfile << s << ";";
+
+				}
+				cout << endl;
+				myfile << "\n";
+			}
+
+			if (res == SQLITE_DONE || res == SQLITE_ERROR)
+			{
+				cout << "done " << endl;
+				myfile.close();
+				break;
+			}
+		}
+	}
+	return 0;
+}
+
 
 
 // Function to call Mettler balance, returns weight in grams
@@ -261,9 +347,14 @@ __declspec(dllexport) void lauda(int port, double set_temp) {
 	read(port,3,temp_);
 }
 
+__declspec(dllexport) double pt100(double temp) {
+
+	return temp;
+}
 
 
-//int main() {
+
+int main() {
 
 	/*
 	char out[50] = { 0 };
@@ -275,14 +366,18 @@ __declspec(dllexport) void lauda(int port, double set_temp) {
 	cout << read(4, 3, "OUT_SP_00_033.0\r\n") << endl;
 	*/
 
+//	lauda(1, 33.2);
+
 //	create_db();
 //	getTableData();
+
+	getColData(1,4,0,0);
 
 //	select_db();
 //	TableSave(1);
 
-//	getch();
-//}
+	getch();
+}
 
 
 ///// LOOP that communicates with serial devices and writes communication to database

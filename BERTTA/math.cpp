@@ -6,7 +6,7 @@
 #include "serialcomm.h"
 #include "mainloop.h"
 #include <windows.h>
-
+#include <ctime>
 
 __declspec(dllexport) void rpm(int speed, char * newRpm) {
 
@@ -81,3 +81,50 @@ __declspec(dllexport) void temp(float temp_, char * newTemp) {
 //	cout << strlen(newTemp) << endl;
 //	getch();
 }
+
+
+
+
+
+
+long unsigned int millisec() {
+
+	long unsigned int sysTime = time(0);
+	long unsigned int sysTimeMS = sysTime * 1000;
+
+	return sysTimeMS;
+
+}
+
+__declspec(dllexport) unsigned int elapsed(long unsigned int time_now) {
+
+	long unsigned int elapsed_ = millisec() - time_now;
+
+	return elapsed_/80000;
+}
+
+__declspec(dllexport) double Compute_PID(double timeChange, double errSum, double lastErr, double Input, double Setpoint, double kp, double ki, double kd)
+{
+
+	if (timeChange <= 0) timeChange = 1;
+
+	/*Compute all the working error variables*/
+	double error = Setpoint - Input;
+	errSum += (error * timeChange);
+	double dErr = (error - lastErr) / timeChange;
+
+	/*Compute PID Output*/
+	double Output = kp * error + ki * errSum + kd * dErr;
+
+	/*Remember some variables for next time*/
+	lastErr = error;
+
+	// Output for Lauda
+	double Output_ = Setpoint + Output/10;
+
+	if (Output_ > 70) Output_ = 70;
+	if (Output_ < 20) Output_ = 20;
+
+	return Output_;
+}
+

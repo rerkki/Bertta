@@ -38,6 +38,8 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     DWORD mode;
 
 	LPCWSTR port_name;
+	if (com_port==1) port_name = L"\\\\.\\COM1";
+	if (com_port==2) port_name = L"\\\\.\\COM2";
 	if(com_port==3) port_name = L"\\\\.\\COM3";
 	if(com_port==4) port_name = L"\\\\.\\COM4";
 	if(com_port==5) port_name = L"\\\\.\\COM5";
