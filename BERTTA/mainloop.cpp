@@ -41,23 +41,24 @@ __declspec(dllexport) int create_db(void)
 
    /* Open database */
    rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
+ //  rc = sqlite3_open("test12.db", &db);
    if( rc ){
-  //    fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(rc);
    }else{
-  //    fprintf(stdout, "Opened database successfully\n");
+      fprintf(stdout, "Opened database successfully\n");
    }
 
    /* Create SQL statement */
-   sql = "CREATE TABLE BERTTA(HEIDOLPH, LAUDA, METTLER1, METTLER2); ";
+   sql = "CREATE TABLE BERTTA(ID INTEGER PRIMARY KEY AUTOINCREMENT, HEIDOLPH, LAUDA, METTLER1, METTLER2);";
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
    if( rc != SQLITE_OK ){
-//   fprintf(stderr, "SQL error: %s\n", zErrMsg);
+   fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
    }else{
- //     fprintf(stdout, "Table created successfully\n");
+      fprintf(stdout, "Table created successfully\n");
    }
    sqlite3_close(db);
    return 0;
@@ -73,6 +74,7 @@ __declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1,
 
    /* Open database */
    rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
+//   rc = sqlite3_open("test12.db", &db);
    if( rc ){
     //  fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
    }else{
@@ -81,7 +83,7 @@ __declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1,
 
    /* Create SQL statement */
 
-   sql = sqlite3_mprintf("INSERT INTO BERTTA (HEIDOLPH, LAUDA, METTLER1, METTLER2) VALUES ('%d','%.2f','%.2f','%.2f'); ", heidolph, lauda, mettler1, mettler2);
+   sql = sqlite3_mprintf("INSERT INTO BERTTA (HEIDOLPH, LAUDA, METTLER1, METTLER2) VALUES ('%d','%.2f','%.2f','%.2f');", heidolph, lauda, mettler1, mettler2);
    cout<<sql<<endl;
 
    /* Execute SQL statement */
@@ -97,6 +99,47 @@ __declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1,
    return rc;
  
 }
+
+int rows()
+{
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	char *sql;
+	const char* data = "Callback function called";
+
+	int count = 0;
+
+	/* Open database */
+	rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
+	if (rc) {
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return(0);
+	}
+	else {
+		fprintf(stderr, "Opened database successfully\n");
+	}
+
+	/* Create SQL statement */
+	//   sql = "SELECT METTLER from BERTTA";
+	sql = "SELECT count(*) FROM BERTTA";
+
+	/* Execute SQL statement */
+	rc = sqlite3_exec(db, sql, callback, &count, &zErrMsg);
+	if (rc != SQLITE_OK) {
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}
+	else {
+		fprintf(stdout, "Operation done successfully\n");
+	}
+	sqlite3_close(db);
+
+	printf("count: %d\n", count);
+
+	return count;
+}
+
 
 
 int select_db()
@@ -117,7 +160,8 @@ int select_db()
    }
 
    /* Create SQL statement */
-   sql = "SELECT METTLER from BERTTA";
+//   sql = "SELECT METTLER from BERTTA";
+   sql = "SELECT Count(*) FROM BERTTA";
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, (void*)data, &zErrMsg);
@@ -193,6 +237,7 @@ __declspec(dllexport) int getTableData()
             {
                 cout << "done " << endl;
 				myfile.close();
+				sqlite3_close(db);
                 break;
             }    
         }
@@ -207,6 +252,7 @@ __declspec(dllexport) int getColData(int nrows, int col1, int col2, int col3, in
 
 	int rcount = 0;
 
+	if (col1 == 0) col1_ = "ID";
 	if (col1 == 1) col1_ = "HEIDOLPH";
 	if (col1 == 2) col1_ = "LAUDA";
 	if (col1 == 3) col1_ = "METTLER1";
@@ -283,6 +329,7 @@ __declspec(dllexport) int getColData(int nrows, int col1, int col2, int col3, in
 			{
 				cout << "done " << endl;
 				myfile.close();
+				sqlite3_close(db);
 				break;
 			}
 		}
@@ -307,7 +354,7 @@ __declspec(dllexport) void getColToArr(int nrows, int col, double * values)
 	char *zErrMsg = 0;
 	int  rc;
 	char sql[60] = { 0 };
-	string sql_ = "SELECT " + col1 + " FROM BERTTA";
+	string sql_ = "SELECT " + col1 + " FROM BERTTA ORDER BY METTLER2 DESC";
 
 //	cout << sql_ << endl;
 //	getch();
@@ -357,6 +404,7 @@ __declspec(dllexport) void getColToArr(int nrows, int col, double * values)
 			if (res == SQLITE_DONE || res == SQLITE_ERROR || rcount == nrows - 1)
 			{
 				//cout << "done " << endl;
+				sqlite3_close(db);
 				break;
 			}
 		}
@@ -436,14 +484,14 @@ int main() {
 
 //	lauda(1, 33.2);
 
-//	create_db();
+	create_db();
 
-	cout << insert_db(1, 2, 3, 4) << endl;;
+	cout << insert_db(1, 2, 3, 4) << endl;
 
 //	getTableData();
 
 	
-//	getColData(10000,1,2,3,4);
+	getColData(10,0,0,0,0);
 
 //	string valueArr[5000];
 //	getColToArr(5000, 4, valueArr);
@@ -451,7 +499,8 @@ int main() {
 //	for (int i = 0; i < 5000; i++) cout << valueArr[i] << endl;
 	
 //	select_db();
-	TableSave(1);
+//	cout << "xxx" << rows() << endl;
+//	TableSave(1);
 /*	long unsigned int time_params[2] = { 0 };
 
 	elapsed(now, time_params);
