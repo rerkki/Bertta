@@ -14,14 +14,7 @@
 #include <ctime>
 #include "PID_v1.h"
 
-long double millis() {
 
-	long double sysTime = time(0);
-	long double sysTimeMS = sysTime*1000;
-
-return sysTimeMS;
-
-}
 
 
 /*Constructor (...)*********************************************************
@@ -45,7 +38,7 @@ PID::PID(double* Input, double* Output, double* Setpoint,
     PID::SetControllerDirection(ControllerDirection);
     PID::SetTunings(Kp, Ki, Kd);
 
-    lastTime = millis()-SampleTime;				
+	lastTime = 1;// millis() - SampleTime;
 }
  
  
@@ -58,7 +51,7 @@ PID::PID(double* Input, double* Output, double* Setpoint,
 bool PID::Compute()
 {
    if(!inAuto) return false;
-   unsigned long now = millis();
+   unsigned long now = 0;// millis();
    unsigned long timeChange = (now - lastTime);
    if(timeChange>=SampleTime)
    {

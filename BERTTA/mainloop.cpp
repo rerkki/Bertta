@@ -82,7 +82,7 @@ __declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1,
    /* Create SQL statement */
 
    sql = sqlite3_mprintf("INSERT INTO BERTTA (HEIDOLPH, LAUDA, METTLER1, METTLER2) VALUES ('%d','%.2f','%.2f','%.2f'); ", heidolph, lauda, mettler1, mettler2);
-   //cout<<sql<<endl;
+   cout<<sql<<endl;
 
    /* Execute SQL statement */
    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -201,9 +201,11 @@ __declspec(dllexport) int getTableData()
 }
 
 
-__declspec(dllexport) int getColData(int col1, int col2, int col3, int col4)
+__declspec(dllexport) int getColData(int nrows, int col1, int col2, int col3, int col4)
 {
 	string col1_, col2_, col3_, col4_;
+
+	int rcount = 0;
 
 	if (col1 == 1) col1_ = "HEIDOLPH";
 	if (col1 == 2) col1_ = "LAUDA";
@@ -271,12 +273,13 @@ __declspec(dllexport) int getColData(int col1, int col2, int col3, int col4)
 
 					myfile << s << ";";
 
+					rcount += 1;
 				}
 				cout << endl;
 				myfile << "\n";
 			}
 
-			if (res == SQLITE_DONE || res == SQLITE_ERROR)
+			if (res == SQLITE_DONE || res == SQLITE_ERROR || rcount == nrows)
 			{
 				cout << "done " << endl;
 				myfile.close();
@@ -285,6 +288,79 @@ __declspec(dllexport) int getColData(int col1, int col2, int col3, int col4)
 		}
 	}
 	return 0;
+}
+
+__declspec(dllexport) void getColToArr(int nrows, int col, double * values)
+{
+	string col1;
+
+	if (nrows < 2) nrows = 2;
+
+	int rcount = 0;
+
+	if (col == 1) col1 = "HEIDOLPH";
+	if (col == 2) col1 = "LAUDA";
+	if (col == 3) col1 = "METTLER1";
+	if (col == 4) col1 = "METTLER2";
+
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int  rc;
+	char sql[60] = { 0 };
+	string sql_ = "SELECT " + col1 + " FROM BERTTA";
+
+//	cout << sql_ << endl;
+//	getch();
+
+	/* Open database */
+	rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
+//	if (rc) {
+//		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		//return(0);
+//	}
+//	else {
+//		fprintf(stdout, "Opened database successfully\n");
+//	}
+
+	sqlite3_stmt *statement;
+	getch();
+	//sql = "SELECT HEIDOLPH, LAUDA, METTLER1, METTLER2 FROM BERTTA";
+	strcpy(sql, sql_.c_str());
+
+	if (sqlite3_prepare(db, sql, -1, &statement, 0) == SQLITE_OK)
+	{
+		int ctotal = sqlite3_column_count(statement);
+		int res = 0;
+
+		while (1)
+		{
+			res = sqlite3_step(statement);
+
+			if (res == SQLITE_ROW)
+			{
+				for (int i = 0; i < ctotal; i++)
+				{
+					double s = atof((char*)sqlite3_column_text(statement, i));
+
+					// print or format the output as you want 
+					//cout << s << " ";
+
+					//myfile << s << ";";
+
+					values[rcount] = s;
+
+					rcount += 1;
+				}
+				//cout << endl;
+			}
+
+			if (res == SQLITE_DONE || res == SQLITE_ERROR || rcount == nrows - 1)
+			{
+				//cout << "done " << endl;
+				break;
+			}
+		}
+	}
 }
 
 
@@ -356,26 +432,34 @@ __declspec(dllexport) double pt100(double temp) {
 
 int main() {
 
-	/*
-	char out[50] = { 0 };
-	double w;
-	heidolph(4, 50);
-	w = mettler(5, 1);
-	cout << out << "   "  << w <<endl;
-	lauda(4, 33.1);
-	cout << read(4, 3, "OUT_SP_00_033.0\r\n") << endl;
-	*/
+//	long unsigned int now = millisec();
 
 //	lauda(1, 33.2);
 
 //	create_db();
+
+	cout << insert_db(1, 2, 3, 4) << endl;;
+
 //	getTableData();
 
-	getColData(1,4,0,0);
+	
+//	getColData(10000,1,2,3,4);
 
+//	string valueArr[5000];
+//	getColToArr(5000, 4, valueArr);
+
+//	for (int i = 0; i < 5000; i++) cout << valueArr[i] << endl;
+	
 //	select_db();
-//	TableSave(1);
+	TableSave(1);
+/*	long unsigned int time_params[2] = { 0 };
 
+	elapsed(now, time_params);
+
+	cout << now << endl;
+	cout << time_params[0] << endl;
+	cout << time_params[1] << endl;
+	*/
 	getch();
 }
 

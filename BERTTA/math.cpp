@@ -87,21 +87,32 @@ __declspec(dllexport) void temp(float temp_, char * newTemp) {
 
 
 
-long unsigned int millisec() {
+__declspec(dllexport) long int millisec() {
 
-	long unsigned int sysTime = time(0);
-	long unsigned int sysTimeMS = sysTime * 1000;
+//	long unsigned int sysTime = time(0);
+//	long unsigned int sysTimeMS = sysTime * 1000;
 
-	return sysTimeMS;
+//	return sysTimeMS;
+
+	SYSTEMTIME time;
+	GetSystemTime(&time);
+	LONG time_ms = (time.wSecond * 1000) + time.wMilliseconds;
+
+	return time_ms;
 
 }
 
-__declspec(dllexport) unsigned int elapsed(long unsigned int time_now) {
+__declspec(dllexport) void elapsed(long int last_time, long int * params) {
 
-	long unsigned int elapsed_ = millisec() - time_now;
+	long int time_now = millisec();
 
-	return elapsed_/80000;
+	long int elapsed_ = time_now - last_time;
+
+		params[0] = elapsed_;
+		params[1] = time_now;	
+
 }
+
 
 __declspec(dllexport) double Compute_PID(double timeChange, double errSum, double lastErr, double Input, double Setpoint, double kp, double ki, double kd)
 {
