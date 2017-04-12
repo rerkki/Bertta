@@ -279,7 +279,7 @@ __declspec(dllexport) int getColData(int nrows, int col1, int col2, int col3, in
 	char *zErrMsg = 0;
 	int  rc;
 	char sql[60] = { 0 };
-	string sql_ = "SELECT " + col1_ + col2_ + col3_ + col4_ + " FROM BERTTA";
+	string sql_ = "SELECT " + col1_ + col2_ + col3_ + col4_ + " FROM BERTTA order by ID desc";
 
 	cout << sql_ << endl;
 	getch();
@@ -337,11 +337,12 @@ __declspec(dllexport) int getColData(int nrows, int col1, int col2, int col3, in
 	return 0;
 }
 
-__declspec(dllexport) void getColToArr(int nrows, int col, double * values)
-{
-	string col1;
 
-	if (nrows < 2) nrows = 2;
+
+__declspec(dllexport) void getColToArr(int col, double * values)
+{
+
+	string col1;
 
 	int rcount = 0;
 
@@ -354,10 +355,7 @@ __declspec(dllexport) void getColToArr(int nrows, int col, double * values)
 	char *zErrMsg = 0;
 	int  rc;
 	char sql[60] = { 0 };
-	string sql_ = "SELECT " + col1 + " FROM BERTTA ORDER BY METTLER2 DESC";
-
-//	cout << sql_ << endl;
-//	getch();
+	string sql_ = "SELECT " + col1 + " FROM BERTTA ORDER BY ID DESC limit 20";
 
 	/* Open database */
 	rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
@@ -370,7 +368,7 @@ __declspec(dllexport) void getColToArr(int nrows, int col, double * values)
 //	}
 
 	sqlite3_stmt *statement;
-	getch();
+//	getch();
 	//sql = "SELECT HEIDOLPH, LAUDA, METTLER1, METTLER2 FROM BERTTA";
 	strcpy(sql, sql_.c_str());
 
@@ -401,7 +399,7 @@ __declspec(dllexport) void getColToArr(int nrows, int col, double * values)
 				//cout << endl;
 			}
 
-			if (res == SQLITE_DONE || res == SQLITE_ERROR || rcount == nrows - 1)
+			if (res == SQLITE_DONE || res == SQLITE_ERROR)
 			{
 				//cout << "done " << endl;
 				sqlite3_close(db);
@@ -409,6 +407,7 @@ __declspec(dllexport) void getColToArr(int nrows, int col, double * values)
 			}
 		}
 	}
+	sqlite3_close(db);
 }
 
 
@@ -477,41 +476,20 @@ __declspec(dllexport) double pt100(double temp) {
 }
 
 
-
+/*
 int main() {
 
-//	long unsigned int now = millisec();
+//	create_db();
+	double valueArr[20] = { 0 };
+	for (int i = 0; i < 100; i++) {
+		insert_db(i + 1, i + 2, i + 3, i + 4);
 
-//	lauda(1, 33.2);
-
-	create_db();
-
-	cout << insert_db(1, 2, 3, 4) << endl;
-
-//	getTableData();
-
-	
-	getColData(10,0,0,0,0);
-
-//	string valueArr[5000];
-//	getColToArr(5000, 4, valueArr);
-
-//	for (int i = 0; i < 5000; i++) cout << valueArr[i] << endl;
-	
-//	select_db();
-//	cout << "xxx" << rows() << endl;
-//	TableSave(1);
-/*	long unsigned int time_params[2] = { 0 };
-
-	elapsed(now, time_params);
-
-	cout << now << endl;
-	cout << time_params[0] << endl;
-	cout << time_params[1] << endl;
-	*/
-	getch();
+		getColToArr(3, valueArr);
+		for (int a = 0; a < 20; a++) cout << valueArr[a] << endl;
+		getch();
+	}
 }
-
+*/
 
 ///// LOOP that communicates with serial devices and writes communication to database
 /*
