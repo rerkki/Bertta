@@ -338,6 +338,11 @@ __declspec(dllexport) int getColData(int nrows, int col1, int col2, int col3, in
 }
 
 
+__declspec(dllexport) void getColToMat(int col1, int col2, double * values1, double * values2)
+{
+	getColToArr(col1, values1);
+	getColToArr(col2, values2);
+}
 
 __declspec(dllexport) void getColToArr(int col, double * values)
 {

@@ -11,6 +11,7 @@ __declspec(dllexport) void lauda(int port, double set_temp);
 __declspec(dllexport) int create_db(void);
 __declspec(dllexport) int insert_db(int heidolph, double lauda, double mettler1, double mettler2);
 __declspec(dllexport) int getTableData();
+__declspec(dllexport) void getColToMat(int col1, int col2, double * values1, double * values2);
 __declspec(dllexport) void getColToArr(int col, double * values);
 __declspec(dllexport) void TableSave(int exec);
 __declspec(dllexport) double pt100(double temp);
