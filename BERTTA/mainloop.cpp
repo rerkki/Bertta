@@ -360,7 +360,8 @@ __declspec(dllexport) void getColToArr(int col, double * values)
 	char *zErrMsg = 0;
 	int  rc;
 	char sql[60] = { 0 };
-	string sql_ = "SELECT " + col1 + " FROM BERTTA ORDER BY ID DESC limit 20";
+	string sql_ = "SELECT " + col1 + " FROM BERTTA ORDER BY ID DESC limit 1";
+//	string sql_ = "SELECT " + col1 + " FROM BERTTA limit 1";
 
 	/* Open database */
 	rc = sqlite3_open("C:\\Users\\xlaraser\\Desktop\\SQLITE3\\test12.db", &db);
