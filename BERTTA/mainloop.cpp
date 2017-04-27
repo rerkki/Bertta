@@ -466,6 +466,18 @@ __declspec(dllexport) void heidolph(int port, int speed) {
 //	strcpy(output, read(port, 2, rpm_).c_str());
 }
 
+__declspec(dllexport) void ismatec(int port, float speed) {
+
+	char rpm_[9] = { 0 };
+	pump(speed, rpm_);
+//	cout << rpm_ << endl;
+	read(port, 2, rpm_);
+	Sleep(10);
+	read(port, 2, "1H\r\n");
+	Sleep(60);
+
+}
+
 
 
 __declspec(dllexport) void lauda(int port, double set_temp) {
@@ -482,20 +494,24 @@ __declspec(dllexport) double pt100(double temp) {
 }
 
 
-/*
-int main() {
+
+//int main() {
 
 //	create_db();
-	double valueArr[20] = { 0 };
-	for (int i = 0; i < 100; i++) {
-		insert_db(i + 1, i + 2, i + 3, i + 4);
+//	double valueArr[20] = { 0 };
+//	for (int i = 0; i < 100; i++) {
+//		insert_db(i + 1, i + 2, i + 3, i + 4);
 
-		getColToArr(3, valueArr);
-		for (int a = 0; a < 20; a++) cout << valueArr[a] << endl;
-		getch();
-	}
-}
-*/
+//		getColToArr(3, valueArr);
+//		for (int a = 0; a < 20; a++) cout << valueArr[a] << endl;
+//		getch();
+//	}
+
+//	ismatec(4, 0.10);
+
+//	getch();
+//}
+
 
 ///// LOOP that communicates with serial devices and writes communication to database
 /*

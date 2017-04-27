@@ -88,6 +88,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 		WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
 		Sleep(50); 
 		ReadFile(file, buffer, 50, &read, NULL);
+//		cout << buffer << endl;
 		Sleep(50);
 	}
 

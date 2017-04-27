@@ -25,6 +25,77 @@ __declspec(dllexport) void rpm(int speed, char * newRpm) {
 //	cout << newRpm << endl;
 }
 
+
+__declspec(dllexport) void pump(float speed_, char * newPump) {
+
+	char buffer[5] = { 0 };
+	char buff[5] = { 0 };
+
+	sprintf(buffer, "%.0f", speed_*100);
+
+//	cout << buffer << endl;
+
+	if (speed_ < 100) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = buffer[0];
+		newPump[5] = buffer[1];
+		newPump[6] = buffer[2];
+		newPump[7] = buffer[3];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+	if (speed_ < 10) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = '0';
+		newPump[5] = buffer[0];
+		newPump[6] = buffer[1];
+		newPump[7] = buffer[2];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+	if (speed_ < 1) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = '0';
+		newPump[5] = '0';
+		newPump[6] = buffer[0];
+		newPump[7] = buffer[1];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+
+	if (speed_ >= 100) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = buffer[0];
+		newPump[4] = buffer[1];
+		newPump[5] = buffer[2];
+		newPump[6] = buffer[3];
+		newPump[7] = buffer[4];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+//	cout << newPump << endl;
+}
+
+
 __declspec(dllexport) void temp(float temp_, char * newTemp) {
 
 	char buffer[5]={0};
