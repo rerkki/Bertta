@@ -13,18 +13,22 @@ mainloop.cpp(486): warning C4244: 'argument': conversion from 'double' to 'float
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
-math.cpp(34): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+math.cpp(33): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
+math.cpp(67): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-math.cpp(107): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+math.cpp(140): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+math.cpp(252): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+math.cpp(254): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
   PID_v1.cpp
   serialcomm.cpp
-serialcomm.cpp(31): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
-serialcomm.cpp(38): warning C4101: 'mode': unreferenced local variable
+serialcomm.cpp(43): warning C4101: 'mode': unreferenced local variable
+serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
 serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   sqlite3_test.cpp
   Generating Code...
+c:\users\xlaraser\documents\visual studio 2017\projects\bertta\bertta\math.cpp(232): warning C4715: 't_epoch': not all control paths return a value
   sqlite3.c
 sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
   C:\Program Files\Windows Kits\10\Include\10.0.14393.0\um\sysinfoapi.h(442): note: see declaration of 'GetVersionExA'

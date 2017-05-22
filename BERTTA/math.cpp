@@ -25,6 +25,39 @@ __declspec(dllexport) void rpm(int speed, char * newRpm) {
 //	cout << newRpm << endl;
 }
 
+__declspec(dllexport) void stirr(int speed, char * newRpm) {
+
+	char buffer[4] = { 0 };
+
+	int msglen = 1;
+	itoa(speed, buffer, 10);
+	if (speed > 9) {
+		msglen = 2;
+		newRpm[0] = 'R';
+		newRpm[1] = '0';
+		newRpm[2] = '0';
+		for (int i = 0; i<msglen; i++) newRpm[i + 3] = buffer[i];
+	}
+
+	if (speed > 99) {
+		msglen = 3;
+		newRpm[0] = 'R';
+		newRpm[1] = '0';
+		for (int i = 0; i<msglen; i++) newRpm[i + 2] = buffer[i];
+	}
+
+	if (speed > 999) {
+		msglen = 3;
+		newRpm[0] = 'R';
+		for (int i = 0; i<msglen; i++) newRpm[i + 1] = buffer[i];
+	}
+
+	newRpm[5] = '\r';
+	newRpm[6] = '\n';
+
+	cout << newRpm << endl;
+}
+
 
 __declspec(dllexport) void pump(float speed_, char * newPump) {
 
@@ -181,6 +214,47 @@ __declspec(dllexport) void elapsed(long int last_time, long int * params) {
 
 		params[0] = elapsed_;
 		params[1] = time_now;	
+
+}
+
+__declspec(dllexport) long int t_epoch(int enable, long int start_time) {
+
+	time_t seconds;
+
+	long int seconds_;
+
+	seconds = time(NULL);
+
+	seconds_ = long int(seconds);
+
+	if(enable==0) return seconds_;
+	if (enable > 0) return start_time;
+}
+
+__declspec(dllexport) double t_ramp(long int start_time, double Tset, double Tcurrent, int rt, int direction) {
+
+		time_t seconds;
+
+		long int seconds_;
+
+		double retval = 0;
+
+		seconds = time(NULL);
+
+		seconds_ = long int(seconds);
+
+		double DT = (Tset - Tcurrent) / (rt * 60);
+
+		double setpoint = DT*(seconds_ - start_time) + Tcurrent;
+
+		retval = setpoint;
+
+		if(setpoint > Tset & direction == 0) retval = Tset;
+
+		if(setpoint < Tset & direction == 1) retval = Tset;
+
+		return retval;
+
 
 }
 

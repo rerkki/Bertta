@@ -26,9 +26,14 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	int msglen = strlen(msg_);
 	char buffer[50];
 	for(int i=0;i<50;i++) buffer[i]=NULL;
-	char msg[17];
-	for(int i=0;i<17;i++) msg[i]=0;
-	strcpy(msg, msg_);
+	char msg[17]; 
+
+	int buff_size = 17;
+
+	if (device == 4) buff_size = 7; //Heidolph HEI requires this
+
+//	for(int i=0;i<17;i++) msg[i]=0;
+//	strcpy(msg, msg_);
 
     HANDLE file;
     COMMTIMEOUTS timeouts;
@@ -46,6 +51,18 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	if(com_port==6) port_name = L"\\\\.\\COM6";
 	if(com_port==7) port_name = L"\\\\.\\COM7";
 	if(com_port==8) port_name = L"\\\\.\\COM8";
+	if(com_port == 9) port_name = L"\\\\.\\COM9";
+	if(com_port == 10) port_name = L"\\\\.\\COM10";
+	if(com_port == 11) port_name = L"\\\\.\\COM11";
+	if(com_port == 12) port_name = L"\\\\.\\COM12";
+	if(com_port == 13) port_name = L"\\\\.\\COM13";
+	if(com_port == 14) port_name = L"\\\\.\\COM14";
+	if(com_port == 15) port_name = L"\\\\.\\COM15";
+	if(com_port == 16) port_name = L"\\\\.\\COM16";
+	if(com_port == 17) port_name = L"\\\\.\\COM17";
+	if(com_port == 18) port_name = L"\\\\.\\COM18";
+	if(com_port == 19) port_name = L"\\\\.\\COM19";
+	if (com_port == 20) port_name = L"\\\\.\\COM20";
 
     char init[] = "";
 
@@ -84,22 +101,37 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     if (written != sizeof(init)) sys_err("ERR_sizeof(init)");
 
 
-	if(device !=3) {	
+
+	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
+	WriteFile(file, "\r\n", 2, &written, NULL);
+	Sleep(200);
+	WriteFile(file, msg_, buff_size, &written, NULL);
+	Sleep(200);
+
+	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
+//	cout << buffer << endl;
+
+
+	/*
+	if(device !=3) {
+		ReadFile(file, buffer, sizeof(buffer), &read, NULL);
 		WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
-		Sleep(50); 
+		Sleep(200); 
 		ReadFile(file, buffer, 50, &read, NULL);
-//		cout << buffer << endl;
+		cout << msg << endl;
 		Sleep(50);
 	}
 
+	
 	if(device==3) {
 		for(int i=0;i<2;i++) {
 			WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
 			Sleep(50); 
 			ReadFile(file, buffer, 50, &read, NULL);
 		}
-	}
 
+	}*/
+	
 	Sleep(50);
 
     CloseHandle(file);

@@ -2,6 +2,9 @@
 
 extern "C" {
 
+__declspec(dllexport) double t_ramp(long int start_time, double Tset, double Tcurrent, int rt, int direction);
+__declspec(dllexport) long int t_epoch(int enable, long int start_time);
+__declspec(dllexport) void stirr(int speed, char * newRpm);
 __declspec(dllexport) void rpm(int speed, char * newRpm);
 __declspec(dllexport) void temp(float temp, char * newTemp);
 __declspec(dllexport) void pump(float speed_, char * newPump);

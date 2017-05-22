@@ -427,7 +427,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	int msglen;
 
 	if (msg == 1) msg_ = "S\r\n";
-
+	
 	strcpy(mettler_str, read(port,1,msg_).c_str());
 	Sleep(60);
 	msglen = strlen(mettler_str);
@@ -459,8 +459,8 @@ __declspec(dllexport) double mettler(int port, int msg) {
 //__declspec(dllexport) void heidolph(int port, int speed, char * output) {
 __declspec(dllexport) void heidolph(int port, int speed) {
 
-	char rpm_[16] = { 0 };
-	rpm(speed, rpm_);
+	char rpm_[7] = { 0 };
+	stirr(speed, rpm_);
 	read(port, 2, rpm_);
 	Sleep(60);
 //	strcpy(output, read(port, 2, rpm_).c_str());
@@ -494,7 +494,6 @@ __declspec(dllexport) double pt100(double temp) {
 }
 
 
-
 //int main() {
 
 //	create_db();
@@ -514,8 +513,20 @@ __declspec(dllexport) double pt100(double temp) {
 
 
 ///// LOOP that communicates with serial devices and writes communication to database
+
 /*
 int main() {
+
+//	read(20, 4, "R0000\r\n");
+//	read(1, 3, "OUT_SP_00_025.3\r\n");
+
+	char new_rpm[7];
+	stirr(1000, new_rpm);
+	cout << new_rpm << endl;
+
+	getch();
+}
+
 
 
 for(int a=0;a<2;a++) {
