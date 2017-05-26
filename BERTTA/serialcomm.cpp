@@ -30,7 +30,8 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 
 	int buff_size = 17;
 
-	if (device == 4) buff_size = 7; //Heidolph HEI requires this
+	if (device == 4) buff_size = 7; //Heidolph HEI requires 7 for setting rpm
+	if (device == 5) buff_size = 3; //Heidolph HEI requires 3 for queries
 
 //	for(int i=0;i<17;i++) msg[i]=0;
 //	strcpy(msg, msg_);

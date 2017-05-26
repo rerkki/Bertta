@@ -217,6 +217,38 @@ __declspec(dllexport) void elapsed(long int last_time, long int * params) {
 
 }
 
+
+__declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * params) {
+
+	long int time_now = millisec();
+
+	long int elapsed_ = time_now - last_time;
+
+	params[0] = elapsed_;
+	params[1] = time_now;
+
+}
+
+__declspec(dllexport) void elapsed_sec(long int last_time, long int * params) {
+
+	time_t seconds;
+
+	long int seconds_;
+
+	double retval = 0;
+
+	seconds = time(NULL);
+
+	seconds_ = long int(seconds);
+
+	long int elapsed_ = seconds_ - last_time;
+
+	params[0] = elapsed_;
+	params[1] = seconds_;
+
+
+}
+
 __declspec(dllexport) long int t_epoch(int enable, long int start_time) {
 
 	time_t seconds;
@@ -227,34 +259,74 @@ __declspec(dllexport) long int t_epoch(int enable, long int start_time) {
 
 	seconds_ = long int(seconds);
 
+	long int elapsed = seconds_ ;
+
 	if(enable==0) return seconds_;
 	if (enable > 0) return start_time;
 }
 
-__declspec(dllexport) double t_ramp(long int start_time, double Tset, double Tcurrent, int rt, int direction) {
+__declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params) {
 
-		time_t seconds;
+	time_t seconds;
 
-		long int seconds_;
+	long int seconds_;
 
-		double retval = 0;
+	seconds = time(NULL);
 
-		seconds = time(NULL);
+	seconds_ = long int(seconds);
 
-		seconds_ = long int(seconds);
+	params[0] = seconds_;
 
-		double DT = (Tset - Tcurrent) / (rt * 60);
+	if (enable == 1) params[1] = start_time;
+	if (pause == 0) params[2] = seconds_;
+	if (pause == 1) params[2] = pause_time;
+	if (pause == 1) params[3] = seconds_ - pause_time + paused_old;
+	if (pause == 0) params[3] = paused; 
+	if (pause == 1) params[4] = paused_old;
+	if (pause == 0) params[4] = paused;
+	params[5] = rt - (seconds_ - start_time) + paused;
 
-		double setpoint = DT*(seconds_ - start_time) + Tcurrent;
+	if (enable == 0) {
+		params[1] = seconds_;
+		params[2] = seconds_;
+		params[3] = 0;
+		params[4] = 0;
+		params[5] = 0;
+	}
 
-		retval = setpoint;
+}
 
-		if(setpoint > Tset & direction == 0) retval = Tset;
 
-		if(setpoint < Tset & direction == 1) retval = Tset;
 
-		return retval;
+__declspec(dllexport) double t_ramp(long int ramp_time, long int elapsed, double Tset, double Tcurrent, int direction) {
 
+	if (ramp_time <= 0) ramp_time = 1;
+	
+	double DT = 0;
+	
+	DT = (Tset - Tcurrent) / ramp_time;
+
+	double setpoint = (DT * double(elapsed) / 1000) + Tcurrent;
+
+	double retval = setpoint;
+
+	if(setpoint > Tset & direction == 0) retval = Tset;
+
+	if(setpoint < Tset & direction == 1) retval = Tset;
+
+	return retval;
+
+
+}
+
+__declspec(dllexport) long int time_left(long int rt, long int start_time) {
+
+	time_t seconds;
+	long int seconds_;
+	seconds = time(NULL);
+	seconds_ = long int(seconds);
+
+	return rt - (seconds_ - start_time);
 
 }
 

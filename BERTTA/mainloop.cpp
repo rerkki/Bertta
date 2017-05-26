@@ -466,6 +466,45 @@ __declspec(dllexport) void heidolph(int port, int speed) {
 //	strcpy(output, read(port, 2, rpm_).c_str());
 }
 
+__declspec(dllexport) double hei_query(int port, int q) {
+
+	char * msg;
+	if (q == 1) msg = "m\r\n";
+	if (q == 2) msg = "r\r\n";
+
+
+	char q_[50] = { 0 };
+
+	string val;
+
+	strcpy(q_, read(port, 5, msg).c_str());
+
+	cout << q_ << endl;
+
+	Sleep(60);
+
+	int msglen = strlen(q_);
+
+//	cout << msglen << endl;
+
+	int v = 0;
+
+	for (int i = 0; i<msglen; i++) {
+		if (isdigit(q_[i])) {
+//			cout << q_[i] << endl;
+			val += q_[i]; v += 1;
+		}
+		if (q_[i] == '.') {
+//			cout << q_[i];
+			val += q_[i]; v += 1;
+		}
+	}
+	cout << val << endl;
+	val[v] = '\0';
+	return atof(val.c_str());
+
+}
+
 __declspec(dllexport) void ismatec(int port, float speed) {
 
 	char rpm_[9] = { 0 };
@@ -493,6 +532,17 @@ __declspec(dllexport) double pt100(double temp) {
 	return temp;
 }
 
+/*
+
+int main() {
+
+	hei_query(20, "m\r\n");
+
+	getch();
+
+}
+
+*/
 
 //int main() {
 
