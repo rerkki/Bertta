@@ -461,8 +461,9 @@ __declspec(dllexport) void heidolph(int port, int speed) {
 
 	char rpm_[7] = { 0 };
 	stirr(speed, rpm_);
-	read(port, 2, rpm_);
+	read(port, 4, rpm_); 
 	Sleep(60);
+	
 //	strcpy(output, read(port, 2, rpm_).c_str());
 }
 

@@ -2,12 +2,13 @@
 
 extern "C" {
 	
+	__declspec(dllexport) double t_ramp2(int enable, int pause, double Tinit, double Tset, double Tcurrent, long int ramp_time, long int elapsed, double sp_old);
 	__declspec(dllexport) double hei_query(int port, int q);
 	__declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params);
 __declspec(dllexport) long int time_left(long int rt, long int start_time);
-__declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * params);
+
 __declspec(dllexport) void elapsed_sec(long int last_time, long int * params);
-__declspec(dllexport) double t_ramp(long int ramp_time, long int elapsed, double Tset, double Tcurrent, int direction);
+__declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int elapsed, double Tset, double Tcurrent, double Tcurr_prev, int direction);
 __declspec(dllexport) long int t_epoch(int enable, long int start_time);
 __declspec(dllexport) void stirr(int speed, char * newRpm);
 __declspec(dllexport) void rpm(int speed, char * newRpm);

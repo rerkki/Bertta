@@ -27,6 +27,8 @@ __declspec(dllexport) void rpm(int speed, char * newRpm) {
 
 __declspec(dllexport) void stirr(int speed, char * newRpm) {
 
+	if (speed < 200) speed = 200;
+
 	char buffer[4] = { 0 };
 
 	int msglen = 1;
@@ -54,6 +56,8 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 
 	newRpm[5] = '\r';
 	newRpm[6] = '\n';
+
+	//if (speed == 0) newRpm = "R0000\r\n";
 
 	cout << newRpm << endl;
 }
@@ -217,7 +221,7 @@ __declspec(dllexport) void elapsed(long int last_time, long int * params) {
 
 }
 
-
+/*
 __declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * params) {
 
 	long int time_now = millisec();
@@ -228,7 +232,7 @@ __declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * par
 	params[1] = time_now;
 
 }
-
+*/
 __declspec(dllexport) void elapsed_sec(long int last_time, long int * params) {
 
 	time_t seconds;
@@ -275,17 +279,19 @@ __declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long i
 
 	seconds_ = long int(seconds);
 
-	params[0] = seconds_;
+	params[0] = 0;// seconds_; //params 0 is the current time...
 
-	if (enable == 1) params[1] = start_time;
-	if (pause == 0) params[2] = seconds_;
+	if (enable == 1) params[1] = start_time; //this defines the starting moment of the timed ramp
+	if (pause == 0) params[2] = seconds_; //params 2 defines the moment (epoch) of pause
 	if (pause == 1) params[2] = pause_time;
-	if (pause == 1) params[3] = seconds_ - pause_time + paused_old;
+	if (pause == 1) params[3] = seconds_ - pause_time + paused_old; //params 3 keeps the ramp time (epoch) interrupted during the pause
 	if (pause == 0) params[3] = paused; 
-	if (pause == 1) params[4] = paused_old;
+	if (pause == 1) params[4] = paused_old; //params 4 keeps track of the pause time during each pause
 	if (pause == 0) params[4] = paused;
-	params[5] = rt - (seconds_ - start_time) + paused;
+	params[5] = rt - (seconds_ - start_time) + paused; //params 5 is the total pause time (sum)
+	if (params[5] < 0) params[5] = 0;
 
+	//initialization of the time sequences
 	if (enable == 0) {
 		params[1] = seconds_;
 		params[2] = seconds_;
@@ -298,25 +304,57 @@ __declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long i
 
 
 
-__declspec(dllexport) double t_ramp(long int ramp_time, long int elapsed, double Tset, double Tcurrent, int direction) {
+__declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int elapsed, double Tset, double Tcurrent, double Tcurr_prev, int direction) {
 
-	if (ramp_time <= 0) ramp_time = 1;
+	double setpoint = 0;
+
+	if (enable == 1) {
+		if (ramp_time <= 0) ramp_time = 10000000;
+
+		double DT = 0;
+
+		DT = (Tset - Tcurrent) / double(ramp_time);
+
+		setpoint = (DT * double(elapsed) / 1000) + Tcurrent;
+
+		if (direction == 0 && setpoint < Tcurrent) setpoint = Tcurr_prev;
+		if (direction == 1 && setpoint > Tcurrent) setpoint = Tcurr_prev;
+	}
+	else setpoint = Tcurrent;
+
+	return setpoint;
+
+
+}
+
+__declspec(dllexport) double t_ramp2(int enable, int pause, double Tinit, double Tset, double Tcurrent, long int ramp_time, long int elapsed, double sp_old) {
+
+	int direction = 0;
+
+	if (Tinit > Tset) direction = 1;
+	if (Tinit < Tset) direction = 0;
+
+	double DT = (Tset - Tinit) / ramp_time;
+	double setpoint = Tinit;
+
+	if (pause == 1) DT = 0;
+
+	if (enable == 1) {
+		setpoint = sp_old + DT*elapsed / 1000;
+		if (direction == 0) {
+			if (Tcurrent > Tset) setpoint = Tset;
+			if (setpoint > Tset) setpoint = Tset;
+			if (setpoint < sp_old) setpoint = sp_old;
+		}
+		if (direction == 1) {
+			if (Tcurrent < Tset) setpoint = Tset;
+			if (setpoint < Tset) setpoint = Tset;
+			if (setpoint > sp_old) setpoint = sp_old;
+		}
+		
+	}
 	
-	double DT = 0;
-	
-	DT = (Tset - Tcurrent) / ramp_time;
-
-	double setpoint = (DT * double(elapsed) / 1000) + Tcurrent;
-
-	double retval = setpoint;
-
-	if(setpoint > Tset & direction == 0) retval = Tset;
-
-	if(setpoint < Tset & direction == 1) retval = Tset;
-
-	return retval;
-
-
+	return setpoint;
 }
 
 __declspec(dllexport) long int time_left(long int rt, long int start_time) {
