@@ -345,11 +345,13 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, double Tinit, double
 			if (Tcurrent > Tset) setpoint = Tset;
 			if (setpoint > Tset) setpoint = Tset;
 			if (setpoint < sp_old) setpoint = sp_old;
+			if (setpoint - Tcurrent > 3) setpoint = sp_old;
 		}
 		if (direction == 1) {
 			if (Tcurrent < Tset) setpoint = Tset;
 			if (setpoint < Tset) setpoint = Tset;
 			if (setpoint > sp_old) setpoint = sp_old;
+			if (Tcurrent - setpoint > 4) setpoint = sp_old;
 		}
 		
 	}
