@@ -27,7 +27,10 @@ __declspec(dllexport) void getColToArr(int col, double * values);
 __declspec(dllexport) void TableSave(int exec);
 __declspec(dllexport) double pt100(double temp);
 __declspec(dllexport) double Compute_PID(double errSum, double lastErr, double Input, double Output_, double Setpoint, double kp, double ki, double kd);
-__declspec(dllexport) void elapsed(long int last_time, long int * params);
+__declspec(dllexport) void elapsed( long int last_time, long int * params);
+__declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold, int seq_previous, int * params);
+__declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, long int elapsed_previous, long int elapsed_total, long int * params);
+__declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params);
 __declspec(dllexport) long int millisec();
 
 }
