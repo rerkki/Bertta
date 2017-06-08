@@ -6,7 +6,7 @@ extern "C" {
 	__declspec(dllexport) double hei_query(int port, int q);
 	__declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params);
 __declspec(dllexport) long int time_left(long int rt, long int start_time);
-
+__declspec(dllexport) double hold(int enable, double in1, double in2);
 __declspec(dllexport) void elapsed_sec(long int last_time, long int * params);
 __declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int elapsed, double Tset, double Tcurrent, double Tcurr_prev, int direction);
 __declspec(dllexport) long int t_epoch(int enable, long int start_time);
@@ -32,5 +32,5 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, long int elapsed_previous, long int elapsed_total, long int * params);
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params);
 __declspec(dllexport) long int millisec();
-
+__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int * params);
 }

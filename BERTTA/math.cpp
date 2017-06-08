@@ -326,6 +326,49 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
+__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int * params){
+
+	long int amount = 0;
+
+
+	if (enable == 0) {
+		params[0] = long int(bal * 100);
+		params[1] = 0;
+		params[2] = 0;
+//		params[3] = 1;
+		
+	}
+
+	if (enable == 1) {
+		params[0] = bal_previous;
+		amount = bal_previous -long int(bal * 100);
+		params[2] = amount;
+		if (long int(target * 100) - amount < 1) {
+			params[1] = 1;
+//			params[3] = 0;
+		}
+
+		
+
+	}
+
+	
+}
+
+
+
+__declspec(dllexport) double hold(int enable, double in1, double in2) {
+
+	double retval = in1;
+
+	if (enable == 1) {
+
+		if (in1 == 0) retval = in2;
+	}
+
+	return retval;
+}
+
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params) {
 
 	params[0] = in1;
