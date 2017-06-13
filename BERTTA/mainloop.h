@@ -2,7 +2,7 @@
 
 extern "C" {
 	
-	__declspec(dllexport) double t_ramp2(int enable, int pause, double Tinit, double Tset, double Tcurrent, long int ramp_time, long int elapsed, double sp_old);
+	__declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double Tcurrent, double Tbyp, double Tfail, long int ramp_time, long int elapsed, double sp_old);
 	__declspec(dllexport) double hei_query(int port, int q);
 	__declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params);
 __declspec(dllexport) long int time_left(long int rt, long int start_time);

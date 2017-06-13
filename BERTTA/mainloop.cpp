@@ -472,6 +472,8 @@ __declspec(dllexport) double hei_query(int port, int q) {
 	char * msg;
 	if (q == 1) msg = "m\r\n";
 	if (q == 2) msg = "r\r\n";
+	if (q == 3) msg = "A\r\n";
+	if (q == 4) msg = "B\r\n";
 
 
 	char q_[50] = { 0 };

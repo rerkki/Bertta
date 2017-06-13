@@ -399,7 +399,7 @@ __declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int ela
 	return setpoint;
 }
 
-__declspec(dllexport) double t_ramp2(int enable, int pause, double Tinit, double Tset, double Tcurrent, long int ramp_time, long int elapsed, double sp_old) {
+__declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double Tcurrent, double Tbyp, double Tfail, long int ramp_time, long int elapsed, double sp_old) {
 
 	int direction = 0;
 
@@ -439,6 +439,10 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, double Tinit, double
 		}
 		
 	}
+
+	if (bypass == 1) setpoint = Tbyp;
+
+	if (err == 1) setpoint = Tfail;
 	
 	return setpoint;
 }
