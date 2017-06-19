@@ -59,7 +59,7 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 
 	//if (speed == 0) newRpm = "R0000\r\n";
 
-	cout << newRpm << endl;
+	//cout << newRpm << endl;
 }
 
 
@@ -421,7 +421,7 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err,
 	double DT = (Tset - Tinit) / ramp_time;
 	double setpoint = Tinit;
 
-	if (pause == 1) DT = 0;
+	if (pause == 0) DT = 0;
 
 	if (enable == 1) {
 		setpoint = sp_old + DT*elapsed / 1000;

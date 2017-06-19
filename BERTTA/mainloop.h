@@ -14,7 +14,7 @@ __declspec(dllexport) void stirr(int speed, char * newRpm);
 __declspec(dllexport) void rpm(int speed, char * newRpm);
 __declspec(dllexport) void temp(float temp, char * newTemp);
 __declspec(dllexport) void pump(float speed_, char * newPump);
-__declspec(dllexport) void ismatec(int port, float speed);
+__declspec(dllexport) void ismatec(int port, double speed);
 //__declspec(dllexport) void heidolph(int port, int speed, char * output);
 __declspec(dllexport) void heidolph(int port, int speed);
 __declspec(dllexport) double mettler(int port, int msg);

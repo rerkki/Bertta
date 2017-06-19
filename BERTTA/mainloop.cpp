@@ -508,13 +508,13 @@ __declspec(dllexport) double hei_query(int port, int q) {
 
 }
 
-__declspec(dllexport) void ismatec(int port, float speed) {
+__declspec(dllexport) void ismatec(int port, double speed) {
 
-	char rpm_[9] = { 0 };
+	char rpm_[12] = { 0 };
 	pump(speed, rpm_);
-//	cout << rpm_ << endl;
+	cout << rpm_ << endl;
 	read(port, 2, rpm_);
-	Sleep(10);
+	Sleep(100);
 	read(port, 2, "1H\r\n");
 	Sleep(60);
 
@@ -535,11 +535,12 @@ __declspec(dllexport) double pt100(double temp) {
 	return temp;
 }
 
-/*
 
+/*
 int main() {
 
-	hei_query(20, "m\r\n");
+	for(int i=0; i<50; i++) ismatec(1,double(i));
+//	cout << mettler(1, 1) << endl;
 
 	getch();
 
