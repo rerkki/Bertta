@@ -508,6 +508,47 @@ __declspec(dllexport) double hei_query(int port, int q) {
 
 }
 
+__declspec(dllexport) double lauda_tex(int port) {
+
+	char * msg;
+	msg = "IN_PV_03\r\n";
+
+
+	char q_[50] = { 0 };
+
+	string val;
+
+	strcpy(q_, read(port, 3, msg).c_str());
+
+	//cout << q_ << endl;
+
+	Sleep(60);
+
+	int msglen = strlen(q_);
+//	cout << msglen << endl;
+	int start_msg = 9;
+	if (isdigit(q_[start_msg]) == 0) start_msg = 10;
+
+	//	cout << msglen << endl;
+
+	int v = 0;
+
+	for (int i = start_msg; i<msglen; i++) {
+		if (isdigit(q_[i])) {
+			//			cout << q_[i] << endl;
+			val += q_[i]; v += 1;
+		}
+		if (q_[i] == '.') {
+			//			cout << q_[i];
+			val += q_[i]; v += 1;
+		}
+	}
+	cout << val << endl;
+	val[v] = '\0';
+	return atof(val.c_str());
+
+}
+
 __declspec(dllexport) void ismatec(int port, double speed) {
 
 	char rpm_[12] = { 0 };
@@ -569,14 +610,12 @@ int main() {
 ///// LOOP that communicates with serial devices and writes communication to database
 
 /*
+
 int main() {
 
-//	read(20, 4, "R0000\r\n");
-//	read(1, 3, "OUT_SP_00_025.3\r\n");
+//	read(9, 3, "IN_PV_03\r\n");
+	lauda_tex(9);
 
-	char new_rpm[7];
-	stirr(1000, new_rpm);
-	cout << new_rpm << endl;
 
 	getch();
 }

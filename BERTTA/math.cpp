@@ -232,24 +232,34 @@ __declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * par
 
 }
 */
-__declspec(dllexport) void elapsed_sec(long int last_time, long int * params) {
+__declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
 	time_t seconds;
 
 	long int seconds_;
 
-	double retval = 0;
-
 	seconds = time(NULL);
 
 	seconds_ = long int(seconds);
 
-	long int elapsed_ = seconds_ - last_time;
+	if (enable == 0) {
+		params[0] = seconds_;
+		params[1] = 0;
+		params[2] = elapsed_last;
 
-	params[0] = elapsed_;
-	params[1] = seconds_;
+	}
 
+	if (enable == 1) {
+		params[0] = seconds_;
+		params[1] = seconds_ - last_time;
+		params[2] = elapsed_last + params[1];
+	}
 
+	if (reset > 0) {
+		params[0] = 0;
+		params[1] = 0;
+		params[2] = 0;
+	}
 }
 
 __declspec(dllexport) long int t_epoch(int enable, long int start_time) {
@@ -316,11 +326,11 @@ __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, l
 
 __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold, int seq_previous, int * params){
 
-	double treshold_ = 0.2*abs(Tset - Tcurrent) + 0.8*treshold/10000;
+	double treshold_ = 0.5*abs(Tset - Tcurrent) + 0.5*treshold/10000;
 
 	params[0] = int(treshold_ * 10000);
 	params[1] = 0;
-	if (treshold_ < 0.6) {
+	if (treshold_ < 1) {
 		params[1] = 1; 
 	}
 
@@ -399,6 +409,7 @@ __declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int ela
 	return setpoint;
 }
 
+/*
 __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double Tcurrent, double Tbyp, double Tfail, long int ramp_time, long int elapsed, double sp_old) {
 
 	int direction = 0;
@@ -406,9 +417,35 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err,
 	if (Tinit > Tset) direction = 1;
 	if (Tinit < Tset) direction = 0;
 
-	double Tdiff = 8;
+	double setpoint = Tinit;
+
+	if (enable == 1 && pause == 1) {
+		if (direction == 0) {
+			if (Tcurrent < 0.93 * Tset) {
+				setpoint = 85;
+				sp_old = Tcurrent;
+			}
+			else { setpoint = Tset; }
+		}
+		if (direction == 1) {
+			setpoint = Tset;
+			sp_old = Tcurrent;
+		}
+	}
+
+	if (pause == 0) setpoint = sp_old;
+
+	if (bypass == 1) setpoint = Tbyp;
+
+	if (err == 1) setpoint = Tfail;
+
+
+
+	
+	
+	double Tdiff = 10;
 	if (direction == 0) {
-		if (abs(sp_old - Tset) < 10) Tdiff = 10;
+		if (abs(sp_old - Tset) < 10) Tdiff = 5;
 		if (abs(sp_old - Tset) < 3) Tdiff = 1;
 	}
 
@@ -418,18 +455,20 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err,
 
 
 
-	double DT = (Tset - Tinit) / ramp_time;
+	double DT = (Tset - Tinit) / (ramp_time * 60);
 	double setpoint = Tinit;
 
 	if (pause == 0) DT = 0;
 
 	if (enable == 1) {
 		setpoint = sp_old + DT*elapsed / 1000;
-		if (direction == 0) {
+
+		if (direction == 0 && Tcurrent < 0.93 * Tset) setpoint = 85;
+		if (direction == 0 && Tcurrent >= 0.93 * Tset) {
 			if (Tcurrent > Tset) setpoint = Tset;
 			if (setpoint > Tset) setpoint = Tset;
-			if (setpoint < sp_old) setpoint = sp_old;
-			if (setpoint - Tcurrent > Tdiff) setpoint = sp_old;
+			if (setpoint < sp_old && setpoint < Tset) setpoint = sp_old;
+			if (setpoint - Tcurrent > Tdiff && setpoint < Tset) setpoint = sp_old;
 		}
 		if (direction == 1) {
 			if (Tcurrent < Tset) setpoint = Tset;
@@ -437,14 +476,87 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err,
 			if (setpoint > sp_old) setpoint = sp_old;
 			if (Tcurrent - setpoint > Tdiff) setpoint = sp_old;
 		}
+
 		
 	}
+	
+	return setpoint;
+}
+*/
+
+
+__declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double Tcurrent, double Tlast, double Tbyp, double Tfail, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params) {
+
+	int direction = 0;
+	int reset = int(reset_last);
+	int count = int(count_last);
+	if (enable == 0) count = 0;
+
+	//y = 0,7849x + 8,1867
+
+	double Tset_ = (Tset - 8.1867)/0.7849;
+
+
+	if (Tinit > Tset) direction = 1;
+	if (Tinit < Tset) direction = 0;
+
+	double setpoint = Tinit;
+
+	double Tmax = Tset_ * 2;
+
+	if (Tmax > 85) Tmax = 85;
+
+	if (enable == 1) {
+		if (direction == 0) {
+			setpoint = Tmax;
+			if (Tcurrent > 0.8 * Tset_) setpoint = Tmax * 0.8;
+			if (Tcurrent > 0.9 * Tset_) setpoint = Tset_;
+			
+		}
+		if (direction == 1) {
+			setpoint = Tset_;
+		}
+	}
+
+	if (pause == 0)	setpoint = Tlast;
+
+	/*
+	if (abs(Tset - Tcurrent) < 1) {
+		step += 1;
+		reset = 1;
+	}
+	*/
+	if (step == 0 && count == 0) count = 10;
+
+	if (abs(Tset - Tcurrent) < 1 && count > 5) count = 0;
+
+	if (count < 5) reset = 1;
+
+	if (count == 5) step += 1;
+	
+	if(enable==1) count += 1;
+
 
 	if (bypass == 1) setpoint = Tbyp;
 
 	if (err == 1) setpoint = Tfail;
-	
-	return setpoint;
+
+	params[0] = setpoint;
+	params[1] = step;
+	params[2] = Tcurrent;
+	if (pause == 0) params[2] = Tlast;
+	params[3] = double(reset);
+	params[4] = double(count);
+}
+
+__declspec(dllexport) int ramp_test(int last_count) {
+
+	int count = last_count + 1;
+
+	if (count > 10) count = 0;
+
+	return count;
+
 }
 
 __declspec(dllexport) long int time_left(long int rt, long int start_time) {

@@ -110,7 +110,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	Sleep(200);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
-	//cout << msg_ << endl;
+	//cout << buffer << endl;
 
 
 	/*
