@@ -242,6 +242,8 @@ __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time
 
 	seconds_ = long int(seconds);
 
+	if (last_time == 0) last_time = seconds_;
+
 	if (enable == 0) {
 		params[0] = seconds_;
 		params[1] = 0;
@@ -490,52 +492,51 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 	int direction = 0;
 	int reset = int(reset_last);
 	int count = int(count_last);
-	if (enable == 0) count = 0;
+	if (pause == 0) count = 0;
+	if (reset_last == 1) reset = 0;
 
 	//y = 0,7849x + 8,1867
 
 	double Tset_ = (Tset - 8.1867)/0.7849;
 
+	double Tmax = Tcurrent + 50;
+
+	double setpoint = 0;
 
 	if (Tinit > Tset) direction = 1;
 	if (Tinit < Tset) direction = 0;
+	if (pause == 0)	setpoint = Tlast;
 
-	double setpoint = Tinit;
-
-	double Tmax = Tset_ * 2;
-
-	if (Tmax > 85) Tmax = 85;
-
-	if (enable == 1) {
+	if (pause == 1) {
 		if (direction == 0) {
 			setpoint = Tmax;
-			if (Tcurrent > 0.8 * Tset_) setpoint = Tmax * 0.8;
-			if (Tcurrent > 0.9 * Tset_) setpoint = Tset_;
-			
+			if (Tcurrent > 0.75 * Tset_) setpoint = Tmax * 0.75;
+			if (Tcurrent > 0.85 * Tset_) setpoint = Tset_;
+			if (setpoint > 90) setpoint = 90;
 		}
 		if (direction == 1) {
 			setpoint = Tset_;
+			if (setpoint < 20) setpoint = 20;
 		}
 	}
 
-	if (pause == 0)	setpoint = Tlast;
 
-	/*
-	if (abs(Tset - Tcurrent) < 1) {
-		step += 1;
+	if (step > 3) setpoint = Tfail;
+
+	if (abs(Tset - Tcurrent) < 1 && elapsed/60 > ramp_time) {
+//		count = 1000;
 		reset = 1;
+		step += 1;
 	}
-	*/
-	if (step == 0 && count == 0) count = 10;
 
-	if (abs(Tset - Tcurrent) < 1 && count > 5) count = 0;
+//	if (count == 1000) {
+//		reset = 1;
+//		step += 1;
+//	}
 
-	if (count < 5) reset = 1;
-
-	if (count == 5) step += 1;
+//	if (count < 1000) reset = 0;
 	
-	if(enable==1) count += 1;
-
+	count += 1;
 
 	if (bypass == 1) setpoint = Tbyp;
 
@@ -544,9 +545,9 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 	params[0] = setpoint;
 	params[1] = step;
 	params[2] = Tcurrent;
-	if (pause == 0) params[2] = Tlast;
+	if (pause == 0 && elapsed > 10) params[2] = Tlast;
 	params[3] = double(reset);
-	params[4] = double(count);
+	params[4] = double(count); //count -parametrin voi poistaa
 }
 
 __declspec(dllexport) int ramp_test(int last_count) {
