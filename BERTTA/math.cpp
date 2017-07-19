@@ -338,33 +338,45 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
-__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int * params){
-
-	long int amount = 0;
-
+__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int step, long int * params){
 
 	if (enable == 0) {
-		params[0] = long int(bal * 100);
+		params[0] = bal_previous;
+		if(params[0]==0) params[0] = long int(bal * 100);
+		params[1] = 0;
+		params[2] = bal_previous - long int(bal * 100);
+		params[4] = 0;
+	}
+
+	if (step == 3) {
+		enable = 0;
+		params[0] = 0;
 		params[1] = 0;
 		params[2] = 0;
-//		params[3] = 1;
-		
+		params[3] = 3;
+		params[4] = 0;
+	}
+
+
+	if (long int(target * 100) - (bal_previous - long int(bal * 100)) < 1 && step < 3) {
+		enable = 0;
+		step += 1;
+		params[0] = long int(bal * 100);
+		params[1] = 1;
+		params[2] = 0;
+		params[4] = 0;
+
 	}
 
 	if (enable == 1) {
 		params[0] = bal_previous;
-		amount = bal_previous -long int(bal * 100);
-		params[2] = amount;
-		if (long int(target * 100) - amount < 1) {
-			params[1] = 1;
-//			params[3] = 0;
-		}
-
-		
-
+		params[1] = 0;
+		params[2] = bal_previous - long int(bal * 100);
+		params[4] = 1;
 	}
 
-	
+	params[3] = step;
+
 }
 
 

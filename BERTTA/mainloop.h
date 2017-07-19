@@ -34,5 +34,5 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, long int elapsed_previous, long int elapsed_total, long int * params);
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params);
 __declspec(dllexport) long int millisec();
-__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int * params);
+__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int step, long int * params);
 }
