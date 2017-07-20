@@ -232,6 +232,37 @@ __declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * par
 
 }
 */
+
+__declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params) {
+
+	time_t seconds;
+
+	long int seconds_;
+
+	seconds = time(NULL);
+
+	seconds_ = long int(seconds);
+
+	if (start == 0) {
+		params[0] = seconds_;
+		params[1] = 0;
+		params[2] = 0;
+	}
+
+	if (start == 1 || start_ == 1) {
+		params[0] = start_time;
+		params[1] = 1;
+		params[2] = 1;
+		if (seconds_ - start_time > delay) {
+			params[0] = seconds_;
+			params[1] = 0;
+			params[2] = 0;
+		}
+	}
+
+}
+
+
 __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
 	time_t seconds;
