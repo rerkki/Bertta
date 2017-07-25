@@ -16,8 +16,8 @@ mainloop.cpp(483): warning C4996: 'strcpy': This function or variable may be uns
 mainloop.cpp(527): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 mainloop.cpp(521): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(555): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(569): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(556): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(571): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
@@ -27,15 +27,17 @@ math.cpp(71): warning C4996: 'sprintf': This function or variable may be unsafe.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
 math.cpp(144): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
+math.cpp(273): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(282): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-serialcomm.cpp(44): warning C4101: 'mode': unreferenced local variable
+serialcomm.cpp(46): warning C4101: 'mode': unreferenced local variable
 serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
 serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   sqlite3_test.cpp
   Generating Code...
-c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(312): warning C4715: 't_epoch': not all control paths return a value
+c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(366): warning C4715: 't_epoch': not all control paths return a value
   sqlite3.c
 sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um\sysinfoapi.h(436): note: see declaration of 'GetVersionExA'

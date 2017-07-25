@@ -35,5 +35,6 @@ __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, l
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params);
 __declspec(dllexport) long int millisec();
 __declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params);
-__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int step, long int * params);
+__declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int step, long int * params);
+__declspec(dllexport) void pump_control(int enable, double amount, double target, long int time_limit, long int start_time, long int * params);
 }

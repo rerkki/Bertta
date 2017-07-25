@@ -262,6 +262,60 @@ __declspec(dllexport) void time_delay(int start, long int delay, long int start_
 
 }
 
+__declspec(dllexport) void pump_control(int enable, double amount, double target, long int time_limit, long int start_time, long int * params) {
+
+	time_t seconds;
+
+	long int seconds_;
+
+	long int target_control = 0;
+
+	if (time_limit == 0) time_limit = 0.0001;
+	if (target == 0) target = 0.0001;
+
+	seconds = time(NULL);
+
+	seconds_ = long int(seconds);
+
+	long int time_elapsed = seconds_ - start_time;
+
+	long int weightcontrol = 100 * (amount / target); //paljonko täytyy vielä pumpata
+
+	long int timecontrol = 100 * (time_elapsed) / (time_limit * 60); // paljonko on aikaa kulunut
+
+	if (weightcontrol < 100 && timecontrol > 100) target_control = 1;
+
+	if (weightcontrol >= 100) {
+		enable = 0;
+		amount = 0;
+		target = 0;
+		time_limit = 0;
+		start_time = 0;
+		params[0] = seconds_;
+		params[1] = 0;
+		params[2] = 0;
+		params[3] = 0;
+		params[4] = target_control;
+	}
+
+	if (enable == 0) {
+		params[0] = seconds_;
+		params[1] = 0;
+		params[2] = 0;
+		params[3] = 0;
+		params[4] = 0;
+	}
+
+	if (enable == 1) {
+		params[0] = start_time;
+		params[1] = time_elapsed;
+		params[2] = timecontrol;
+		params[3] = weightcontrol;
+		params[4] = target_control;
+	}
+
+}
+
 
 __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
@@ -369,7 +423,20 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
-__declspec(dllexport) void pump_amount(int enable, double target, double bal, long int bal_previous, long int step, long int * params){
+__declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int step, long int * params){
+
+	if (reset == 1) {
+		enable = 0;
+		step = 0;
+		bal = 0;
+		bal_previous = 0;
+		target = 0;
+		params[0] = 0;
+		params[1] = 0;
+		params[2] = 0;
+		params[3] = 0;
+		params[4] = 0;
+	}
 
 	if (enable == 0) {
 		params[0] = bal_previous;

@@ -429,7 +429,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	if (msg == 1) msg_ = "S\r\n";
 	
 	strcpy(mettler_str, read(port,1,msg_).c_str());
-	Sleep(60);
+	Sleep(10);
 	msglen = strlen(mettler_str);
 
 	int v = 0;
@@ -551,13 +551,15 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 __declspec(dllexport) void ismatec(int port, double speed) {
 
-	char rpm_[12] = { 0 };
-	pump(speed, rpm_);
-	cout << rpm_ << endl;
-	read(port, 2, rpm_);
-	Sleep(100);
-	read(port, 2, "1H\r\n");
-	Sleep(60);
+	if (port > 0) {
+		char rpm_[12] = { 0 };
+		pump(speed, rpm_);
+		cout << rpm_ << endl;
+		read(port, 2, rpm_);
+		Sleep(100);
+		read(port, 2, "1H\r\n");
+		Sleep(60);
+	}
 
 }
 
