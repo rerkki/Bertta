@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <iomanip>
-//#include <algorithm>
+#include <math.h>
 #include "sqlite3.h"
 #include "serialcomm.h"
 #include "mainloop.h"
@@ -270,8 +270,9 @@ __declspec(dllexport) void pump_control(int enable, double amount, double target
 
 	long int target_control = 0;
 
-	if (time_limit == 0) time_limit = 0.0001;
-	if (target == 0) target = 0.0001;
+	if (time_limit == 0 || isnan(double(time_limit))) time_limit = 1;
+	if (target == 0 || isnan(double(target))) target = 1;
+	if (amount == 0 || isnan(double(amount))) target = 0;
 
 	seconds = time(NULL);
 
@@ -283,21 +284,6 @@ __declspec(dllexport) void pump_control(int enable, double amount, double target
 
 	long int timecontrol = 100 * (time_elapsed) / (time_limit * 60); // paljonko on aikaa kulunut
 
-	if (weightcontrol < 100 && timecontrol > 100) target_control = 1;
-
-	if (weightcontrol >= 100) {
-		enable = 0;
-		amount = 0;
-		target = 0;
-		time_limit = 0;
-		start_time = 0;
-		params[0] = seconds_;
-		params[1] = 0;
-		params[2] = 0;
-		params[3] = 0;
-		params[4] = target_control;
-	}
-
 	if (enable == 0) {
 		params[0] = seconds_;
 		params[1] = 0;
@@ -305,6 +291,8 @@ __declspec(dllexport) void pump_control(int enable, double amount, double target
 		params[3] = 0;
 		params[4] = 0;
 	}
+
+	if (100 * (double(weightcontrol) / double(timecontrol)) < 70) target_control = 1;
 
 	if (enable == 1) {
 		params[0] = start_time;
@@ -423,7 +411,7 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
-__declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int step, long int * params){
+__declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int bal_start, long int step, long int * params){
 
 	if (reset == 1) {
 		enable = 0;
@@ -436,6 +424,7 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 		params[2] = 0;
 		params[3] = 0;
 		params[4] = 0;
+		params[5] = 0;
 	}
 
 	if (enable == 0) {
@@ -444,15 +433,17 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 		params[1] = 0;
 		params[2] = bal_previous - long int(bal * 100);
 		params[4] = 0;
+		params[5] = bal_previous;
 	}
-
+	//korjaa...
 	if (step == 3) {
 		enable = 0;
-		params[0] = 0;
+		params[0] = long int(bal * 100);
 		params[1] = 0;
 		params[2] = 0;
 		params[3] = 3;
 		params[4] = 0;
+		params[5] = bal_start;
 	}
 
 
@@ -463,7 +454,7 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 		params[1] = 1;
 		params[2] = 0;
 		params[4] = 0;
-
+		params[5] = bal_start;
 	}
 
 	if (enable == 1) {
@@ -471,6 +462,15 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 		params[1] = 0;
 		params[2] = bal_previous - long int(bal * 100);
 		params[4] = 1;
+		params[5] = bal_start;
+	}
+
+	if (enable == 1 && step==0) {
+		params[0] = bal_previous;
+		params[1] = 0;
+		params[2] = bal_previous - long int(bal * 100);
+		params[4] = 1;
+		params[5] = bal_start;
 	}
 
 	params[3] = step;

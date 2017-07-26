@@ -27,8 +27,7 @@ math.cpp(71): warning C4996: 'sprintf': This function or variable may be unsafe.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
 math.cpp(144): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-math.cpp(273): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(282): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+math.cpp(283): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
@@ -37,7 +36,7 @@ serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
 serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   sqlite3_test.cpp
   Generating Code...
-c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(366): warning C4715: 't_epoch': not all control paths return a value
+c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(354): warning C4715: 't_epoch': not all control paths return a value
   sqlite3.c
 sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um\sysinfoapi.h(436): note: see declaration of 'GetVersionExA'
