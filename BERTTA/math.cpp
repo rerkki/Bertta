@@ -615,7 +615,10 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 
 	if (Tinit > Tset) direction = 1;
 	if (Tinit < Tset) direction = 0;
-	if (pause == 0)	setpoint = Tlast;
+	if (pause == 0) {
+		setpoint = Tlast;
+		if(Tlast > 40) setpoint = ((Tlast - 8.1867) / 0.7849);
+	}
 
 	if (pause == 1) {
 		if (direction == 0) {
