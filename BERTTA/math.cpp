@@ -653,7 +653,10 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 
 	if (bypass == 1) setpoint = Tbyp;
 
-	if (err == 1) setpoint = Tfail;
+	if (err == 1) {
+		setpoint = Tfail;
+		if (Tfail > 40) setpoint = ((Tfail - 8.1867) / 0.7849);
+	}
 
 	params[0] = setpoint;
 	params[1] = step;

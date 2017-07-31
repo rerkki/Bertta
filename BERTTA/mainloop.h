@@ -37,4 +37,5 @@ __declspec(dllexport) long int millisec();
 __declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params);
 __declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int bal_start, long int step, long int * params);
 __declspec(dllexport) void pump_control(int enable, double amount, double target, long int time_limit, long int start_time, long int * params);
+__declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, int port_heidolph);
 }

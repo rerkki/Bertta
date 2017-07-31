@@ -579,6 +579,20 @@ __declspec(dllexport) double pt100(double temp) {
 }
 
 
+__declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, int port_heidolph) {
+
+	if (sh == 1) {
+		lauda(port_lauda, 20);
+		Sleep(100);
+		ismatec(port_ismatec, 0);
+		Sleep(100);
+		heidolph(port_heidolph, 0);
+	}
+
+
+
+}
+
 /*
 int main() {
 
