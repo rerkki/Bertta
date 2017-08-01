@@ -305,6 +305,25 @@ __declspec(dllexport) void pump_control(int enable, double amount, double target
 }
 
 
+__declspec(dllexport) void start_time(int enable, long int start_time, long int * params) {
+
+	time_t seconds;
+
+	long int seconds_;
+
+	seconds = time(0);
+
+	seconds_ = long int(seconds);
+
+	if (start_time == 0) start_time = seconds_;
+
+	if (enable == 0) params[0] = seconds_;
+
+	if (enable == 1) params[0] = start_time;
+}
+
+
+
 __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
 	time_t seconds;
@@ -436,7 +455,7 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 		params[5] = bal_previous;
 	}
 	//korjaa...
-	if (step == 3) {
+	if (step == 10) {
 		enable = 0;
 		params[0] = long int(bal * 100);
 		params[1] = 0;
@@ -607,7 +626,8 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 
 	//y = 0,7849x + 8,1867
 
-	double Tset_ = (Tset - 8.1867)/0.7849;
+	double Tset_ = Tset;
+	if(Tset > 40) Tset_ = (Tset - 8.1867) / 0.7849;
 
 	double Tmax = Tcurrent + 50;
 
@@ -634,12 +654,12 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 	}
 
 
-	if (step > 3) setpoint = Tfail;
+//	if (step > 5) setpoint = Tfail;
 
 	if (abs(Tset - Tcurrent) < 1 && elapsed/60 > ramp_time) {
 //		count = 1000;
 		reset = 1;
-		step += 1;
+		if(step < 5) step += 1;
 	}
 
 //	if (count == 1000) {

@@ -36,7 +36,7 @@ serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
 serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   sqlite3_test.cpp
   Generating Code...
-c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(354): warning C4715: 't_epoch': not all control paths return a value
+c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(373): warning C4715: 't_epoch': not all control paths return a value
   sqlite3.c
 sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um\sysinfoapi.h(436): note: see declaration of 'GetVersionExA'
