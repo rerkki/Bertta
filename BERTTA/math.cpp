@@ -26,8 +26,8 @@ __declspec(dllexport) void rpm(int speed, char * newRpm) {
 }
 
 __declspec(dllexport) void stirr(int speed, char * newRpm) {
-
-	if (speed < 200) speed = 200;
+//
+//	if (speed < 200) speed = 200;
 
 	char buffer[4] = { 0 };
 
@@ -57,9 +57,9 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 	newRpm[5] = '\r';
 	newRpm[6] = '\n';
 
-	//if (speed == 0) newRpm = "R0000\r\n";
+	if (speed < 60) newRpm = "R0000\r\n";
 
-	//cout << newRpm << endl;
+//	cout << newRpm << endl;
 }
 
 
@@ -466,7 +466,7 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 	}
 
 
-	if (long int(target * 100) - (bal_previous - long int(bal * 100)) < 1 && step < 3) {
+	if (long int(target * 100) - (bal_previous - long int(bal * 100)) < 1 && step < 10) {
 		enable = 0;
 		step += 1;
 		params[0] = long int(bal * 100);
@@ -661,13 +661,6 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 		reset = 1;
 		if(step < 5) step += 1;
 	}
-
-//	if (count == 1000) {
-//		reset = 1;
-//		step += 1;
-//	}
-
-//	if (count < 1000) reset = 0;
 	
 	count += 1;
 

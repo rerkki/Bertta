@@ -625,16 +625,17 @@ int main() {
 
 ///// LOOP that communicates with serial devices and writes communication to database
 
-/*
 
+/*
 int main() {
 
-//	read(9, 3, "IN_PV_03\r\n");
-	lauda_tex(9);
+//	read(13, 4, "R0061\r\n");
 
-
+	heidolph(13, 80);
+	cout << "xxx" << endl;
 	getch();
 }
+
 
 
 
