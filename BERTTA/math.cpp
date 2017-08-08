@@ -616,7 +616,7 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err,
 */
 
 
-__declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double Tcurrent, double Tlast, double Tbyp, double Tfail, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params) {
+__declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double T_low, double T_up, double Tcurrent, double Tlast, double Tbyp, double Tfail, double Treshold, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params) {
 
 	int direction = 0;
 	int reset = int(reset_last);
@@ -656,7 +656,7 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 
 //	if (step > 5) setpoint = Tfail;
 
-	if (abs(Tset - Tcurrent) < 1 && elapsed/60 > ramp_time) {
+	if (abs(Tset - Tcurrent) < Treshold && elapsed/60 > ramp_time) {
 //		count = 1000;
 		reset = 1;
 		if(step < 5) step += 1;
@@ -670,6 +670,9 @@ __declspec(dllexport) void t_ramp2(int enable, int pause, int bypass, int err, d
 		setpoint = Tfail;
 		if (Tfail > 40) setpoint = ((Tfail - 8.1867) / 0.7849);
 	}
+
+	if (setpoint > T_up) setpoint = T_up;
+	if (setpoint < T_low) setpoint = T_low;
 
 	params[0] = setpoint;
 	params[1] = step;

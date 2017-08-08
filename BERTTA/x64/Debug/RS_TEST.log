@@ -10,14 +10,14 @@ mainloop.cpp(379): warning C4996: 'strcpy': This function or variable may be uns
 mainloop.cpp(433): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 mainloop.cpp(431): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(489): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-mainloop.cpp(483): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+mainloop.cpp(490): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+mainloop.cpp(484): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(527): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-mainloop.cpp(521): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+mainloop.cpp(528): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+mainloop.cpp(522): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(556): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(571): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(557): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(572): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
