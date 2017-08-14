@@ -628,7 +628,7 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 	//y = 0,7849x + 8,1867
 
 	double Tset_ = Tset;
-	if(Tset > 40) Tset_ = (Tset - 8.1867) / 0.7849;
+	if(Tset > 40) Tset_ = (Tset - 7.3876) / 0.8007; //(Tset - 8.1867) / 0.7849;
 
 	double Tmax = Tcurrent + 50;
 
@@ -638,15 +638,15 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 	if (Tinit < Tset) direction = 0;
 	if (pause == 0) {
 		setpoint = Tlast;
-		if(Tlast > 40) setpoint = ((Tlast - 8.1867) / 0.7849);
+		if(Tlast > 40) setpoint = ((Tlast - 7.3876) / 0.8007);
 	}
 
 	if (pause == 1) {
 		if (direction == 0) {
 			setpoint = Tmax;
-			if (Tcurrent > 0.75 * Tset_) setpoint = Tmax * 0.75;
-			if (Tcurrent > 0.85 * Tset_) setpoint = Tset_;
-			if (setpoint > 90) setpoint = 90;
+			if (Tcurrent > 0.80 * Tset_) setpoint = Tmax * 0.75; //0.75
+			if (Tcurrent > 0.88 * Tset_) setpoint = Tset_; //0.85
+			if (setpoint > 199) setpoint = 199;
 		}
 		if (direction == 1) {
 			setpoint = Tset_;
@@ -669,7 +669,7 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 
 	if (err == 1) {
 		setpoint = Tfail;
-		if (Tfail > 40) setpoint = ((Tfail - 8.1867) / 0.7849);
+		if (Tfail > 40) setpoint = ((Tfail - 7.3876) / 0.80076);
 	}
 
 	if (setpoint > T_up) setpoint = T_up;
