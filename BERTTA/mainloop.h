@@ -4,7 +4,7 @@ extern "C" {
 	
 	__declspec(dllexport) int ramp_test(int last_count);
 	__declspec(dllexport) double lauda_tex(int port);
-	__declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, int err, double Tinit, double Tset, double T_low, double T_up, double Tcurrent, double Tlast, double Tbyp, double Tfail, double Treshold, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params);
+	__declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, int err, double Tinit, double Tset, double Xe, double T_low, double T_up, double Tcurrent, double Tlast, double Tbyp, double Tfail, double Treshold, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params);
 	__declspec(dllexport) double hei_query(int port, int q);
 	__declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params);
 __declspec(dllexport) long int time_left(long int rt, long int start_time);

@@ -521,14 +521,14 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 	strcpy(q_, read(port, 3, msg).c_str());
 
-	//cout << q_ << endl;
+//	cout << q_ << endl;
 
-	Sleep(60);
+	//Sleep(60);
 
 	int msglen = strlen(q_);
 //	cout << msglen << endl;
-	int start_msg = 9;
-	if (isdigit(q_[start_msg]) == 0) start_msg = 10;
+	int start_msg = 8;
+//	if (isdigit(q_[start_msg]) == 0) start_msg = 10;
 
 	//	cout << msglen << endl;
 
@@ -544,7 +544,7 @@ __declspec(dllexport) double lauda_tex(int port) {
 			val += q_[i]; v += 1;
 		}
 	}
-	cout << val << endl;
+//	cout << val << endl;
 	val[v] = '\0';
 	return atof(val.c_str());
 
@@ -594,17 +594,16 @@ __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, i
 
 }
 
-/*
+
 int main() {
 
-	for(int i=0; i<50; i++) ismatec(1,double(i));
-//	cout << mettler(1, 1) << endl;
+	cout<<lauda_tex(9)<<endl;
 
 	getch();
 
 }
 
-*/
+
 
 //int main() {
 
