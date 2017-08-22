@@ -447,6 +447,7 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 	}
 
 	if (enable == 0) {
+		params[3] = step; //uusi korjaus 2208
 		params[0] = bal_previous;
 		if(params[0]==0) params[0] = long int(bal * 100);
 		params[1] = 0;
@@ -460,7 +461,7 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 		params[0] = long int(bal * 100);
 		params[1] = 0;
 		params[2] = 0;
-		params[3] = 3;
+		params[3] = 10; //3 ?????
 		params[4] = 0;
 		params[5] = bal_start;
 	}
@@ -655,7 +656,7 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 	if (pause == 1) {
 		if (direction == 0) {
 			setpoint = Tmax;
-			if(Tcurrent > 0.9 * Tset) setpoint = (2 * Tset - Tcurrent) *Xe + Tdiff;  //
+			if(Tcurrent > 0.85 * Tset) setpoint = (2 * Tset - Tcurrent) *Xe + Tdiff;  //
 	//		setpoint = Tmax;
 	//		if (Tcurrent > 0.75 * Tset_) setpoint = Tmax * 0.75; //0.75 //
 	//		if (Tcurrent > 0.85 * Tset_) setpoint = Tset_; //0.85    //
@@ -666,7 +667,7 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 		if (direction == 1) {
 			setpoint = Tmin;
 	//		setpoint = Tset_;
-			if (Tcurrent < 1.1*Tset) setpoint = Tset + Tdiff; // (2 * Tset - Tcurrent) *Xe + Tdiff;
+			if (Tcurrent < 1.1*Tset) setpoint = (2 * Tset - Tcurrent) *Xe + Tdiff;
 			if (setpoint < Tmin) setpoint = Tmin;
 			if (setpoint < 20) setpoint = 20;
 		}
@@ -681,9 +682,9 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 		if(step < 5) step += 1;
 	}
 	
-	count += 1;
+//	count += 1;
 
-	if (bypass == 1) setpoint = Tbyp;
+	if (bypass == 1) setpoint = Tbyp; // 2 * (Tbyp - Tcurrent)*Xe;
 
 	if (err == 1) {
 		setpoint = Tfail;

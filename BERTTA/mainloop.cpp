@@ -594,16 +594,17 @@ __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, i
 
 }
 
-
+/*
 int main() {
 
 	cout<<lauda_tex(9)<<endl;
+	ismatec(15, 20);
 
 	getch();
 
 }
 
-
+*/
 
 //int main() {
 
