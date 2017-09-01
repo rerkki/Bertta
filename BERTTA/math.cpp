@@ -430,6 +430,47 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
+__declspec(dllexport) void pump_amount2(int master, int pause, int reset, double scale, double * target, double * time_, double * params) {
+
+	double step = 0;
+	double fr = 0;
+	
+	double target_step0 = target[0];
+	double target_step1 = target[0] + target[1];
+	double target_step2 = target[0] + target[1] + target[2];
+	double target_step3 = target[0] + target[1] + target[2] + target[3];
+	double target_step4 = target[0] + target[1] + target[2] + target[3] + target[4];
+	double target_step5 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5];
+	double target_step6 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6];
+	double target_step7 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7];
+	double target_step8 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8];
+	double target_step9 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8] + target[9];
+
+	double amount = -1 * scale;
+
+	if (amount <= target_step9 && time_[9] > 0) { step = 9; fr = target[9] / time_[9]; }
+	if (amount <= target_step8 && time_[8] > 0) { step = 8; fr = target[8] / time_[8]; }
+	if (amount <= target_step7 && time_[7] > 0) { step = 7; fr = target[7] / time_[7]; }
+	if (amount <= target_step6 && time_[6] > 0) { step = 6; fr = target[6] / time_[6]; }
+	if (amount <= target_step5 && time_[5] > 0) { step = 5; fr = target[5] / time_[5]; }
+	if (amount <= target_step4 && time_[4] > 0) { step = 4; fr = target[4] / time_[4]; }
+	if (amount <= target_step3 && time_[3] > 0) { step = 3; fr = target[3] / time_[3]; }
+	if (amount <= target_step2 && time_[2] > 0) { step = 2; fr = target[2] / time_[2]; }
+	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; }
+	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; }
+
+	if (master == 0) fr = 0;
+	if (pause == 0) fr = 0;
+	if (reset == 0) step = 0;
+
+	params[0] = fr;
+	params[1] = step;
+
+
+
+
+}
+
 __declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int bal_start, long int step, long int * params){
 
 	if (reset == 1) {
@@ -616,6 +657,336 @@ __declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err,
 }
 */
 
+__declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, long int elapsed, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
+
+	double Tinit_0 = SeqParams[0];
+	double Tinit_1 = SeqParams[1];
+	double Tinit_2 = SeqParams[2];
+	double Tinit_3 = SeqParams[3];
+	double Tinit_4 = SeqParams[4];
+
+	double Tset_0 = SeqParams[5];
+	double Tset_1 = SeqParams[6];
+	double Tset_2 = SeqParams[7];
+	double Tset_3 = SeqParams[8];
+	double Tset_4 = SeqParams[9];
+
+	double Fail_0 = SeqParams[10];
+	double Fail_1 = SeqParams[11];
+	double Fail_2 = SeqParams[12];
+	double Fail_3 = SeqParams[13];
+	double Fail_4 = SeqParams[14];
+
+	double Tmanual = SeqParams[15];
+	double Treshold = SeqParams[16];
+	double Xe = SeqParams[17];
+
+	double reset = 0;
+
+	double Tset_ = 0;
+	double Tinit_ = 0;
+	double T_abs_max = 199;
+	double T_abs_min = 20;
+
+	long int Time_0 = TimeParams[0] * 60;
+	long int Time_1 = TimeParams[1] * 60;
+	long int Time_2 = TimeParams[2] * 60;
+	long int Time_3 = TimeParams[3] * 60;
+	long int Time_4 = TimeParams[4] * 60;
+	long int Time_ = 0;
+
+	double step = step_previous; // virhettä...
+
+	if (step == 0) {
+		Tset_ = Tset_0;
+		Tinit_ = Tinit_0;
+	}
+
+	if (step == 1) {
+		Tset_ = Tset_0;
+		Tinit_ = Tinit_0;
+		if (elapsed - Time_0 > 0) {
+			Tset_ = Tset_1;
+			Tinit_ = Tinit_1;
+		}
+	}
+
+	if (step == 2) {
+		Tset_ = Tset_1;
+		Tinit_ = Tinit_1;
+		if (elapsed - Time_1 > 0) {
+			Tset_ = Tset_2;
+			Tinit_ = Tinit_2;
+		}
+	}
+
+	if (step == 3) {
+		Tset_ = Tset_2;
+		Tinit_ = Tinit_2;
+		if (elapsed - Time_2 > 0) {
+			Tset_ = Tset_3;
+			Tinit_ = Tinit_3;
+		}
+	}
+
+	if (step == 4) {
+		Tset_ = Tset_3;
+		Tinit_ = Tinit_3;
+		if (elapsed - Time_3 > 0) {
+			Tset_ = Tset_4;
+			Tinit_ = Tinit_4;
+		}
+	}
+
+	if (step == 4) {
+		Tset_ = Tset_4;
+		Tinit_ = Tinit_4;
+		if (elapsed - Time_4 > 0) {
+			Tset_ = 20;
+			Tinit_ = Tset_4;
+		}
+	}
+
+
+	if (abs(Tset_0 - Tr) < Treshold && step == 0) {
+		step = 1;
+		reset = 1;
+	}
+
+	if (abs(Tset_1 - Tr) < Treshold && step == 1) {
+		step = 2;
+		reset = 1;
+	}
+
+	if (abs(Tset_2 - Tr) < Treshold && step == 2) {
+		step = 3;
+	}
+
+	if (abs(Tset_3 - Tr) < Treshold && step == 3) {
+		step = 4;
+	}
+
+	if (abs(Tset_4 - Tr) < Treshold && step == 4) {
+		step = 5;
+	}
+
+
+	double Tdiff = 0;
+	double slope = 0;
+	double intercept = 0;
+	if (Tset_ < 199) { slope = 0.445087; intercept = -26.6324; }
+	if (Tset_ < 85) { slope = 0.36; intercept = -19.4; }
+	if (Tset_ < 70) { slope = 0.2055; intercept = -8.585; }
+	if (Tset_ < 50) { slope = 0.0845; intercept = -2.535; }
+	if (Tset_ < 30) { slope = 0; intercept = 0; }
+	Tdiff = slope*Tset_ + intercept;
+
+	int direction;
+	if (Tinit_ > Tset_) direction = 1; //cools down
+	if (Tinit_ < Tset_) direction = 0; //heats up
+
+	double setpoint;
+
+	if (direction == 0) {
+		setpoint = Tr + 50;
+		if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (setpoint > 199) setpoint = 199;
+	}
+
+	if (direction == 1) {
+		setpoint = Tr - 50;
+		if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (setpoint < 20) setpoint = 20;
+	}
+
+	if (pause == 0 && Tr_or_Tj == 0) setpoint = Tr_last + Tdiff;
+	if (pause == 0 && Tr_or_Tj == 1) setpoint = Tr_last;
+
+	if (master == 0) setpoint = 20;
+
+	params[0] = Tr;
+	params[1] = setpoint;
+	params[2] = reset;
+	params[3] = Tinit_;
+	params[4] = Tset_;
+	params[5] = abs(Tset_ - Tr);
+	params[6] = Time_;
+	params[7] = step;
+
+}
+
+
+
+__declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
+	
+	time_t seconds;
+
+	seconds = time(NULL);
+
+	long int start_time_ = long int(start_time);
+
+	if (master == 0 || pause == 0) {
+		start_time_ = seconds;
+	}
+
+	long int elapsed = long int(seconds) - long int(start_time);
+
+	double Tinit_0 = SeqParams[0];
+	double Tinit_1 = SeqParams[1];
+	double Tinit_2 = SeqParams[2];
+	double Tinit_3 = SeqParams[3];
+	double Tinit_4 = SeqParams[4];
+
+	double Tset_0 = SeqParams[5];
+	double Tset_1 = SeqParams[6];
+	double Tset_2 = SeqParams[7];
+	double Tset_3 = SeqParams[8];
+	double Tset_4 = SeqParams[9];
+
+	double Fail_0 = SeqParams[10];
+	double Fail_1 = SeqParams[11];
+	double Fail_2 = SeqParams[12];
+	double Fail_3 = SeqParams[13];
+	double Fail_4 = SeqParams[14];
+
+	double Tmanual = SeqParams[15];
+	double Treshold = SeqParams[16];
+	double Xe = SeqParams[17];
+
+	double Tset_ = 0;
+	double Tinit_ = 0;
+	double T_abs_max = 199;
+	double T_abs_min = 20;
+
+	long int Time_0 = TimeParams[0] * 60;
+	long int Time_1 = TimeParams[1] * 60;
+	long int Time_2 = TimeParams[2] * 60;
+	long int Time_3 = TimeParams[3] * 60;
+	long int Time_4 = TimeParams[4] * 60;
+	long int Time_ = 0;
+
+	double step = step_previous;
+
+	if (step == 0) {
+		Tset_ = Tset_0;
+		Tinit_ = Tinit_0;
+	}
+
+	if (step == 1) {
+		Tset_ = Tset_0;
+		Tinit_ = Tinit_0;
+		if (elapsed - Time_0 > 0) {
+			Tset_ = Tset_1;
+			Tinit_ = Tinit_1;
+		}
+	}
+
+	if (step == 2) {
+		Tset_ = Tset_1;
+		Tinit_ = Tinit_1;
+		if (elapsed - Time_1 > 0) {
+			Tset_ = Tset_2;
+			Tinit_ = Tinit_2;
+		}
+	}
+
+	if (step == 3) {
+		Tset_ = Tset_2;
+		Tinit_ = Tinit_2;
+		if (elapsed - Time_2 > 0) {
+			Tset_ = Tset_3;
+			Tinit_ = Tinit_3;
+		}
+	}
+
+	if (step == 4) {
+		Tset_ = Tset_3;
+		Tinit_ = Tinit_3;
+		if (elapsed - Time_3 > 0) {
+			Tset_ = Tset_4;
+			Tinit_ = Tinit_4;
+		}
+	}
+
+	if (step == 5) {
+		Tset_ = Tset_4;
+		Tinit_ = Tinit_4;
+		if (elapsed - Time_4 > 0) {
+			Tset_ = 20;
+			Tinit_ = Tset_4;
+		}
+	}
+
+
+	if (abs(Tset_0 - Tr) < Treshold && step == 0) {
+		step = 1;
+		start_time_ = seconds; // reset = 1;
+	}
+
+	if (abs(Tset_1 - Tr) < Treshold && step == 1) {
+		step = 2;
+		start_time_ = seconds; //reset = 1;
+	}
+
+	if (abs(Tset_2 - Tr) < Treshold && step == 2) {
+		step = 3;
+		start_time_ = seconds; //
+	}
+
+	if (abs(Tset_3 - Tr) < Treshold && step == 3) {
+		step = 4;
+		start_time_ = seconds; //
+	}
+
+	if (abs(Tset_4 - Tr) < Treshold && step == 4) {
+		step = 5;
+		start_time_ = seconds; //
+	}
+
+
+	double Tdiff = 0;
+	double slope = 0;
+	double intercept = 0;
+	if (Tset_ < 199) { slope = 0.445087; intercept = -26.6324; }
+	if (Tset_ < 85) { slope = 0.36; intercept = -19.4; }
+	if (Tset_ < 70) { slope = 0.2055; intercept = -8.585; }
+	if (Tset_ < 50) { slope = 0.0845; intercept = -2.535; }
+	if (Tset_ < 30) { slope = 0; intercept = 0; }
+	Tdiff = slope*Tset_ + intercept;
+
+	int direction;
+	if (Tinit_ > Tset_) direction = 1; //cools down
+	if (Tinit_ < Tset_) direction = 0; //heats up
+
+	double setpoint;
+
+	if (direction == 0) {
+		setpoint = Tr + 50;
+		if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (setpoint > 199) setpoint = 199;
+	}
+
+	if (direction == 1) {
+		setpoint = Tr - 50;
+		if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (setpoint < 20) setpoint = 20;
+	}
+
+	if (pause == 0 && Tr_or_Tj == 0) setpoint = Tr_last + Tdiff;
+	if (pause == 0 && Tr_or_Tj == 1) setpoint = Tr_last;
+
+	if (master == 0) setpoint = 20;
+
+	params[0] = Tr;
+	params[1] = setpoint;
+	params[2] = double(elapsed);
+	params[3] = Tinit_;
+	params[4] = Tset_;
+	params[5] = abs(Tset_ - Tr);
+	params[6] = double(start_time_);// Time_;
+	params[7] = step;
+
+}
 
 __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, int err, double Tinit, double Tset, double Xe, double T_low, double T_up, double Tcurrent, double Tlast, double Tbyp, double Tfail, double Treshold, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params) {
 

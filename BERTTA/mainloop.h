@@ -36,6 +36,9 @@ __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * p
 __declspec(dllexport) long int millisec();
 __declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params);
 __declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int bal_start, long int step, long int * params);
+__declspec(dllexport) void pump_amount2(int master, int pause, int reset, double scale, double * target, double * time_, double * params);
+__declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, long int elapsed, double time_err, double * SeqParams, long int * TimeParams, double * params);
+__declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params);
 __declspec(dllexport) void pump_control(int enable, double amount, double target, long int time_limit, long int start_time, long int * params);
 __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, int port_heidolph);
 __declspec(dllexport) void start_time(int enable, long int start_time, long int * params);
