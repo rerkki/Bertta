@@ -430,7 +430,7 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
-__declspec(dllexport) void pump_amount2(int master, int pause, int reset, double scale, double * target, double * time_, double * params) {
+__declspec(dllexport) void pump_amount2(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double * target, double * time_, double * params) {
 
 	double step = 0;
 	double fr = 0;
@@ -461,10 +461,28 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, double
 
 	if (master == 0) fr = 0;
 	if (pause == 0) fr = 0;
-	if (reset == 0) step = 0;
+	if (reset == 1) {
+		step = 0; amount = 0;
+	}
+
+	if (amount >= target_step9) {
+		step = 10; fr = 0;
+	}
+
+	if (manual == 1) {
+		step = 10;
+		fr = fr_manual;
+	}
+
+	if (count == 3) {
+		fr = 0;
+		count = 0;
+	}
 
 	params[0] = fr;
 	params[1] = step;
+	params[2] = amount;
+	params[3] = count + 1;
 
 
 
@@ -546,10 +564,39 @@ __declspec(dllexport) double hold(int enable, double in1, double in2) {
 
 	if (enable == 1) {
 
-		if (in1 == 0) retval = in2;
+		if (in1 >= 0) retval = in2;
 	}
 
 	return retval;
+}
+
+__declspec(dllexport) double hold3(int enable, double in1, double in2) {
+
+	double retval = in1;
+
+	if (enable == 1) {
+
+		if (in1 >= 0) retval = in2;
+	}
+
+	return retval;
+}
+
+__declspec(dllexport) void hold2(int enable, double in1, double in2, double count, double * params) { // double in2) {
+
+	double retval = in1;
+	params[1] = 0;
+
+	if (enable == 1) {
+		if (in1 >= 0.5) retval = in2;
+		count += 1;
+	}
+
+	if (count >= 3) params[1] = 1;
+
+	//return retval;
+
+	params[0] = retval;
 }
 
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params) {
@@ -817,7 +864,7 @@ __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_o
 
 
 
-__declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
+__declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 	
 	time_t seconds;
 
@@ -853,8 +900,13 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_o
 	double Treshold = SeqParams[16];
 	double Xe = SeqParams[17];
 
+	double T_max = SeqParams[18];
+	double T_min = SeqParams[19];
+	double Fail_manual = SeqParams[20];
+
 	double Tset_ = 0;
 	double Tinit_ = 0;
+	double Fail_ = 20;
 	double T_abs_max = 199;
 	double T_abs_min = 20;
 
@@ -870,77 +922,88 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_o
 	if (step == 0) {
 		Tset_ = Tset_0;
 		Tinit_ = Tinit_0;
+		Fail_ = Fail_0;
 	}
 
 	if (step == 1) {
 		Tset_ = Tset_0;
 		Tinit_ = Tinit_0;
+		Fail_ = Fail_0;
 		if (elapsed - Time_0 > 0) {
 			Tset_ = Tset_1;
 			Tinit_ = Tinit_1;
+			Fail_ = Fail_1;
 		}
 	}
 
 	if (step == 2) {
 		Tset_ = Tset_1;
 		Tinit_ = Tinit_1;
+		Fail_ = Fail_1;
 		if (elapsed - Time_1 > 0) {
 			Tset_ = Tset_2;
 			Tinit_ = Tinit_2;
+			Fail_ = Fail_2;
 		}
 	}
 
 	if (step == 3) {
 		Tset_ = Tset_2;
 		Tinit_ = Tinit_2;
+		Fail_ = Fail_2;
 		if (elapsed - Time_2 > 0) {
 			Tset_ = Tset_3;
 			Tinit_ = Tinit_3;
+			Fail_ = Fail_3;
 		}
 	}
 
 	if (step == 4) {
 		Tset_ = Tset_3;
 		Tinit_ = Tinit_3;
+		Fail_ = Fail_3;
 		if (elapsed - Time_3 > 0) {
 			Tset_ = Tset_4;
 			Tinit_ = Tinit_4;
+			Fail_ = Fail_4;
 		}
 	}
 
 	if (step == 5) {
 		Tset_ = Tset_4;
 		Tinit_ = Tinit_4;
+		Fail_ = Fail_4;
 		if (elapsed - Time_4 > 0) {
 			Tset_ = 20;
 			Tinit_ = Tset_4;
+			Fail_ = 20;
 		}
 	}
 
 
 	if (abs(Tset_0 - Tr) < Treshold && step == 0) {
 		step = 1;
-		start_time_ = seconds; // reset = 1;
+		start_time_ = seconds;
 	}
 
 	if (abs(Tset_1 - Tr) < Treshold && step == 1) {
 		step = 2;
-		start_time_ = seconds; //reset = 1;
+		start_time_ = seconds;
 	}
 
 	if (abs(Tset_2 - Tr) < Treshold && step == 2) {
 		step = 3;
-		start_time_ = seconds; //
+		start_time_ = seconds;
 	}
 
 	if (abs(Tset_3 - Tr) < Treshold && step == 3) {
 		step = 4;
-		start_time_ = seconds; //
+		start_time_ = seconds;
 	}
 
 	if (abs(Tset_4 - Tr) < Treshold && step == 4) {
 		step = 5;
-		start_time_ = seconds; //
+		start_time_ = seconds;
 	}
 
 
@@ -975,7 +1038,25 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_o
 	if (pause == 0 && Tr_or_Tj == 0) setpoint = Tr_last + Tdiff;
 	if (pause == 0 && Tr_or_Tj == 1) setpoint = Tr_last;
 
+	if (manual == 1) {
+		if (Tr_or_Tj == 0) setpoint = Tmanual + Tdiff;
+		if (Tr_or_Tj == 1) setpoint = Tmanual;
+		Fail_ = Fail_manual;
+	}
+
 	if (master == 0) setpoint = 20;
+
+	if (setpoint > T_max) setpoint = T_max;
+	if (setpoint < T_min) setpoint = T_min;
+	if (setpoint > T_abs_max) setpoint = T_abs_max;
+	if (setpoint < T_abs_min) setpoint = T_abs_min;
+
+
+
+	if (reset == 1) {
+		start_time_ = seconds;
+		step = 0;
+	}
 
 	params[0] = Tr;
 	params[1] = setpoint;
@@ -985,6 +1066,37 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int shutdown, int Tr_o
 	params[5] = abs(Tset_ - Tr);
 	params[6] = double(start_time_);// Time_;
 	params[7] = step;
+
+}
+
+__declspec(dllexport) void flow_pump(double flow, int pump_type, int port, double * pump_ctrl) {
+
+	double analog_signal = 0.004;
+	double pam_signal = 0;
+	double reglo_signal = 0;
+	double rcoeff = 11.865;
+
+	if (pump_type == 0) {
+		if (port > 0) {
+			ismatec(port, rcoeff*flow);
+			reglo_signal = rcoeff*flow;
+		}
+
+	}
+
+	if (pump_type == 1) {
+		analog_signal = 0.0007*flow + 0.0042;
+		if (analog_signal > 0.02) analog_signal = 0.02;
+		if (analog_signal < 0.004) analog_signal = 0.004;
+	}
+
+	if (pump_type == 2) {
+		pam_signal = 1;
+	}
+
+	pump_ctrl[0] = analog_signal;
+	pump_ctrl[1] = pam_signal;
+	pump_ctrl[2] = reglo_signal;
 
 }
 
