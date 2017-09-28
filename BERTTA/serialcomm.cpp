@@ -109,6 +109,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	WriteFile(file, "\r\n", 2, &written, NULL);
 	Sleep(50);
 	WriteFile(file, msg_, buff_size, &written, NULL);
+	if(device==1) Sleep(100);
 	Sleep(100);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
