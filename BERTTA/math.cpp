@@ -474,10 +474,10 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int co
 		fr = fr_manual;
 	}
 
-	if (count == 3) {
-		fr = 0;
-		count = 0;
-	}
+//	if (count == 3) {
+//		fr = 0;
+//		count = 0;
+//	}
 
 	params[0] = fr;
 	params[1] = step;
@@ -1074,7 +1074,7 @@ __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, doubl
 	double analog_signal = 0.004;
 	double pam_signal = 0;
 	double reglo_signal = 0;
-	double rcoeff = 11.865;
+	double rcoeff = 8.009;
 
 	if (pump_type == 0) {
 		if (port > 0) {
@@ -1085,7 +1085,7 @@ __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, doubl
 	}
 
 	if (pump_type == 1) {
-		analog_signal = 0.0007*flow + 0.0042;
+		analog_signal = 0.0008*flow + 0.0042;
 		if (analog_signal > 0.02) analog_signal = 0.02;
 		if (analog_signal < 0.004) analog_signal = 0.004;
 	}

@@ -1,4 +1,5 @@
-﻿  mainloop.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\x64\debug\bertta.dll' because it is being used by another process.
+  mainloop.cpp
 mainloop.cpp(285): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\conio.h(452): note: see declaration of 'getch'
 mainloop.cpp(298): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
