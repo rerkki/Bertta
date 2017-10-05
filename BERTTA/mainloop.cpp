@@ -550,6 +550,47 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 }
 
+__declspec(dllexport) double lauda_tin(int port) {
+
+	char * msg;
+	msg = "IN_PV_00\r\n";
+
+
+	char q_[50] = { 0 };
+
+	string val;
+
+	strcpy(q_, read(port, 3, msg).c_str());
+
+	//	cout << q_ << endl;
+
+	//Sleep(60);
+
+	int msglen = strlen(q_);
+	//	cout << msglen << endl;
+	int start_msg = 8;
+	//	if (isdigit(q_[start_msg]) == 0) start_msg = 10;
+
+	//	cout << msglen << endl;
+
+	int v = 0;
+
+	for (int i = start_msg; i<msglen; i++) {
+		if (isdigit(q_[i])) {
+			//			cout << q_[i] << endl;
+			val += q_[i]; v += 1;
+		}
+		if (q_[i] == '.') {
+			//			cout << q_[i];
+			val += q_[i]; v += 1;
+		}
+	}
+	//	cout << val << endl;
+	val[v] = '\0';
+	return atof(val.c_str());
+
+}
+
 __declspec(dllexport) void ismatec(int port, double speed) {
 
 	if (port > 0) {

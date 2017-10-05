@@ -1,5 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\x64\debug\bertta.dll' because it is being used by another process.
-  mainloop.cpp
+﻿  mainloop.cpp
 mainloop.cpp(285): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\conio.h(452): note: see declaration of 'getch'
 mainloop.cpp(298): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
@@ -17,8 +16,11 @@ mainloop.cpp(484): warning C4996: 'strcpy': This function or variable may be uns
 mainloop.cpp(528): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 mainloop.cpp(522): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(557): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(572): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(569): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+mainloop.cpp(563): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
+mainloop.cpp(598): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(613): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
@@ -35,7 +37,7 @@ math.cpp(991): warning C4244: '=': conversion from 'time_t' to 'long', possible 
 math.cpp(996): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
 math.cpp(1001): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
 math.cpp(1006): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1057): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1059): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data

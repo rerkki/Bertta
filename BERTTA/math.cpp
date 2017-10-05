@@ -864,7 +864,7 @@ __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_o
 
 
 
-__declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
+__declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust,  double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 	
 	time_t seconds;
 
@@ -1025,13 +1025,15 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual,
 
 	if (direction == 0) {
 		setpoint = Tr + 50;
-		if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+	//	if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) + (Tset_ - Tr) * Xe + Tdiff;
 		if (setpoint > 199) setpoint = 199;
 	}
 
 	if (direction == 1) {
 		setpoint = Tr - 50;
-		if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+	//	if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) + (Tset_ - Tr) * Xe + Tdiff;
 		if (setpoint < 20) setpoint = 20;
 	}
 
@@ -1059,7 +1061,7 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual,
 	}
 
 	params[0] = Tr;
-	params[1] = setpoint;
+	params[1] = setpoint + adjust;
 	params[2] = double(elapsed);
 	params[3] = Tinit_;
 	params[4] = Tset_;
