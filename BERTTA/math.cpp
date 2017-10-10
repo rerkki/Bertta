@@ -908,7 +908,7 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual,
 	double Tinit_ = 0;
 	double Fail_ = 20;
 	double T_abs_max = 199;
-	double T_abs_min = 20;
+	double T_abs_min = -39;
 
 	long int Time_0 = TimeParams[0] * 60;
 	long int Time_1 = TimeParams[1] * 60;
@@ -1010,6 +1010,7 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual,
 	double Tdiff = 0;
 	double slope = 0;
 	double intercept = 0;
+	if (manual == 1) Tset_ = Tmanual;
 	if (Tset_ < 199) { slope = 0.445087; intercept = -26.6324; }
 	if (Tset_ < 85) { slope = 0.36; intercept = -19.4; }
 	if (Tset_ < 70) { slope = 0.2055; intercept = -8.585; }
@@ -1070,6 +1071,228 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual,
 	params[7] = step;
 
 }
+
+__declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
+
+	time_t seconds;
+
+	seconds = time(NULL);
+
+	//	long int start_time_ = long int(start_time);
+
+	if (master == 0 || pause == 0) {
+		start_time = seconds;
+	}
+
+	long int elapsed = long int(seconds) - long int(start_time);
+
+	double Tinit_0 = SeqParams[0];
+	double Tinit_1 = SeqParams[1];
+	double Tinit_2 = SeqParams[2];
+	double Tinit_3 = SeqParams[3];
+	double Tinit_4 = SeqParams[4];
+
+	double Tset_0 = SeqParams[5];
+	double Tset_1 = SeqParams[6];
+	double Tset_2 = SeqParams[7];
+	double Tset_3 = SeqParams[8];
+	double Tset_4 = SeqParams[9];
+
+	double Fail_0 = SeqParams[10];
+	double Fail_1 = SeqParams[11];
+	double Fail_2 = SeqParams[12];
+	double Fail_3 = SeqParams[13];
+	double Fail_4 = SeqParams[14];
+
+	double Tmanual = SeqParams[15];
+	double Treshold = SeqParams[16];
+	double Xe = SeqParams[17];
+
+	double T_max = SeqParams[18];
+	double T_min = SeqParams[19];
+	double Fail_manual = SeqParams[20];
+
+	double Tset_ = 0;
+	double Tinit_ = 0;
+	double Fail_ = 20;
+	double T_abs_max = 199;
+	double T_abs_min = -39;
+
+	long int Time_0 = TimeParams[0] * 60;
+	long int Time_1 = TimeParams[1] * 60;
+	long int Time_2 = TimeParams[2] * 60;
+	long int Time_3 = TimeParams[3] * 60;
+	long int Time_4 = TimeParams[4] * 60;
+	long int Time_ = 0;
+
+	double step = step_previous;
+
+	int s1 = 0;
+	int s2 = 0;
+	int s3 = 0;
+	int s4 = 0;
+	int s5 = 0;
+
+	//pysytään stepin mukaisissa olosuhteissa, kunnes odotusaika on kulunut loppuun
+	if (step == 0) {
+		Tset_ = Tset_0;
+		Tinit_ = Tinit_0;
+		Fail_ = Fail_0;
+	}
+
+	if (step == 1) {
+		Tset_ = Tset_1;
+		Tinit_ = Tinit_1;
+		Fail_ = Fail_1;
+		/*		if (elapsed - Time_0 > 0) {
+		Tset_ = Tset_1;
+		Tinit_ = Tinit_1;
+		Fail_ = Fail_1;
+		} */
+	}
+
+	if (step == 2) {
+		Tset_ = Tset_2;
+		Tinit_ = Tinit_2;
+		Fail_ = Fail_2;
+		/*		if (elapsed - Time_1 > 0) {
+		Tset_ = Tset_2;
+		Tinit_ = Tinit_2;
+		Fail_ = Fail_2;
+		} */
+	}
+
+	if (step == 3) {
+		Tset_ = Tset_3;
+		Tinit_ = Tinit_3;
+		Fail_ = Fail_3;
+		/*		if (elapsed - Time_2 > 0) {
+		Tset_ = Tset_3;
+		Tinit_ = Tinit_3;
+		Fail_ = Fail_3;
+		}*/
+	}
+
+	if (step == 4) {
+		Tset_ = Tset_4;
+		Tinit_ = Tinit_4;
+		Fail_ = Fail_4;
+		/*		if (elapsed - Time_3 > 0) {
+		Tset_ = Tset_4;
+		Tinit_ = Tinit_4;
+		Fail_ = Fail_4;
+		} */
+	}
+
+	//	if (step == 5) {
+	//		Tset_ = Tset_5;
+	//		Tinit_ = Tinit_5;
+	//		Fail_ = Fail_5;
+	/*		if (elapsed - Time_4 > 0) {
+	Tset_ = 20;
+	Tinit_ = Tset_4;
+	Fail_ = 20;
+	}*/
+	//	}
+
+	//Jos tavoitelämpötila saavutetaan, siirrytään seuraavaan steppiin ja nollataan kello (wait)
+
+	if (abs(Tset_4 - Tr) < Treshold && elapsed - Time_4 > 0 && step == 4) {
+		step = 5;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_3 - Tr) < Treshold && elapsed - Time_3 > 0 && step == 3) {
+		step = 4;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_2 - Tr) < Treshold && elapsed - Time_2 > 0 && step == 2) {
+		step = 3;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_1 - Tr) < Treshold && elapsed - Time_1 > 0 && step == 1) {
+		step = 2;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_0 - Tr) < Treshold && elapsed - Time_0 && step == 0) {
+		step = 1;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+
+	double Tdiff = 0;
+	double slope = 0;
+	double intercept = 0;
+	if (manual == 1) Tset_ = Tmanual;
+	if (Tset_ < 199) { slope = 0.445087; intercept = -26.6324; }
+	if (Tset_ < 85) { slope = 0.36; intercept = -19.4; }
+	if (Tset_ < 70) { slope = 0.2055; intercept = -8.585; }
+	if (Tset_ < 50) { slope = 0.0845; intercept = -2.535; }
+	if (Tset_ < 30) { slope = 0; intercept = 0; }
+	Tdiff = slope*Tset_ + intercept;
+
+	int direction;
+	if (Tinit_ > Tset_) direction = 1; //cools down
+	if (Tinit_ <= Tset_) direction = 0; //heats up
+
+	double setpoint;
+
+	if (direction == 0) {
+		setpoint = Tr + 50;
+		//	if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (Tr > 0.88 * Tset_) setpoint = (2 * Tset_ - Tr) + (Tset_ - Tr) * Xe + Tdiff;
+		if (setpoint > 199) setpoint = 199;
+	}
+
+	if (direction == 1) {
+		setpoint = Tr - 50;
+		//	if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) * Xe + Tdiff;
+		if (Tr < 1.1*Tset_) setpoint = (2 * Tset_ - Tr) + (Tset_ - Tr) * Xe + Tdiff;
+		if (setpoint < 20) setpoint = 20;
+	}
+
+	if (pause == 0 && Tr_or_Tj == 0) setpoint = Tr_last + Tdiff;
+	if (pause == 0 && Tr_or_Tj == 1) setpoint = Tr_last;
+
+	if (manual == 1) {
+		if (Tr_or_Tj == 0) setpoint = Tmanual + Tdiff;
+		if (Tr_or_Tj == 1) setpoint = Tmanual;
+		Fail_ = Fail_manual;
+	}
+
+	if (master == 0) setpoint = 20;
+
+	
+	if (setpoint > T_max) setpoint = T_max;
+	if (setpoint < T_min) setpoint = T_min;
+	if (setpoint > T_abs_max) setpoint = T_abs_max;
+	if (setpoint < T_abs_min) setpoint = T_abs_min;
+
+
+	if (reset == 1) {
+		start_time = seconds;
+		step = 0;
+	}
+
+	params[0] = Tr;
+	params[1] = setpoint + adjust;
+	params[2] = double(elapsed);
+	params[3] = Tinit_;
+	params[4] = Tset_;
+	params[5] = abs(Tset_ - Tr);
+	params[6] = double(start_time);// Time_;
+	params[7] = step;
+
+}
+
 
 __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, double * pump_ctrl) {
 
