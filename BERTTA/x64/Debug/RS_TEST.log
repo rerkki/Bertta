@@ -1,6 +1,4 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\x64\debug\bertta.pdb' because it is being used by another process.
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\x64\debug\bertta.tlog\link.read.1.tlog' because it is being used by another process.
-  mainloop.cpp
+﻿  mainloop.cpp
 mainloop.cpp(285): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\conio.h(452): note: see declaration of 'getch'
 mainloop.cpp(298): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
@@ -21,8 +19,12 @@ mainloop.cpp(522): warning C4996: 'strcpy': This function or variable may be uns
 mainloop.cpp(569): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 mainloop.cpp(563): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(598): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(613): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(607): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
+mainloop.cpp(613): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
+mainloop.cpp(626): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(641): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
@@ -30,32 +32,41 @@ math.cpp(35): warning C4996: 'itoa': The POSIX name for this item is deprecated.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
 math.cpp(71): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-math.cpp(144): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+math.cpp(145): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-math.cpp(283): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
-math.cpp(876): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(986): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(991): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(996): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1001): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1006): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1060): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1084): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1202): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1208): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1214): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1220): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1226): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1281): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(305): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+math.cpp(924): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1034): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1039): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1044): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1049): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1054): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1108): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1132): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1250): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1256): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1262): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1268): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1274): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1329): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1471): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1558): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1564): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1570): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1576): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1582): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1633): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1679): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(1817): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-serialcomm.cpp(46): warning C4101: 'mode': unreferenced local variable
+serialcomm.cpp(47): warning C4101: 'mode': unreferenced local variable
 serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
 serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   sqlite3_test.cpp
   Generating Code...
-c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(373): warning C4715: 't_epoch': not all control paths return a value
+c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(421): warning C4715: 't_epoch': not all control paths return a value
   sqlite3.c
 sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um\sysinfoapi.h(436): note: see declaration of 'GetVersionExA'

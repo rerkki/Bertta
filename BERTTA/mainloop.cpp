@@ -591,6 +591,34 @@ __declspec(dllexport) double lauda_tin(int port) {
 
 }
 
+__declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable) {
+
+	char * msg0;
+	msg0 = "OUT_MODE_01_0\r\n";
+
+	char * msg1;
+	msg1 = "OUT_MODE_01_1\r\n";
+
+	char q_[50] = { 0 };
+
+	if (enable == 1) {
+		if (mode == 0) {
+
+			strcpy(q_, read(port, 2, msg0).c_str());
+			cout << q_ << endl;
+		}
+
+		if (mode == 1) {
+
+			strcpy(q_, read(port, 2, msg1).c_str());
+			cout << q_ << endl;
+		}
+	}
+
+	Sleep(60);
+
+}
+
 __declspec(dllexport) void ismatec(int port, double speed) {
 
 	if (port > 0) {
@@ -638,14 +666,13 @@ __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, i
 /*
 int main() {
 
-	cout<<lauda_tex(9)<<endl;
-	ismatec(15, 20);
+	lauda_switch_mode(9, 1, 1);
 
 	getch();
 
 }
-
 */
+
 
 //int main() {
 

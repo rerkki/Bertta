@@ -137,11 +137,33 @@ __declspec(dllexport) void temp(float temp_, char * newTemp) {
 
 	char buffer[5]={0};
 
-	int msglen = 4;
+	int msglen = 3;
 
-	if(temp_>=100) msglen = 5;
+	if (temp_ >= 100) msglen = 5;
+	if (temp_ >= 10) msglen = 4;
 
 	sprintf(buffer, "%.1f", temp_);
+
+	if (msglen == 3) {
+
+		newTemp[0] = 'O';
+		newTemp[1] = 'U';
+		newTemp[2] = 'T';
+		newTemp[3] = '_';
+		newTemp[4] = 'S';
+		newTemp[5] = 'P';
+		newTemp[6] = '_';
+		newTemp[7] = '0';
+		newTemp[8] = '0';
+		newTemp[9] = '_';
+		newTemp[10] = '0';
+		newTemp[11] = '0';
+		newTemp[12] = buffer[0];
+		newTemp[13] = buffer[1];
+		newTemp[14] = buffer[2];
+		newTemp[15] = '\r';
+		newTemp[16] = '\n';
+	}
 	
 	if(msglen==4) {
 
@@ -323,6 +345,33 @@ __declspec(dllexport) void start_time(int enable, long int start_time, long int 
 }
 
 
+__declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, long int elapsed_last, double target, double amount, double amount_last, double fr_actual_last, long int * params) {
+
+	elapsed_sec(enable, reset, last_time, elapsed_last, params);
+
+	long int elapsed = params[2];
+
+	if (elapsed == 0) elapsed = 1;
+
+	double fr_actual;
+
+	fr_actual = (amount - amount_last) * 60 / (elapsed - elapsed_last);
+
+	if (fr_actual < 0) fr_actual = fr_actual_last;
+
+	params[3] = long int(fr_actual*1000);
+
+	params[4] = long int(target *1000/ fr_actual);
+
+	if(amount > 0) params[5] = long int(amount * 1000);
+
+	if (amount <= 0) params[5] = long int(amount_last * 1000);
+
+	params[6] = long int(fr_actual * 1000);
+
+}
+
+
 
 __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
@@ -430,6 +479,65 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
+__declspec(dllexport) void pump_amount3(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double * target, double * time_, double * params) {
+
+	double step = 0;
+	double fr = 0;
+
+	double target_step0 = target[0];
+	double target_step1 = target[0] + target[1];
+	double target_step2 = target[0] + target[1] + target[2];
+	double target_step3 = target[0] + target[1] + target[2] + target[3];
+	double target_step4 = target[0] + target[1] + target[2] + target[3] + target[4];
+	double target_step5 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5];
+	double target_step6 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6];
+	double target_step7 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7];
+	double target_step8 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8];
+	double target_step9 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8] + target[9];
+
+	double amount = -1 * scale;
+
+	if (amount <= target_step9 && time_[9] > 0) { step = 9; fr = target[9] / time_[9]; }
+	if (amount <= target_step8 && time_[8] > 0) { step = 8; fr = target[8] / time_[8]; }
+	if (amount <= target_step7 && time_[7] > 0) { step = 7; fr = target[7] / time_[7]; }
+	if (amount <= target_step6 && time_[6] > 0) { step = 6; fr = target[6] / time_[6]; }
+	if (amount <= target_step5 && time_[5] > 0) { step = 5; fr = target[5] / time_[5]; }
+	if (amount <= target_step4 && time_[4] > 0) { step = 4; fr = target[4] / time_[4]; }
+	if (amount <= target_step3 && time_[3] > 0) { step = 3; fr = target[3] / time_[3]; }
+	if (amount <= target_step2 && time_[2] > 0) { step = 2; fr = target[2] / time_[2]; }
+	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; }
+	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; }
+
+	if (master == 0) fr = 0;
+	if (pause == 0) fr = 0;
+	if (reset == 1) {
+		step = 0; amount = 0;
+	}
+
+	if (amount >= target_step9) {
+		step = 10; fr = 0;
+	}
+
+	if (manual == 1) {
+		step = 10;
+		fr = fr_manual;
+	}
+
+	if (fr > 6 && count == 3) {
+		fr = 0;
+		count = 0;
+	}
+
+	params[0] = fr;
+	params[1] = step;
+	params[2] = amount;
+	params[3] = count + 1;
+
+
+
+
+}
+
 __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double * target, double * time_, double * params) {
 
 	double step = 0;
@@ -474,10 +582,10 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int co
 		fr = fr_manual;
 	}
 
-//	if (count == 3) {
-//		fr = 0;
-//		count = 0;
-//	}
+	if (fr > 6 && count == 3) {
+		fr = 0;
+		count = 0;
+	}
 
 	params[0] = fr;
 	params[1] = step;
@@ -1412,6 +1520,192 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 	params[4] = double(count); //count -parametrin voi poistaa
 }
 
+
+__declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
+
+	time_t seconds;
+
+	seconds = time(NULL);
+
+	if (master == 0 || pause == 0) {
+		start_time = seconds;
+	}
+
+	long int elapsed = long int(seconds) - long int(start_time);
+
+	double Tinit_0 = SeqParams[0];
+	double Tinit_1 = SeqParams[1];
+	double Tinit_2 = SeqParams[2];
+	double Tinit_3 = SeqParams[3];
+	double Tinit_4 = SeqParams[4];
+
+	double Tset_0 = SeqParams[5];
+	double Tset_1 = SeqParams[6];
+	double Tset_2 = SeqParams[7];
+	double Tset_3 = SeqParams[8];
+	double Tset_4 = SeqParams[9];
+
+	double Fail_0 = SeqParams[10];
+	double Fail_1 = SeqParams[11];
+	double Fail_2 = SeqParams[12];
+	double Fail_3 = SeqParams[13];
+	double Fail_4 = SeqParams[14];
+
+	double Tmanual = SeqParams[15];
+	double Treshold = SeqParams[16];
+	double Xe = SeqParams[17];
+
+	double T_max = SeqParams[18];
+	double T_min = SeqParams[19];
+	double Fail_manual = SeqParams[20];
+
+	double Tset_ = 0;
+	double Tinit_ = 0;
+	double Fail_ = 20;
+	double T_abs_max = 199;
+	double T_abs_min = -39;
+
+	long int Time_0 = TimeParams[0] * 60;
+	long int Time_1 = TimeParams[1] * 60;
+	long int Time_2 = TimeParams[2] * 60;
+	long int Time_3 = TimeParams[3] * 60;
+	long int Time_4 = TimeParams[4] * 60;
+	long int Time_ = 0;
+
+	double step = step_previous;
+
+	int s1 = 0;
+	int s2 = 0;
+	int s3 = 0;
+	int s4 = 0;
+	int s5 = 0;
+
+	//pysytään stepin mukaisissa olosuhteissa, kunnes odotusaika on kulunut loppuun
+	if (step == 0) {
+		Tset_ = Tset_0;
+		Tinit_ = Tinit_0;
+		Fail_ = Fail_0;
+	}
+
+	if (step == 1) {
+		Tset_ = Tset_1;
+		Tinit_ = Tinit_1;
+		Fail_ = Fail_1;
+	}
+
+	if (step == 2) {
+		Tset_ = Tset_2;
+		Tinit_ = Tinit_2;
+		Fail_ = Fail_2;
+	}
+
+	if (step == 3) {
+		Tset_ = Tset_3;
+		Tinit_ = Tinit_3;
+		Fail_ = Fail_3;
+	}
+
+	if (step == 4) {
+		Tset_ = Tset_4;
+		Tinit_ = Tinit_4;
+		Fail_ = Fail_4;
+	}
+
+	//Jos tavoitelämpötila saavutetaan, siirrytään seuraavaan steppiin ja nollataan kello (wait)
+
+	if (abs(Tset_4 - Tr) < Treshold && elapsed - Time_4 > 0 && step == 4) {
+		step = 5;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_3 - Tr) < Treshold && elapsed - Time_3 > 0 && step == 3) {
+		step = 4;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_2 - Tr) < Treshold && elapsed - Time_2 > 0 && step == 2) {
+		step = 3;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_1 - Tr) < Treshold && elapsed - Time_1 > 0 && step == 1) {
+		step = 2;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+	if (abs(Tset_0 - Tr) < Treshold && elapsed - Time_0 && step == 0) {
+		step = 1;
+		start_time = seconds;
+		elapsed = 0;
+	}
+
+
+	double Tdiff = 0;
+	double slope = 0;
+	double intercept = 0;
+	if (manual == 1) Tset_ = Tmanual;
+	if (Tset_ < 199) { slope = 0.445087; intercept = -26.6324; }
+	if (Tset_ < 85) { slope = 0.36; intercept = -19.4; }
+	if (Tset_ < 70) { slope = 0.2055; intercept = -8.585; }
+	if (Tset_ < 50) { slope = 0.0845; intercept = -2.535; }
+	if (Tset_ < 30) { slope = 0; intercept = 0; }
+	Tdiff = slope*Tset_ + intercept;
+
+	int direction;
+	if (Tinit_ > Tset_) direction = 1; //cools down
+	if (Tinit_ <= Tset_) direction = 0; //heats up
+
+	double setpoint;
+
+	if (direction == 0) {
+		setpoint = Tr + 50;
+		if (Tr + 50 > Tset_) setpoint = Tset_;
+		if (setpoint > 199) setpoint = 199;
+	}
+
+	if (direction == 1) {
+		setpoint = Tr - 50;
+		if (Tr - 50 < Tset_) setpoint = Tset_;
+		if (setpoint < 20) setpoint = 20;
+	}
+
+	if (pause == 0 && Tr_or_Tj == 0) setpoint = Tr_last;
+	if (pause == 0 && Tr_or_Tj == 1) setpoint = Tr_last;
+
+	if (manual == 1) {
+		if (Tr_or_Tj == 0) setpoint = Tmanual;
+		if (Tr_or_Tj == 1) setpoint = Tmanual;
+		Fail_ = Fail_manual;
+	}
+
+	if (master == 0) setpoint = 20;
+
+	if (setpoint > T_max) setpoint = T_max;
+	if (setpoint < T_min) setpoint = T_min;
+	if (setpoint > T_abs_max) setpoint = T_abs_max;
+	if (setpoint < T_abs_min) setpoint = T_abs_min;
+
+	if (reset == 1) {
+		start_time = seconds;
+		step = 0;
+	}
+
+	params[0] = Tr;
+	params[1] = setpoint + adjust;
+	params[2] = double(elapsed);
+	params[3] = Tinit_;
+	params[4] = Tset_;
+	params[5] = abs(Tset_ - Tr);
+	params[6] = double(start_time);
+	params[7] = step;
+
+}
+
+
 __declspec(dllexport) int ramp_test(int last_count) {
 
 	int count = last_count + 1;
@@ -1434,28 +1728,184 @@ __declspec(dllexport) long int time_left(long int rt, long int start_time) {
 }
 
 
-__declspec(dllexport) double Compute_PID(double timeChange, double errSum, double lastErr, double Input, double Setpoint, double kp, double ki, double kd)
+__declspec(dllexport) void Compute_PID(double errSum, double lastErr, double last_time, double last_timeChange, double Input, double Setpoint, double kp, double ki, double kd, double * params)
 {
+	time_t seconds;
 
-	if (timeChange <= 0) timeChange = 1;
+	seconds = time(NULL);
 
-	/*Compute all the working error variables*/
+	long int timeChange = long int(seconds) - long int(last_time);
+
+	if (timeChange <= 0) timeChange = last_timeChange;
+
 	double error = Setpoint - Input;
-	errSum += (error * timeChange);
-	double dErr = (error - lastErr) / timeChange;
+	double errSum_ = error * double(timeChange*1000)/1000;
+	double dErr = (error - lastErr) / double(timeChange*1000)/1000;
 
-	/*Compute PID Output*/
 	double Output = kp * error + ki * errSum + kd * dErr;
 
-	/*Remember some variables for next time*/
+	if (Output > Input+50) Output = Input+50;
+	if (Output < 0) Output = 0;
+
 	lastErr = error;
 
-	// Output for Lauda
-	double Output_ = Setpoint + Output/10;
+	params[0] = Output;
+	params[1] += errSum_;
+	params[2] = lastErr;
+	params[3] = double(seconds);
+	params[4] = timeChange;
 
-	if (Output_ > 70) Output_ = 70;
-	if (Output_ < 20) Output_ = 20;
+}
 
-	return Output_;
+__declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double * Seq, long int * TimeParams, long int * params) {
+
+	double Sp0 = Seq[0]; double Sp1 = Seq[1]; double Sp2 = Seq[2]; double Sp3 = Seq[3]; double Sp4 = Seq[4];
+
+	double Sp_ = Sp0;
+
+	long int time0 = TimeParams[0]; long int time1 = TimeParams[1]; long int time2 = TimeParams[2]; long int time3 = TimeParams[3]; long int time4 = TimeParams[4];
+
+	double slope1 = 1;
+	double slope2 = 1;
+	double slope3 = 1;
+	double slope4 = 1;
+
+	if (time0>0) slope1 = (Sp1 - Sp0) / (time1 * 60000);
+	if (time1>0) slope2 = (Sp2 - Sp1) / (time2 * 60000);
+	if (time2>0) slope3 = (Sp3 - Sp2) / (time3 * 60000);
+	if (time3>0) slope4 = (Sp4 - Sp3) / (time4 * 60000);
+
+	double intercept1 = Sp0;
+	double intercept2 = Sp1;
+	double intercept3 = Sp2;
+	double intercept4 = Sp3;
+
+
+
+	bool timeLimit0 = false;
+	bool timeLimit1 = false;
+	bool timeLimit2 = false;
+	bool timeLimit3 = false;
+	bool timeLimit4 = false;
+
+	if (elapsed_total > time0 * 60000) timeLimit0 = true;
+	if (elapsed_total > (time0 + time1) * 60000) timeLimit1 = true;
+	if (elapsed_total > (time0 + time1 + time2) * 60000) timeLimit2 = true;
+	if (elapsed_total > (time0 + time1 + time2 + time3) * 60000) timeLimit3 = true;
+	if (elapsed_total > (time0 + time1 + time2 + time3 + time4) * 60000) timeLimit4 = true;
+
+	if (timeLimit0 && step == 0) {
+		if (abs(Tr - Sp0) < 1) {
+			step = 1;
+		}
+		else {
+			pause = 1;
+		}
+	}
+
+	if (timeLimit1 && step == 1) {
+		if (abs(Tr - Sp1) < 1) {
+			step = 2;
+		}
+		else {
+			pause = 1;
+		}
+	}
+
+
+	if (timeLimit2 && step == 2) {
+		if (abs(Tr - Sp2) < 1) {
+			step = 3;
+		}
+		else {
+			pause = 1;
+		}
+	}
+
+
+	if (timeLimit3 && step == 3) {
+		if (abs(Tr - Sp3) < 1) {
+			step = 4;
+		}
+		else {
+			pause = 1;
+		}
+	}
+
+	if (timeLimit4 && step == 4) {
+		if (abs(Tr - Sp4) < 1) {
+			step = 5;
+		}
+	}
+
+	if (step == 0 && grad == 0) Sp_ = Sp0;
+	if (step == 1 && grad == 0) Sp_ = Sp1;
+	if (step == 2 && grad == 0) Sp_ = Sp2;
+	if (step == 3 && grad == 0) Sp_ = Sp3;
+	if (step == 4 && grad == 0) Sp_ = Sp4;
+	if (step == 5 && grad == 0) Sp_ = 20;
+
+	if (step == 0 && grad == 1) Sp_ = Sp0;
+
+	if (step == 1 && grad == 1) {
+		Sp_ = (elapsed_total - time0 * 60000)*slope1 + intercept1;
+		if (slope1 > 0 && Sp_ > Sp1) Sp_ = Sp1;
+		if (slope1 < 0 && Sp_ < Sp1) Sp_ = Sp1;
+	}
+
+	if (step == 2 && grad == 1) {
+		Sp_ = (elapsed_total - (time0 + time1) * 60000)*slope2 + intercept2;
+		if (slope2 > 0 && Sp_ > Sp2) Sp_ = Sp2;
+		if (slope2 < 0 && Sp_ < Sp2) Sp_ = Sp2;
+	}
+
+	if (step == 3 && grad == 1) {
+		Sp_ = (elapsed_total - (time0 + time1 + time2) * 60000)*slope3 + intercept3;
+		if (slope3 > 0 && Sp_ > Sp3) Sp_ = Sp3;
+		if (slope3 < 0 && Sp_ < Sp3) Sp_ = Sp3;
+	}
+
+	if (step == 4 && grad == 1) {
+		Sp_ = (elapsed_total - (time0 + time1 + time2 + time3) * 60000)*slope4 + intercept4;
+		if (slope4 > 0 && Sp_ > Sp4) Sp_ = Sp4;
+		if (slope4 < 0 && Sp_ < Sp4) Sp_ = Sp4;
+	}
+
+	if (manual == 1) Sp_ = T_man;
+
+	params[3] = step;
+	params[4] = Sp_ * 1000;
+
+	timer_1(pause, reset, start_time, last_time, elapsed_total, params);
+
+}
+
+__declspec(dllexport) void timer_1(int pause, int reset, long int start_time, long int last_time, long int elapsed_total, long int * params) {
+
+
+	long int seconds = millisec();
+
+	long int elapsed_sec = long int(seconds) - long int(last_time);
+
+	if (last_time > seconds) elapsed_sec = 60000 - last_time + seconds;
+
+	if (pause == 1) {
+
+		start_time = seconds;
+		elapsed_sec = 0;
+
+	}
+
+	if (reset == 1) {
+		start_time = seconds;
+		elapsed_total = 0;
+		elapsed_sec = 0;
+		last_time = 0;
+	}
+
+	params[0] = seconds;
+	params[1] = start_time;
+	params[2] = elapsed_total + elapsed_sec;
+
 }
 

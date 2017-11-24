@@ -28,7 +28,7 @@ __declspec(dllexport) void getColToMat(int col1, int col2, double * values1, dou
 __declspec(dllexport) void getColToArr(int col, double * values);
 __declspec(dllexport) void TableSave(int exec);
 __declspec(dllexport) double pt100(double temp);
-__declspec(dllexport) double Compute_PID(double errSum, double lastErr, double Input, double Output_, double Setpoint, double kp, double ki, double kd);
+__declspec(dllexport) void Compute_PID(double errSum, double lastErr, double last_time, double last_timeChange, double Input, double Setpoint, double kp, double ki, double kd, double * params);
 __declspec(dllexport) void elapsed( long int last_time, long int * params);
 __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold, int seq_previous, int * params);
 __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, long int elapsed_previous, long int elapsed_total, long int * params);
@@ -40,9 +40,14 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int co
 __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, long int elapsed, double time_err, double * SeqParams, long int * TimeParams, double * params);
 __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params);
 __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params);
+__declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params);
 __declspec(dllexport) void pump_control(int enable, double amount, double target, long int time_limit, long int start_time, long int * params);
 __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, int port_heidolph);
 __declspec(dllexport) void start_time(int enable, long int start_time, long int * params);
 __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, double * pump_ctrl);
 __declspec(dllexport) void hold2(int enable, double in1, double in2, double count, double * params);
+__declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, long int elapsed_last, double target, double amount, double amount_last, double fr_actual_last, long int * params);
+__declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double * Seq, long int * TimeParams, long int * params);
+__declspec(dllexport) void timer_1(int pause, int reset, long int start_time, long int last_time, long int elapsed_total, long int * params);
+__declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable);
 }
