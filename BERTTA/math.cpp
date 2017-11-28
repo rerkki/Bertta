@@ -62,6 +62,76 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 //	cout << newRpm << endl;
 }
 
+__declspec(dllexport) void pump2(int enable, float speed_, char * newPump) {
+
+	if (enable == 0) speed_ = 0;
+
+	char buffer[5] = { 0 };
+	char buff[5] = { 0 };
+
+	sprintf(buffer, "%.0f", speed_ * 100);
+
+	//	cout << buffer << endl;
+
+	if (speed_ < 100) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = buffer[0];
+		newPump[5] = buffer[1];
+		newPump[6] = buffer[2];
+		newPump[7] = buffer[3];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+	if (speed_ < 10) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = '0';
+		newPump[5] = buffer[0];
+		newPump[6] = buffer[1];
+		newPump[7] = buffer[2];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+	if (speed_ < 1) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = '0';
+		newPump[5] = '0';
+		newPump[6] = buffer[0];
+		newPump[7] = buffer[1];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+
+	if (speed_ >= 100) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = buffer[0];
+		newPump[4] = buffer[1];
+		newPump[5] = buffer[2];
+		newPump[6] = buffer[3];
+		newPump[7] = buffer[4];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+	//	cout << newPump << endl;
+}
 
 __declspec(dllexport) void pump(float speed_, char * newPump) {
 
@@ -345,7 +415,7 @@ __declspec(dllexport) void start_time(int enable, long int start_time, long int 
 }
 
 
-__declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, long int elapsed_last, double target, double amount, double amount_last, double fr_actual_last, long int * params) {
+__declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, long int elapsed_last, double target, double amount, double amount_last, long int * params) {
 
 	elapsed_sec(enable, reset, last_time, elapsed_last, params);
 
@@ -355,9 +425,7 @@ __declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, lo
 
 	double fr_actual;
 
-	fr_actual = (amount - amount_last) * 60 / (elapsed - elapsed_last);
-
-	if (fr_actual < 0) fr_actual = fr_actual_last;
+	fr_actual = (amount) * 60 / (elapsed);
 
 	params[3] = long int(fr_actual*1000);
 
@@ -479,6 +547,98 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 
 }
 
+__declspec(dllexport) void pump_amount4(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double step_previous, double amount_step_previous, double * target, double * time_, double * params) {
+
+	double step = 0;
+	double fr = 0;
+	double amount_step = 0;
+	double elapsed_step = 0;
+	double reset_out = 1;
+	double time_step = 0;
+	double target_step = 0;
+
+	double target_step0 = target[0];
+	double target_step1 = target[0] + target[1];
+	double target_step2 = target[0] + target[1] + target[2];
+	double target_step3 = target[0] + target[1] + target[2] + target[3];
+	double target_step4 = target[0] + target[1] + target[2] + target[3] + target[4];
+	double target_step5 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5];
+	double target_step6 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6];
+	double target_step7 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7];
+	double target_step8 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8];
+	double target_step9 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8] + target[9];
+
+	double amount = -1 * scale;
+
+	if (amount <= target_step9 && time_[9] > 0) { step = 9; fr = target[9] / time_[9]; time_step = time_[9]; target_step = target_step9; }
+	if (amount <= target_step8 && time_[8] > 0) { step = 8; fr = target[8] / time_[8]; time_step = time_[8]; target_step = target_step8; }
+	if (amount <= target_step7 && time_[7] > 0) { step = 7; fr = target[7] / time_[7]; time_step = time_[7]; target_step = target_step7; }
+	if (amount <= target_step6 && time_[6] > 0) { step = 6; fr = target[6] / time_[6]; time_step = time_[6]; target_step = target_step6; }
+	if (amount <= target_step5 && time_[5] > 0) { step = 5; fr = target[5] / time_[5]; time_step = time_[5]; target_step = target_step5; }
+	if (amount <= target_step4 && time_[4] > 0) { step = 4; fr = target[4] / time_[4]; time_step = time_[4]; target_step = target_step4; }
+	if (amount <= target_step3 && time_[3] > 0) { step = 3; fr = target[3] / time_[3]; time_step = time_[3]; target_step = target_step3; }
+	if (amount <= target_step2 && time_[2] > 0) { step = 2; fr = target[2] / time_[2]; time_step = time_[2]; target_step = target_step2; }
+	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; time_step = time_[1]; target_step = target_step1; }
+	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; time_step = time_[0]; target_step = target_step0; }
+
+	if (step == 0) {
+		amount_step = amount;
+		amount_step_previous = 0;
+	}
+	if (step > 0) amount_step = amount - amount_step_previous;
+
+	elapsed_step = elapsed;
+
+	if (master == 0) fr = 0;
+	if (pause == 0) fr = 0;
+	if (reset == 1) {
+		step = 0; amount = 0;
+	}
+
+	if (amount >= target_step9) {
+		step = 10; fr = 0;
+	}
+
+	if (manual == 1) {
+		step = 10;
+		fr = fr_manual;
+	}
+
+	/*
+	if (fr > 6 && count == 3) {
+		fr = 0;
+		count = 0;
+	}
+	*/
+
+	double frc = 0.5*fr;
+
+	if (elapsed < time_step*60 && amount_step < target_step) frc = (target_step - amount_step) / ((time_step*60 - elapsed)/60);
+	if (frc > 1.6*fr) frc = 1.6*fr;
+	if (frc < 0.4*fr) frc = 0.4*fr;
+	fr = frc;
+
+	if (step > step_previous) {
+		fr = 0;
+		reset_out = 0;
+		amount_step_previous += amount_step;
+		amount_step = 0;
+		elapsed_step = 0;
+	}
+	
+
+	params[0] = fr;
+	params[1] = step;
+	params[2] = amount;
+	params[3] = count + 1;
+	params[4] = amount_step;
+	params[5] = elapsed_step;
+	params[6] = amount_step / (elapsed_step / 60); // flow rate
+	params[7] = reset_out;
+	params[8] = amount_step_previous; // bookkeeping of previous step amounts
+
+}
+
 __declspec(dllexport) void pump_amount3(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double * target, double * time_, double * params) {
 
 	double step = 0;
@@ -538,10 +698,13 @@ __declspec(dllexport) void pump_amount3(int master, int pause, int reset, int co
 
 }
 
-__declspec(dllexport) void pump_amount2(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double * target, double * time_, double * params) {
+__declspec(dllexport) void pump_amount2(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double * target, double * time_, double * params) {
 
+	//KORJAA previous step ja pumpun pysäytys stepin vaihtuessa siten että steppi ei heti vaihdu!!!!
 	double step = 0;
 	double fr = 0;
+	double amount_step = 0;
+	double elapsed_step = 0;
 	
 	double target_step0 = target[0];
 	double target_step1 = target[0] + target[1];
@@ -567,6 +730,28 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int co
 	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; }
 	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; }
 
+	if (step == 9) amount_step = amount - target_step8 - target_step7 - target_step6 - target_step5 - target_step4 - target_step3 - target_step2 - target_step1 - target_step0;
+	if (step == 8) amount_step = amount - target_step7 - target_step6 - target_step5 - target_step4 - target_step3 - target_step2 - target_step1 - target_step0;
+	if (step == 7) amount_step = amount - target_step6 - target_step5 - target_step4 - target_step3 - target_step2 - target_step1 - target_step0;
+	if (step == 6) amount_step = amount - target_step5 - target_step4 - target_step3 - target_step2 - target_step1 - target_step0;
+	if (step == 5) amount_step = amount - target_step4 - target_step3 - target_step2 - target_step1 - target_step0;
+	if (step == 4) amount_step = amount - target_step3 - target_step2 - target_step1 - target_step0;
+	if (step == 3) amount_step = amount - target_step2 - target_step1 - target_step0;
+	if (step == 2) amount_step = amount - target_step1 - target_step0;
+	if (step == 1) amount_step = amount - target_step0;
+	if (step == 0) amount_step = amount;
+
+	if (step == 9) elapsed_step = elapsed;// -60 * (time_[8] + time_[7] + time_[6] + time_[5] + time_[4] + time_[3] + time_[2] + time_[1] + time_[0]);
+	if (step == 8) elapsed_step = elapsed;// -60 * (time_[7] + time_[6] + time_[5] + time_[4] + time_[3] + time_[2] + time_[1] + time_[0]);
+	if (step == 7) elapsed_step = elapsed;// -60 * (time_[6] + time_[5] + time_[4] + time_[3] + time_[2] + time_[1] + time_[0]);
+	if (step == 6) elapsed_step = elapsed;// -60 * (time_[5] + time_[4] + time_[3] + time_[2] + time_[1] + time_[0]);
+	if (step == 5) elapsed_step = elapsed;// -60 * (time_[4] + time_[3] + time_[2] + time_[1] + time_[0]);
+	if (step == 4) elapsed_step = elapsed;// -60 * (time_[3] + time_[2] + time_[1] + time_[0]);
+	if (step == 3) elapsed_step = elapsed;// -60 * (time_[2] + time_[1] + time_[0]);
+	if (step == 2) elapsed_step = elapsed;// -60 * (time_[1] + time_[0]);
+	if (step == 1) elapsed_step = elapsed;// -60 * (time_[0]);
+	if (step == 0) elapsed_step = elapsed;
+
 	if (master == 0) fr = 0;
 	if (pause == 0) fr = 0;
 	if (reset == 1) {
@@ -591,6 +776,9 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int co
 	params[1] = step;
 	params[2] = amount;
 	params[3] = count + 1;
+	params[4] = amount_step;
+	params[5] = elapsed_step;
+	params[6] = amount_step / (elapsed_step/60); // flow rate
 
 
 
@@ -1398,6 +1586,39 @@ __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual,
 	params[5] = abs(Tset_ - Tr);
 	params[6] = double(start_time);// Time_;
 	params[7] = step;
+
+}
+
+__declspec(dllexport) void flow_pump2(int enable, double flow, int pump_type, int port, double * pump_ctrl) {
+
+	double analog_signal = 0.004;
+	double pam_signal = 0;
+	double reglo_signal = 0;
+	double rcoeff = 8.009;
+
+	flow = flow*double(enable);
+
+	if (pump_type == 0) {
+		if (port > 0) {
+			ismatec(port, rcoeff*flow);
+			reglo_signal = rcoeff*flow;
+		}
+
+	}
+
+	if (pump_type == 1) {
+		analog_signal = 0.0008*flow + 0.0042;
+		if (analog_signal > 0.02) analog_signal = 0.02;
+		if (analog_signal < 0.004) analog_signal = 0.004;
+	}
+
+	if (pump_type == 2) {
+		pam_signal = 1;
+	}
+
+	pump_ctrl[0] = analog_signal;
+	pump_ctrl[1] = pam_signal;
+	pump_ctrl[2] = reglo_signal;
 
 }
 
