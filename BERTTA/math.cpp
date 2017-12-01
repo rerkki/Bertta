@@ -556,6 +556,8 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	double reset_out = 1;
 	double time_step = 0;
 	double target_step = 0;
+	double time_to_target = 0;
+	double frc = 0;
 
 	double target_step0 = target[0];
 	double target_step1 = target[0] + target[1];
@@ -570,6 +572,8 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 
 	double amount = -1 * scale;
 
+	if (step == 11) step = 0;
+
 	if (amount <= target_step9 && time_[9] > 0) { step = 9; fr = target[9] / time_[9]; time_step = time_[9]; target_step = target_step9; }
 	if (amount <= target_step8 && time_[8] > 0) { step = 8; fr = target[8] / time_[8]; time_step = time_[8]; target_step = target_step8; }
 	if (amount <= target_step7 && time_[7] > 0) { step = 7; fr = target[7] / time_[7]; time_step = time_[7]; target_step = target_step7; }
@@ -580,52 +584,65 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	if (amount <= target_step2 && time_[2] > 0) { step = 2; fr = target[2] / time_[2]; time_step = time_[2]; target_step = target_step2; }
 	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; time_step = time_[1]; target_step = target_step1; }
 	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; time_step = time_[0]; target_step = target_step0; }
+		
+	if (manual == 0) {
 
-	if (step == 0) {
-		amount_step = amount;
-		amount_step_previous = 0;
-	}
-	if (step > 0) amount_step = amount - amount_step_previous;
+		if (step > 0) amount_step = amount - amount_step_previous;
 
-	elapsed_step = elapsed;
+		if (step == 0) {
+			amount_step = amount;
+			amount_step_previous = 0;
+		}
 
-	if (master == 0) fr = 0;
-	if (pause == 0) fr = 0;
-	if (reset == 1) {
-		step = 0; amount = 0;
-	}
+		elapsed_step = elapsed;
 
-	if (amount >= target_step9) {
-		step = 10; fr = 0;
+		if (master == 0) fr = 0;
+		if (pause == 0) fr = 0;
+
+		if (reset == 1) {
+			step = 0; amount = 0;
+		}
+
+		if (amount >= target_step9) {
+			step = 10; fr = 0;
+		}
+
+		frc = fr;
+
+		if (elapsed < time_step * 60 && amount_step < target_step) frc = (target_step - amount_step) / ((time_step * 60 - elapsed) / 60);
+		if (frc > 1.8*fr) frc = 1.8*fr;
+		if (frc < 0.2*fr) frc = 0.2*fr;
+		fr = frc;
+
+		if ((target_step - amount_step) / fr < 30) fr = 0.33*fr;  //slow pump at the end
+
+		if (step > step_previous) {
+			reset_out = 0;
+			fr = 0;
+			amount_step_previous += amount_step;
+			amount_step = 0;
+			elapsed_step = 0;
+		}
+
+		double time_to_target = time_step;
+		if (fr > 0) {
+			time_to_target = ((time_step * 60) - elapsed) / 60;
+		}
+
+		if (target_step == 0) fr = 0;
 	}
 
 	if (manual == 1) {
-		step = 10;
+		reset_out = 1;
+		step = 11;
 		fr = fr_manual;
+		if (step_previous < 11) {
+			reset_out = 0;
+			elapsed_step = 0;
+			amount_step = 0;
+		}
 	}
 
-	/*
-	if (fr > 6 && count == 3) {
-		fr = 0;
-		count = 0;
-	}
-	*/
-
-	double frc = 0.5*fr;
-
-	if (elapsed < time_step*60 && amount_step < target_step) frc = (target_step - amount_step) / ((time_step*60 - elapsed)/60);
-	if (frc > 1.6*fr) frc = 1.6*fr;
-	if (frc < 0.4*fr) frc = 0.4*fr;
-	fr = frc;
-
-	if (step > step_previous) {
-		fr = 0;
-		reset_out = 0;
-		amount_step_previous += amount_step;
-		amount_step = 0;
-		elapsed_step = 0;
-	}
-	
 
 	params[0] = fr;
 	params[1] = step;
@@ -636,6 +653,7 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	params[6] = amount_step / (elapsed_step / 60); // flow rate
 	params[7] = reset_out;
 	params[8] = amount_step_previous; // bookkeeping of previous step amounts
+	params[9] = time_to_target;
 
 }
 
@@ -1589,15 +1607,16 @@ __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual,
 
 }
 
-__declspec(dllexport) void flow_pump2(int enable, double flow, int pump_type, int port, double * pump_ctrl) {
+__declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int pump_type, int port, double * pump_ctrl) {
 
 	double analog_signal = 0.004;
 	double pam_signal = 0;
 	double reglo_signal = 0;
-	double rcoeff = 8.009;
+	double rcoeff = 15;
+	if (flow < 0.5) rcoeff = 25;
 
-	flow = flow*double(enable);
-
+	if (enable == 0 && manual == 0) flow = 0;
+	
 	if (pump_type == 0) {
 		if (port > 0) {
 			ismatec(port, rcoeff*flow);

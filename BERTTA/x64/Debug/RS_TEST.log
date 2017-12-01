@@ -37,29 +37,29 @@ math.cpp(141): warning C4996: 'sprintf': This function or variable may be unsafe
 math.cpp(215): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
 math.cpp(375): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
-math.cpp(1172): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1282): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1287): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1292): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1297): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1302): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1356): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1380): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1498): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1504): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1510): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1190): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1300): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1305): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1310): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1315): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1320): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1374): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+math.cpp(1398): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1516): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1522): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1577): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1752): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1839): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1845): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1851): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1857): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1863): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1914): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1960): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2098): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(1528): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1534): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1540): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1595): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1771): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1858): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1864): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1870): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1876): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1882): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1933): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1979): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(2117): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
