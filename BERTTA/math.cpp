@@ -585,7 +585,6 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; time_step = time_[1]; target_step = target_step1; }
 	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; time_step = time_[0]; target_step = target_step0; }
 		
-	if (manual == 0) {
 
 		if (step > 0) amount_step = amount - amount_step_previous;
 
@@ -624,24 +623,16 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 			elapsed_step = 0;
 		}
 
-		double time_to_target = time_step;
-		if (fr > 0) {
-			time_to_target = ((time_step * 60) - elapsed) / 60;
-		}
+		time_to_target = 60*(target_step - amount_step)/(target_step/time_step);
+
 
 		if (target_step == 0) fr = 0;
-	}
-
-	if (manual == 1) {
-		reset_out = 1;
-		step = 11;
-		fr = fr_manual;
-		if (step_previous < 11) {
-			reset_out = 0;
-			elapsed_step = 0;
+	
+		if (manual == 1) {
+			step = 11;
+			fr = fr_manual;
 			amount_step = 0;
 		}
-	}
 
 
 	params[0] = fr;
@@ -649,11 +640,14 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	params[2] = amount;
 	params[3] = count + 1;
 	params[4] = amount_step;
-	params[5] = elapsed_step;
-	params[6] = amount_step / (elapsed_step / 60); // flow rate
+	if (manual == 0) params[5] = elapsed_step;
+	if (manual == 1) params[5] = 0;
+	if (manual == 0) params[6] = amount_step / (elapsed_step / 60); // flow rate
+	if (manual == 1) params[6] = fr;
 	params[7] = reset_out;
 	params[8] = amount_step_previous; // bookkeeping of previous step amounts
-	params[9] = time_to_target;
+	if (manual == 0) params[9] = time_to_target;
+	if (manual == 1) params[9] = 0;
 
 }
 
