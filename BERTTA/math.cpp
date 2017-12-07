@@ -558,6 +558,10 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	double target_step = 0;
 	double time_to_target = 0;
 	double frc = 0;
+	double pumpCtrl = 100;
+
+	double STEPTARGET = 0; // for process page only
+	double TOTALTARGET = 0; // for process page only
 
 	double target_step0 = target[0];
 	double target_step1 = target[0] + target[1];
@@ -569,21 +573,22 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	double target_step7 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7];
 	double target_step8 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8];
 	double target_step9 = target[0] + target[1] + target[2] + target[3] + target[4] + target[5] + target[6] + target[7] + target[8] + target[9];
+	TOTALTARGET = target_step9;
 
 	double amount = -1 * scale;
 
 	if (step == 11) step = 0;
 
-	if (amount <= target_step9 && time_[9] > 0) { step = 9; fr = target[9] / time_[9]; time_step = time_[9]; target_step = target_step9; }
-	if (amount <= target_step8 && time_[8] > 0) { step = 8; fr = target[8] / time_[8]; time_step = time_[8]; target_step = target_step8; }
-	if (amount <= target_step7 && time_[7] > 0) { step = 7; fr = target[7] / time_[7]; time_step = time_[7]; target_step = target_step7; }
-	if (amount <= target_step6 && time_[6] > 0) { step = 6; fr = target[6] / time_[6]; time_step = time_[6]; target_step = target_step6; }
-	if (amount <= target_step5 && time_[5] > 0) { step = 5; fr = target[5] / time_[5]; time_step = time_[5]; target_step = target_step5; }
-	if (amount <= target_step4 && time_[4] > 0) { step = 4; fr = target[4] / time_[4]; time_step = time_[4]; target_step = target_step4; }
-	if (amount <= target_step3 && time_[3] > 0) { step = 3; fr = target[3] / time_[3]; time_step = time_[3]; target_step = target_step3; }
-	if (amount <= target_step2 && time_[2] > 0) { step = 2; fr = target[2] / time_[2]; time_step = time_[2]; target_step = target_step2; }
-	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; time_step = time_[1]; target_step = target_step1; }
-	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; time_step = time_[0]; target_step = target_step0; }
+	if (amount <= target_step9 && time_[9] > 0) { step = 9; fr = target[9] / time_[9]; time_step = time_[9]; target_step = target_step9; STEPTARGET = target[9];}
+	if (amount <= target_step8 && time_[8] > 0) { step = 8; fr = target[8] / time_[8]; time_step = time_[8]; target_step = target_step8; STEPTARGET = target[8];}
+	if (amount <= target_step7 && time_[7] > 0) { step = 7; fr = target[7] / time_[7]; time_step = time_[7]; target_step = target_step7; STEPTARGET = target[7];}
+	if (amount <= target_step6 && time_[6] > 0) { step = 6; fr = target[6] / time_[6]; time_step = time_[6]; target_step = target_step6; STEPTARGET = target[6];}
+	if (amount <= target_step5 && time_[5] > 0) { step = 5; fr = target[5] / time_[5]; time_step = time_[5]; target_step = target_step5; STEPTARGET = target[5];}
+	if (amount <= target_step4 && time_[4] > 0) { step = 4; fr = target[4] / time_[4]; time_step = time_[4]; target_step = target_step4; STEPTARGET = target[4];}
+	if (amount <= target_step3 && time_[3] > 0) { step = 3; fr = target[3] / time_[3]; time_step = time_[3]; target_step = target_step3; STEPTARGET = target[3];}
+	if (amount <= target_step2 && time_[2] > 0) { step = 2; fr = target[2] / time_[2]; time_step = time_[2]; target_step = target_step2; STEPTARGET = target[2];}
+	if (amount <= target_step1 && time_[1] > 0) { step = 1; fr = target[1] / time_[1]; time_step = time_[1]; target_step = target_step1; STEPTARGET = target[1];}
+	if (amount <= target_step0 && time_[0] > 0) { step = 0; fr = target[0] / time_[0]; time_step = time_[0]; target_step = target_step0; STEPTARGET = target[0];}
 		
 
 		if (step > 0) amount_step = amount - amount_step_previous;
@@ -608,12 +613,11 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 
 		frc = fr;
 
-		if (elapsed < time_step * 60 && amount_step < target_step) frc = (target_step - amount_step) / ((time_step * 60 - elapsed) / 60);
+		if (elapsed < time_step * 60 && amount_step < STEPTARGET) frc = (STEPTARGET - amount_step) / ((time_step * 60 - elapsed) / 60);
+//		if (elapsed < time_step * 60 && amount_step < target_step) frc = (target_step - amount_step) / ((time_step * 60 - elapsed) / 60);
 		if (frc > 1.8*fr) frc = 1.8*fr;
 		if (frc < 0.2*fr) frc = 0.2*fr;
 		fr = frc;
-
-		if ((target_step - amount_step) / fr < 30) fr = 0.33*fr;  //slow pump at the end
 
 		if (step > step_previous) {
 			reset_out = 0;
@@ -623,10 +627,15 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 			elapsed_step = 0;
 		}
 
-		time_to_target = 60*(target_step - amount_step)/(target_step/time_step);
+//		time_to_target = 60*(target_step - amount_step)/(target_step/time_step);
+		time_to_target = 60 * (STEPTARGET - amount_step) / (STEPTARGET / time_step);
+		
+		if (time_to_target < 30) fr = 0.3*fr;
 
+		if (time_to_target >  0) pumpCtrl = (time_step*60 - elapsed)*100/time_to_target;
 
 		if (target_step == 0) fr = 0;
+
 	
 		if (manual == 1) {
 			step = 11;
@@ -642,12 +651,16 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	params[4] = amount_step;
 	if (manual == 0) params[5] = elapsed_step;
 	if (manual == 1) params[5] = 0;
-	if (manual == 0) params[6] = amount_step / (elapsed_step / 60); // flow rate
+	if (manual == 0 && elapsed_step > 0) params[6] = amount_step / (elapsed_step / 60); // flow rate
+	if (manual == 0 && elapsed_step == 0) params[6] = 0; // flow rate
 	if (manual == 1) params[6] = fr;
 	params[7] = reset_out;
 	params[8] = amount_step_previous; // bookkeeping of previous step amounts
 	if (manual == 0) params[9] = time_to_target;
 	if (manual == 1) params[9] = 0;
+	params[10] = STEPTARGET;
+	params[11] = TOTALTARGET;
+	params[12] = pumpCtrl;
 
 }
 
@@ -1606,7 +1619,7 @@ __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int p
 	double analog_signal = 0.004;
 	double pam_signal = 0;
 	double reglo_signal = 0;
-	double rcoeff = 15;
+	double rcoeff = 9;
 	if (flow < 0.5) rcoeff = 25;
 
 	if (enable == 0 && manual == 0) flow = 0;
@@ -2029,7 +2042,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	if (elapsed_total > (time0 + time1 + time2 + time3 + time4) * 60000) timeLimit4 = true;
 
 	if (timeLimit0 && step == 0) {
-		if (abs(Tr - Sp0) < 1) {
+		if (abs(Tr - Sp0) < 0.5) {
 			step = 1;
 		}
 		else {
@@ -2038,7 +2051,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	}
 
 	if (timeLimit1 && step == 1) {
-		if (abs(Tr - Sp1) < 1) {
+		if (abs(Tr - Sp1) < 0.5) {
 			step = 2;
 		}
 		else {
@@ -2048,7 +2061,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 
 
 	if (timeLimit2 && step == 2) {
-		if (abs(Tr - Sp2) < 1) {
+		if (abs(Tr - Sp2) < 0.5) {
 			step = 3;
 		}
 		else {
@@ -2058,7 +2071,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 
 
 	if (timeLimit3 && step == 3) {
-		if (abs(Tr - Sp3) < 1) {
+		if (abs(Tr - Sp3) < 0.5) {
 			step = 4;
 		}
 		else {
@@ -2067,7 +2080,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	}
 
 	if (timeLimit4 && step == 4) {
-		if (abs(Tr - Sp4) < 1) {
+		if (abs(Tr - Sp4) < 0.5) {
 			step = 5;
 		}
 	}
