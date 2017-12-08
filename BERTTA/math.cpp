@@ -2004,7 +2004,10 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 
 }
 
-__declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double * Seq, long int * TimeParams, long int * params) {
+__declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double treshold, double * Seq, long int * TimeParams, long int * params) {
+
+	if (treshold < 0.5) treshold = 0.5;
+	if (treshold > 2) treshold = 2;
 
 	double Sp0 = Seq[0]; double Sp1 = Seq[1]; double Sp2 = Seq[2]; double Sp3 = Seq[3]; double Sp4 = Seq[4];
 
@@ -2042,7 +2045,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	if (elapsed_total > (time0 + time1 + time2 + time3 + time4) * 60000) timeLimit4 = true;
 
 	if (timeLimit0 && step == 0) {
-		if (abs(Tr - Sp0) < 0.5) {
+		if (abs(Tr - Sp0) < treshold) {
 			step = 1;
 		}
 		else {
@@ -2051,7 +2054,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	}
 
 	if (timeLimit1 && step == 1) {
-		if (abs(Tr - Sp1) < 0.5) {
+		if (abs(Tr - Sp1) < treshold) {
 			step = 2;
 		}
 		else {
@@ -2061,7 +2064,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 
 
 	if (timeLimit2 && step == 2) {
-		if (abs(Tr - Sp2) < 0.5) {
+		if (abs(Tr - Sp2) < treshold) {
 			step = 3;
 		}
 		else {
@@ -2071,7 +2074,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 
 
 	if (timeLimit3 && step == 3) {
-		if (abs(Tr - Sp3) < 0.5) {
+		if (abs(Tr - Sp3) < treshold) {
 			step = 4;
 		}
 		else {
@@ -2080,7 +2083,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	}
 
 	if (timeLimit4 && step == 4) {
-		if (abs(Tr - Sp4) < 0.5) {
+		if (abs(Tr - Sp4) < treshold) {
 			step = 5;
 		}
 	}
@@ -2119,6 +2122,7 @@ __declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, doub
 	}
 
 	if (manual == 1) Sp_ = T_man;
+	if (shutdown == 1) Sp_ = 20;
 
 	params[3] = step;
 	params[4] = Sp_ * 1000;

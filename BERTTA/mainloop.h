@@ -47,7 +47,7 @@ __declspec(dllexport) void start_time(int enable, long int start_time, long int 
 __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, double * pump_ctrl);
 __declspec(dllexport) void hold2(int enable, double in1, double in2, double count, double * params);
 __declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, long int elapsed_last, double target, double amount, double amount_last, long int * params);
-__declspec(dllexport) void ramp(int pause, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double * Seq, long int * TimeParams, long int * params);
+__declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double treshold, double * Seq, long int * TimeParams, long int * params);
 __declspec(dllexport) void timer_1(int pause, int reset, long int start_time, long int last_time, long int elapsed_total, long int * params);
 __declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable);
 __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double step_previous, double amount_step_previous, double * target, double * time_, double * params);

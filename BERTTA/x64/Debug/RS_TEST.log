@@ -59,7 +59,7 @@ math.cpp(1883): warning C4244: '=': conversion from 'time_t' to 'double', possib
 math.cpp(1889): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1940): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1986): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2124): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(2128): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
