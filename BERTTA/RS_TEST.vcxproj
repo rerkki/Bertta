@@ -148,15 +148,11 @@
     <ClCompile Include="math.cpp" />
     <ClCompile Include="PID_v1.cpp" />
     <ClCompile Include="serialcomm.cpp" />
-    <ClCompile Include="sqlite3.c" />
-    <ClCompile Include="sqlite3_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainloop.h" />
     <ClInclude Include="PID_v1.h" />
     <ClInclude Include="serialcomm.h" />
-    <ClInclude Include="sqlite3.h" />
-    <ClInclude Include="sqlite3ext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

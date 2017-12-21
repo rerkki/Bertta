@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <iomanip>
 #include <math.h>
-#include "sqlite3.h"
 #include "serialcomm.h"
 #include "mainloop.h"
 #include <windows.h>
@@ -202,7 +201,6 @@ __declspec(dllexport) void pump(float speed_, char * newPump) {
 //	cout << newPump << endl;
 }
 
-
 __declspec(dllexport) void temp(float temp_, char * newTemp) {
 
 	char buffer[5]={0};
@@ -282,11 +280,6 @@ __declspec(dllexport) void temp(float temp_, char * newTemp) {
 //	getch();
 }
 
-
-
-
-
-
 __declspec(dllexport) long int millisec() {
 
 //	long unsigned int sysTime = time(0);
@@ -311,19 +304,6 @@ __declspec(dllexport) void elapsed(long int last_time, long int * params) {
 		params[1] = time_now;
 
 }
-
-/*
-__declspec(dllexport) void t_ramp2(long int last_time, double DT, long int * params) {
-
-	long int time_now = millisec();
-
-	long int elapsed_ = time_now - last_time;
-
-	params[0] = elapsed_;
-	params[1] = time_now;
-
-}
-*/
 
 __declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params) {
 
@@ -396,7 +376,6 @@ __declspec(dllexport) void pump_control(int enable, double amount, double target
 
 }
 
-
 __declspec(dllexport) void start_time(int enable, long int start_time, long int * params) {
 
 	time_t seconds;
@@ -413,7 +392,6 @@ __declspec(dllexport) void start_time(int enable, long int start_time, long int 
 
 	if (enable == 1) params[0] = start_time;
 }
-
 
 __declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, long int elapsed_last, double target, double amount, double amount_last, long int * params) {
 
@@ -438,8 +416,6 @@ __declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, lo
 	params[6] = long int(fr_actual * 1000);
 
 }
-
-
 
 __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
@@ -472,24 +448,6 @@ __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time
 		params[2] = 0;
 	}
 }
-
-__declspec(dllexport) long int t_epoch(int enable, long int start_time) {
-
-	time_t seconds;
-
-	long int seconds_;
-
-	seconds = time(NULL);
-
-	seconds_ = long int(seconds);
-
-	long int elapsed = seconds_ ;
-
-	if(enable==0) return seconds_;
-	if (enable > 0) return start_time;
-}
-
-
 
 __declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params) {
 
@@ -877,8 +835,6 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 
 }
 
-
-
 __declspec(dllexport) double hold(int enable, double in1, double in2) {
 
 	double retval = in1;
@@ -949,81 +905,6 @@ __declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int ela
 
 	return setpoint;
 }
-
-/*
-__declspec(dllexport) double t_ramp2(int enable, int pause, int bypass, int err, double Tinit, double Tset, double Tcurrent, double Tbyp, double Tfail, long int ramp_time, long int elapsed, double sp_old) {
-
-	int direction = 0;
-
-	if (Tinit > Tset) direction = 1;
-	if (Tinit < Tset) direction = 0;
-
-	double setpoint = Tinit;
-
-	if (enable == 1 && pause == 1) {
-		if (direction == 0) {
-			if (Tcurrent < 0.93 * Tset) {
-				setpoint = 85;
-				sp_old = Tcurrent;
-			}
-			else { setpoint = Tset; }
-		}
-		if (direction == 1) {
-			setpoint = Tset;
-			sp_old = Tcurrent;
-		}
-	}
-
-	if (pause == 0) setpoint = sp_old;
-
-	if (bypass == 1) setpoint = Tbyp;
-
-	if (err == 1) setpoint = Tfail;
-
-
-
-	
-	
-	double Tdiff = 10;
-	if (direction == 0) {
-		if (abs(sp_old - Tset) < 10) Tdiff = 5;
-		if (abs(sp_old - Tset) < 3) Tdiff = 1;
-	}
-
-	if (direction == 1) {
-		if (abs(sp_old - Tset) < 10) Tdiff = 10;
-	}
-
-
-
-	double DT = (Tset - Tinit) / (ramp_time * 60);
-	double setpoint = Tinit;
-
-	if (pause == 0) DT = 0;
-
-	if (enable == 1) {
-		setpoint = sp_old + DT*elapsed / 1000;
-
-		if (direction == 0 && Tcurrent < 0.93 * Tset) setpoint = 85;
-		if (direction == 0 && Tcurrent >= 0.93 * Tset) {
-			if (Tcurrent > Tset) setpoint = Tset;
-			if (setpoint > Tset) setpoint = Tset;
-			if (setpoint < sp_old && setpoint < Tset) setpoint = sp_old;
-			if (setpoint - Tcurrent > Tdiff && setpoint < Tset) setpoint = sp_old;
-		}
-		if (direction == 1) {
-			if (Tcurrent < Tset) setpoint = Tset;
-			if (setpoint < Tset) setpoint = Tset;
-			if (setpoint > sp_old) setpoint = sp_old;
-			if (Tcurrent - setpoint > Tdiff) setpoint = sp_old;
-		}
-
-		
-	}
-	
-	return setpoint;
-}
-*/
 
 __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, long int elapsed, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 
@@ -1182,8 +1063,6 @@ __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_o
 	params[7] = step;
 
 }
-
-
 
 __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust,  double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 	
@@ -1620,7 +1499,7 @@ __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int p
 	double pam_signal = 0;
 	double reglo_signal = 0;
 	double rcoeff = 9;
-	if (flow < 0.5) rcoeff = 25;
+//	if (flow < 0.5) rcoeff = 4;
 
 	if (enable == 0 && manual == 0) flow = 0;
 	
@@ -1647,7 +1526,6 @@ __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int p
 	pump_ctrl[2] = reglo_signal;
 
 }
-
 
 __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, double * pump_ctrl) {
 
@@ -1766,7 +1644,6 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 	params[3] = double(reset);
 	params[4] = double(count); //count -parametrin voi poistaa
 }
-
 
 __declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 
@@ -1952,7 +1829,6 @@ __declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual,
 
 }
 
-
 __declspec(dllexport) int ramp_test(int last_count) {
 
 	int count = last_count + 1;
@@ -1973,7 +1849,6 @@ __declspec(dllexport) long int time_left(long int rt, long int start_time) {
 	return rt - (seconds_ - start_time);
 
 }
-
 
 __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double last_time, double last_timeChange, double Input, double Setpoint, double kp, double ki, double kd, double * params)
 {

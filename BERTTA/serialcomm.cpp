@@ -18,7 +18,6 @@ void sys_err(char *name) {
     LocalFree(ptr);
 }
 
-
 __declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
 
@@ -110,7 +109,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	WriteFile(file, "\r\n", 2, &written, NULL);
 	Sleep(50);
 	WriteFile(file, msg_, buff_size, &written, NULL);
-	if(device==1) Sleep(100);
+	if(device==1) Sleep(100); //100 toimii varmasti
 	Sleep(100);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
