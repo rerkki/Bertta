@@ -103,7 +103,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     if (!WriteFile(file, init, sizeof(init), &written, NULL)) sys_err("ERR_WriteFile");
     if (written != sizeof(init)) sys_err("ERR_sizeof(init)");
 
-
+	PurgeComm(file, PURGE_RXABORT | PURGE_TXABORT | PURGE_RXCLEAR | PURGE_TXCLEAR);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
 	WriteFile(file, "\r\n", 2, &written, NULL);
@@ -113,30 +113,6 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	Sleep(100);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
-	//cout << buffer << endl;
-
-
-	/*
-	if(device !=3) {
-		ReadFile(file, buffer, sizeof(buffer), &read, NULL);
-		WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
-		Sleep(200); 
-		ReadFile(file, buffer, 50, &read, NULL);
-		cout << msg << endl;
-		Sleep(50);
-	}
-
-	
-	if(device==3) {
-		for(int i=0;i<2;i++) {
-			WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
-			Sleep(50); 
-			ReadFile(file, buffer, 50, &read, NULL);
-		}
-
-	}*/
-	
-//	Sleep(50);
 
     CloseHandle(file);
 
