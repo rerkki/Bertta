@@ -43,15 +43,15 @@ math.cpp(1414): warning C4244: '=': conversion from 'time_t' to 'double', possib
 math.cpp(1420): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1426): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1481): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1655): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1742): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1748): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1754): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1760): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1766): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1817): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1861): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2003): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(1671): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1758): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1764): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1770): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1776): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1782): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1833): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+math.cpp(1877): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(2019): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data

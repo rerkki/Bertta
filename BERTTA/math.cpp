@@ -588,7 +588,7 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 //		time_to_target = 60*(target_step - amount_step)/(target_step/time_step);
 		time_to_target = 60 * (STEPTARGET - amount_step) / (STEPTARGET / time_step);
 		
-		if (time_to_target < 30) fr = 0.3*fr;
+		if (time_to_target < 10) fr = 0.3*fr;
 
 		if (time_to_target >  0) pumpCtrl = (time_step*60 - elapsed)*100/time_to_target;
 
@@ -1492,6 +1492,22 @@ __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual,
 	params[7] = step;
 
 }
+
+__declspec(dllexport) double flow_pump3(int enable, int manual, double flow, int port) { //this subroutine only for reglo D
+
+	double reglo_signal = 0;
+	double rcoeff = 9;
+
+	if (enable == 0 && manual == 0) flow = 0;
+
+		if (port > 0) {
+			ismatec(port, rcoeff*flow);
+			reglo_signal = rcoeff*flow;
+		}
+
+	return reglo_signal;
+}
+
 
 __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int pump_type, int port, double * pump_ctrl) {
 

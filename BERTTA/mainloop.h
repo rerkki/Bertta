@@ -44,5 +44,7 @@ __declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable);
 __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double step_previous, double amount_step_previous, double * target, double * time_, double * params);
 __declspec(dllexport) void pump2(int enable, float speed_, char * newPump);
 __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int pump_type, int port, double * pump_ctrl);
+__declspec(dllexport) double flow_pump3(int enable, int manual, double flow, int port);
 __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params);
+__declspec(dllexport) void MWriteRS232(int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4);
 }

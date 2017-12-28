@@ -327,6 +327,42 @@ __declspec(dllexport) double device(int port, int dev) {
 	return retval;
 }
 
+__declspec(dllexport) void dev_ctrl(int port, int dev, double param) {
+
+	double retval = 0;
+
+	if (dev == 1) lauda(port, param);
+	if (dev == 2) ismatec(port, param * 9);
+
+	if (dev < 1 || dev > 2) retval = 0;
+
+}
+
+__declspec(dllexport) void MWriteRS232(int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4) {
+	
+	thread t1([port1, dev1, param1] {
+		dev_ctrl(port1, dev1, param1);
+	});
+
+	thread t2([port2, dev2, param2] {
+		dev_ctrl(port2, dev2, param2);
+	});
+
+	thread t3([port3, dev3, param3] {
+		dev_ctrl(port3, dev3, param3);
+	});
+
+	thread t4([port4, dev4, param4] {
+		dev_ctrl(port4, dev4, param4);
+	});
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+
+}
+
 __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params) {
 
 	double x1{ 0 };
