@@ -1895,6 +1895,76 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 
 }
 
+__declspec(dllexport) void ramp_simple(int pause, int reset, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params) {
+
+	double intercept;
+
+	double slope = 0;
+
+	double T0 = Tr;
+
+	double setpoint;
+
+	if (reset == 1) {
+
+		params[3] = 0;
+
+		params[4] = Tr_last;
+
+	}
+
+	if (pause == 0) {
+
+		params[4] = Tr;
+
+		params[0] = T0_;
+
+		if (time_set > 0) {
+
+			slope = (T_sp - T0_) / time_set;
+
+			intercept = T0_;
+
+			setpoint = slope*(elapsed / 60000) + intercept;
+		
+		}else setpoint = T_sp;
+
+		if (slope > 0 && setpoint > T_sp) {
+			setpoint = T_sp;
+		}
+		if (slope < 0 && setpoint < T_sp) {
+			setpoint = T_sp;
+		}
+ 
+	}
+
+	if (pause == 1) {
+
+		if (Tr_last == 0) Tr_last = Tr;
+
+		setpoint = Tr_last;
+
+		if (params[5] == 1) setpoint = T_sp;
+
+		params[4] = Tr_last;
+
+		params[0] = Tr;
+
+		
+
+	}
+
+	
+
+	params[1] = setpoint;
+
+	params[2] = slope;
+
+	params[3] = elapsed / 60000;
+
+}
+
+
 __declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double treshold, double * Seq, long int * TimeParams, long int * params) {
 
 	if (treshold < 0.5) treshold = 0.5;
@@ -1903,13 +1973,15 @@ __declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, in
 	double Sp0 = Seq[0]; double Sp1 = Seq[1]; double Sp2 = Seq[2]; double Sp3 = Seq[3]; double Sp4 = Seq[4];
 
 	double Sp_ = Sp0;
+	double Sp0_man;
 
-	long int time0 = TimeParams[0]; long int time1 = TimeParams[1]; long int time2 = TimeParams[2]; long int time3 = TimeParams[3]; long int time4 = TimeParams[4];
+	long int time0 = TimeParams[0]; long int time1 = TimeParams[1]; long int time2 = TimeParams[2]; long int time3 = TimeParams[3]; long int time4 = TimeParams[4]; long int time_man = TimeParams[5];
 
 	double slope1 = 1;
 	double slope2 = 1;
 	double slope3 = 1;
 	double slope4 = 1;
+	double slope_man = 1;
 
 	if (time0>0) slope1 = (Sp1 - Sp0) / (time1 * 60000);
 	if (time1>0) slope2 = (Sp2 - Sp1) / (time2 * 60000);
@@ -2012,11 +2084,23 @@ __declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, in
 		if (slope4 < 0 && Sp_ < Sp4) Sp_ = Sp4;
 	}
 
-	if (manual == 1) Sp_ = T_man;
+//	if (manual == 1) Sp_ = T_man;
+
+	//new gradient implementation to manual control
+	if(manual==0) Sp0_man = Tr;
+	if (manual == 1) {
+		Sp0_man = params[5];
+		
+		if(time_man>0) slope_man = (T_man - Sp0_man) / (time_man * 60000);
+		
+		Sp_ = T_man;
+	}
+
 	if (shutdown == 1) Sp_ = 20;
 
 	params[3] = step;
 	params[4] = Sp_ * 1000;
+	params[5] = Sp0_man;
 
 	timer_1(pause, reset, start_time, last_time, elapsed_total, params);
 
