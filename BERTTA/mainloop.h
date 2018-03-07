@@ -47,5 +47,5 @@ __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int p
 __declspec(dllexport) double flow_pump3(int enable, int manual, double flow, int port);
 __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params);
 __declspec(dllexport) void MWriteRS232(int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4);
-__declspec(dllexport) void ramp_simple(int pause, int reset, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params);
+__declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params);
 }

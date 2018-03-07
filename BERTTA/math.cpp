@@ -1895,7 +1895,7 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 
 }
 
-__declspec(dllexport) void ramp_simple(int pause, int reset, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params) {
+__declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params) {
 
 	double intercept;
 
@@ -1909,7 +1909,7 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, double elapsed, dou
 
 		params[3] = 0;
 
-		params[4] = Tr_last;
+	//	params[4] = Tr_last;
 
 	}
 
@@ -1949,10 +1949,10 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, double elapsed, dou
 		params[4] = Tr_last;
 
 		params[0] = Tr;
-
 		
-
 	}
+
+	if (master == 0) setpoint = 20;
 
 	
 
