@@ -16,7 +16,7 @@ mainloop.cpp(205): warning C4996: 'strcpy': This function or variable may be uns
 mainloop.cpp(211): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
 mainloop.cpp(224): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(237): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+mainloop.cpp(258): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 math.cpp(15): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
@@ -50,9 +50,9 @@ math.cpp(1770): warning C4244: '=': conversion from 'time_t' to 'double', possib
 math.cpp(1776): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1782): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 math.cpp(1833): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1877): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2102): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2103): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(1891): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(2119): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+math.cpp(2120): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data

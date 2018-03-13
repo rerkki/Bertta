@@ -231,6 +231,27 @@ __declspec(dllexport) void ismatec(int port, double speed) {
 
 }
 
+__declspec(dllexport) void isma_set(int port, int dir) {
+
+	if (port > 0) {
+
+
+		read(port, 2, "1I\r\n");
+		Sleep(60);
+
+		if (dir == 2) {
+			read(port, 2, "1K\r\n");
+		}else read(port, 2, "1J\r\n");
+
+		Sleep(60);
+
+		read(port, 2, "1H\r\n");
+		Sleep(60);
+
+	}
+
+}
+
 __declspec(dllexport) void lauda(int port, double set_temp) {
 
 	char temp_[18] = { 0 };

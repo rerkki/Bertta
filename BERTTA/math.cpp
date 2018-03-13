@@ -1845,6 +1845,20 @@ __declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual,
 
 }
 
+__declspec(dllexport) void rising_edge(int reset, int input, int prev_input, int prev_count, int * params) {
+
+	params[0] = prev_count;
+	if (input == 1 && prev_input==0) params[0] = prev_count + 1;
+	if (params[0] > 2) params[0] = 2;
+	params[1] = input;
+	if (reset == 1) {
+		params[0] = 0;
+		params[1] = 0;
+		prev_count = 0;
+	}
+	
+}
+
 __declspec(dllexport) int ramp_test(int last_count) {
 
 	int count = last_count + 1;
@@ -1901,7 +1915,7 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double 
 
 	double slope = 0;
 
-	double T0 = Tr;
+//	double T0 = Tr;
 
 	double setpoint;
 
@@ -1909,11 +1923,13 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double 
 
 		params[3] = 0;
 
-	//	params[4] = Tr_last;
+		params[4] = Tr_last;
+
+		params[0] = Tr;
 
 	}
 
-	if (pause == 0) {
+	if (pause == 0 && reset==0) {
 
 		params[4] = Tr;
 
@@ -1954,7 +1970,8 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double 
 
 	if (master == 0) setpoint = 20;
 
-	
+	params[6] = 0;
+	if (abs(Tr - T_sp) < treshold) params[6] = 1;
 
 	params[1] = setpoint;
 
