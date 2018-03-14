@@ -32,6 +32,16 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 
 	int msglen = 1;
 	itoa(speed, buffer, 10);
+	
+	if (speed > 0) {
+		msglen = 1;
+		newRpm[0] = 'R';
+		newRpm[1] = '0';
+		newRpm[2] = '0';
+		newRpm[3] = '0';
+		newRpm[4] = buffer[4];
+	}
+
 	if (speed > 9) {
 		msglen = 2;
 		newRpm[0] = 'R';
@@ -56,7 +66,7 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 	newRpm[5] = '\r';
 	newRpm[6] = '\n';
 
-	if (speed < 60) newRpm = "R0000\r\n";
+//	if (speed < 60) newRpm = "R0001\r\n";
 
 //	cout << newRpm << endl;
 }
@@ -1926,6 +1936,8 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double 
 		params[4] = Tr_last;
 
 		params[0] = Tr;
+
+		setpoint = Tr_last;
 
 	}
 
