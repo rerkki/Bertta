@@ -1,27 +1,27 @@
 ﻿  mainloop.cpp
 mainloop.cpp(285): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\conio.h(452): note: see declaration of 'getch'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\conio.h(452): note: see declaration of 'getch'
 mainloop.cpp(298): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\conio.h(452): note: see declaration of 'getch'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\conio.h(452): note: see declaration of 'getch'
 mainloop.cpp(300): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
 mainloop.cpp(379): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
 mainloop.cpp(431): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
 mainloop.cpp(483): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\string.h(129): note: see declaration of 'strcpy'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
 mainloop.cpp(514): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 mainloop.cpp(528): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 math.cpp(16): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
 math.cpp(35): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
 math.cpp(71): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
 math.cpp(144): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
   PID_v1.cpp
   serialcomm.cpp
 serialcomm.cpp(44): warning C4101: 'mode': unreferenced local variable
@@ -29,10 +29,8 @@ serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
 serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   sqlite3_test.cpp
   Generating Code...
-c:\users\xlaraser\documents\visual studio 2017\projects\bertta\bertta\math.cpp(269): warning C4715: 't_epoch': not all control paths return a value
+c:\users\shresplab\onedrive - kemira oyj\documents\visual studio 2017\projects\bertta\bertta\math.cpp(269): warning C4715: 't_epoch': not all control paths return a value
   sqlite3.c
 sqlite3.c(32622): warning C4996: 'GetVersionExA': was declared deprecated
-  C:\Program Files\Windows Kits\10\Include\10.0.14393.0\um\sysinfoapi.h(442): note: see declaration of 'GetVersionExA'
-     Creating library C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.lib and object C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.exp
-  RS_TEST.vcxproj -> C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.dll
-  RS_TEST.vcxproj -> C:\Users\xlaraser\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\Debug\BERTTA.pdb (Full PDB)
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um\sysinfoapi.h(436): note: see declaration of 'GetVersionExA'
+Debug\mainloop.obj : fatal error LNK1112: module machine type 'X86' conflicts with target machine type 'x64'

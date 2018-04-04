@@ -18,7 +18,6 @@ void sys_err(char *name) {
     LocalFree(ptr);
 }
 
-
 __declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
 
@@ -27,9 +26,12 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	char buffer[50];
 	for(int i=0;i<50;i++) buffer[i]=NULL;
 	char msg[17]; 
+//	int timedelay = 200;
 
 	int buff_size = 17;
 
+//	if (device = 1) timedelay = 100;
+	if (device == 2) buff_size = 17;  //switch lauda mode internal -> PT100
 	if (device == 4) buff_size = 7; //Heidolph HEI requires 7 for setting rpm
 	if (device == 5) buff_size = 3; //Heidolph HEI requires 3 for queries
 
@@ -101,39 +103,16 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
     if (!WriteFile(file, init, sizeof(init), &written, NULL)) sys_err("ERR_WriteFile");
     if (written != sizeof(init)) sys_err("ERR_sizeof(init)");
 
-
+	PurgeComm(file, PURGE_RXABORT | PURGE_TXABORT | PURGE_RXCLEAR | PURGE_TXCLEAR);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
 	WriteFile(file, "\r\n", 2, &written, NULL);
-	Sleep(200);
+	Sleep(50);
 	WriteFile(file, msg_, buff_size, &written, NULL);
-	Sleep(200);
+	if(device==1) Sleep(100); //100 toimii varmasti
+	Sleep(100);
 
 	ReadFile(file, buffer, sizeof(buffer), &read, NULL);
-	//cout << msg_ << endl;
-
-
-	/*
-	if(device !=3) {
-		ReadFile(file, buffer, sizeof(buffer), &read, NULL);
-		WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
-		Sleep(200); 
-		ReadFile(file, buffer, 50, &read, NULL);
-		cout << msg << endl;
-		Sleep(50);
-	}
-
-	
-	if(device==3) {
-		for(int i=0;i<2;i++) {
-			WriteFile(file, &msg, (sizeof(msg)), &written, NULL);
-			Sleep(50); 
-			ReadFile(file, buffer, 50, &read, NULL);
-		}
-
-	}*/
-	
-	Sleep(50);
 
     CloseHandle(file);
 
