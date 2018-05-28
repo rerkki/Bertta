@@ -10,7 +10,7 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
-		<Item Name="BenchA_v09_97.vi" Type="VI" URL="../BenchA_v09_97.vi"/>
+		<Item Name="BenchA_v09_979.vi" Type="VI" URL="../BenchA_v09_979.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="__closeStorageFromObject.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/storage/Storage.llb/__closeStorageFromObject.vi"/>
@@ -565,7 +565,7 @@
 				<Property Name="Source[0].itemID" Type="Str">{76B9F3D2-C598-4B70-99D9-E35E5D2BFCE9}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_97.vi</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_979.vi</Property>
 				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
 				<Property Name="Source[1].type" Type="Str">VI</Property>
 				<Property Name="SourceCount" Type="Int">2</Property>
@@ -605,7 +605,7 @@
 				<Property Name="Source[0].itemID" Type="Str">{76B9F3D2-C598-4B70-99D9-E35E5D2BFCE9}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_97.vi</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_979.vi</Property>
 				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
 				<Property Name="Source[1].type" Type="Str">VI</Property>
 				<Property Name="SourceCount" Type="Int">2</Property>
@@ -616,6 +616,46 @@
 				<Property Name="TgtF_productName" Type="Str">BenchA_v09_972</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{F80623C7-01BA-434F-BC8D-7EFEB9717E52}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">BenchA_v09_972.exe</Property>
+				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
+			</Item>
+			<Item Name="BenchA_v09_973" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{0E5A46DF-73B8-4F37-8F10-BC8167CAC5B5}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{6221649A-5B5F-4D2E-A7C3-A0BAC9740BF3}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{7041E239-94BE-415C-9BD5-0E09F873EAEB}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">BenchA_v09_973</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_973</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{BFF170C6-3324-4903-950D-88ED8FA8A499}</Property>
+				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">BenchA_v09_973.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_973/BenchA_v09_973.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_973/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{C930420D-BED1-405E-86E3-21F9D4C466A6}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_979.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">Kemira Oyj</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">BenchA_v09_973</Property>
+				<Property Name="TgtF_internalName" Type="Str">BenchA_v09_973</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 Kemira Oyj</Property>
+				<Property Name="TgtF_productName" Type="Str">BenchA_v09_973</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{3982FB55-1B26-4B2A-BE50-97920350B668}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">BenchA_v09_973.exe</Property>
 				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
 			</Item>
 		</Item>
