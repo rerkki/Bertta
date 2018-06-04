@@ -539,70 +539,31 @@
 			<Item Name="STEPINDICATOR_091_4.vi" Type="VI" URL="../../x64/Debug/STEPINDICATOR_091_4.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
-			<Item Name="BenchA_v09_97" Type="EXE">
+			<Item Name="BenchA_v09_99" Type="EXE">
 				<Property Name="App_copyErrors" Type="Bool">true</Property>
-				<Property Name="App_INI_aliasGUID" Type="Str">{4EC5BD50-7547-4FBD-A346-9B3757A1028C}</Property>
-				<Property Name="App_INI_GUID" Type="Str">{D564061F-6DE4-409B-8D2B-C6D742C97604}</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{440B83EC-AC09-4378-8F9A-DA1488A70D89}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{EBD1EAC5-F066-415B-BFD3-7A694A888CBF}</Property>
 				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
 				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
-				<Property Name="Bld_buildCacheID" Type="Str">{299B5A3F-6D18-4476-8FDB-0CBBB4020255}</Property>
-				<Property Name="Bld_buildSpecName" Type="Str">BenchA_v09_97</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{5F9E7B96-1BD3-438B-A7E1-E0153B50CFEE}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">BenchA_v09_99</Property>
 				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
 				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
 				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
-				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_97</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_99</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
-				<Property Name="Bld_previewCacheID" Type="Str">{25162168-E7DA-48B5-B078-52C008D017E5}</Property>
-				<Property Name="Bld_version.major" Type="Int">1</Property>
-				<Property Name="Destination[0].destName" Type="Str">Application.exe</Property>
-				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_97/Application.exe</Property>
-				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
-				<Property Name="Destination[0].type" Type="Str">App</Property>
-				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
-				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_97/data</Property>
-				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{76B9F3D2-C598-4B70-99D9-E35E5D2BFCE9}</Property>
-				<Property Name="Source[0].type" Type="Str">Container</Property>
-				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_979.vi</Property>
-				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
-				<Property Name="Source[1].type" Type="Str">VI</Property>
-				<Property Name="SourceCount" Type="Int">2</Property>
-				<Property Name="TgtF_companyName" Type="Str">Kemira Oyj</Property>
-				<Property Name="TgtF_fileDescription" Type="Str">BenchA_v09_97</Property>
-				<Property Name="TgtF_internalName" Type="Str">BenchA_v09_97</Property>
-				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 Kemira Oyj</Property>
-				<Property Name="TgtF_productName" Type="Str">BenchA_v09_97</Property>
-				<Property Name="TgtF_targetfileGUID" Type="Str">{8A26ACB7-20AA-47C6-A624-8E11178165B3}</Property>
-				<Property Name="TgtF_targetfileName" Type="Str">Application.exe</Property>
-				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
-			</Item>
-			<Item Name="BenchA_v09_972" Type="EXE">
-				<Property Name="App_copyErrors" Type="Bool">true</Property>
-				<Property Name="App_INI_aliasGUID" Type="Str">{8FFF47E8-CC6B-425D-9872-862AD49F8C50}</Property>
-				<Property Name="App_INI_GUID" Type="Str">{724515AF-0FA4-472F-AC87-2B1ADEE059FF}</Property>
-				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
-				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
-				<Property Name="Bld_buildCacheID" Type="Str">{0F7A6C75-0CEC-4C54-9A7D-36722DC982D1}</Property>
-				<Property Name="Bld_buildSpecName" Type="Str">BenchA_v09_972</Property>
-				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
-				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
-				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
-				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_972</Property>
-				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
-				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
-				<Property Name="Bld_previewCacheID" Type="Str">{11076D14-FEA8-40BF-BE01-B0574DB0A0FE}</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{E45B20B8-0289-44B5-A93F-4236E6A8E03A}</Property>
 				<Property Name="Bld_version.build" Type="Int">1</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
-				<Property Name="Destination[0].destName" Type="Str">BenchA_v09_972.exe</Property>
-				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_972/BenchA_v09_972.exe</Property>
+				<Property Name="Destination[0].destName" Type="Str">BenchA_v09_99.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_99/BenchA_v09_99.exe</Property>
 				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[0].type" Type="Str">App</Property>
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
-				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_972/data</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_99/data</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{76B9F3D2-C598-4B70-99D9-E35E5D2BFCE9}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{3DFAF81E-4B82-473F-B3C3-296B01B45AE4}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_979.vi</Property>
@@ -610,53 +571,103 @@
 				<Property Name="Source[1].type" Type="Str">VI</Property>
 				<Property Name="SourceCount" Type="Int">2</Property>
 				<Property Name="TgtF_companyName" Type="Str">Kemira Oyj</Property>
-				<Property Name="TgtF_fileDescription" Type="Str">BenchA_v09_972</Property>
-				<Property Name="TgtF_internalName" Type="Str">BenchA_v09_972</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">BenchA_v09_99</Property>
+				<Property Name="TgtF_internalName" Type="Str">BenchA_v09_99</Property>
 				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 Kemira Oyj</Property>
-				<Property Name="TgtF_productName" Type="Str">BenchA_v09_972</Property>
-				<Property Name="TgtF_targetfileGUID" Type="Str">{F80623C7-01BA-434F-BC8D-7EFEB9717E52}</Property>
-				<Property Name="TgtF_targetfileName" Type="Str">BenchA_v09_972.exe</Property>
+				<Property Name="TgtF_productName" Type="Str">BenchA_v09_99</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{CDA22CD4-7D35-4B9C-96C2-0A789DEF5C6D}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">BenchA_v09_99.exe</Property>
 				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
 			</Item>
-			<Item Name="BenchA_v09_973" Type="EXE">
-				<Property Name="App_copyErrors" Type="Bool">true</Property>
-				<Property Name="App_INI_aliasGUID" Type="Str">{0E5A46DF-73B8-4F37-8F10-BC8167CAC5B5}</Property>
-				<Property Name="App_INI_GUID" Type="Str">{6221649A-5B5F-4D2E-A7C3-A0BAC9740BF3}</Property>
-				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
-				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
-				<Property Name="Bld_buildCacheID" Type="Str">{7041E239-94BE-415C-9BD5-0E09F873EAEB}</Property>
-				<Property Name="Bld_buildSpecName" Type="Str">BenchA_v09_973</Property>
-				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
-				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
-				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
-				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_973</Property>
-				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
-				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
-				<Property Name="Bld_previewCacheID" Type="Str">{BFF170C6-3324-4903-950D-88ED8FA8A499}</Property>
-				<Property Name="Bld_version.build" Type="Int">1</Property>
-				<Property Name="Bld_version.major" Type="Int">1</Property>
-				<Property Name="Destination[0].destName" Type="Str">BenchA_v09_973.exe</Property>
-				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_973/BenchA_v09_973.exe</Property>
-				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
-				<Property Name="Destination[0].type" Type="Str">App</Property>
-				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
-				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchA_v09_973/data</Property>
-				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{C930420D-BED1-405E-86E3-21F9D4C466A6}</Property>
-				<Property Name="Source[0].type" Type="Str">Container</Property>
-				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
-				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchA_v09_979.vi</Property>
-				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
-				<Property Name="Source[1].type" Type="Str">VI</Property>
-				<Property Name="SourceCount" Type="Int">2</Property>
-				<Property Name="TgtF_companyName" Type="Str">Kemira Oyj</Property>
-				<Property Name="TgtF_fileDescription" Type="Str">BenchA_v09_973</Property>
-				<Property Name="TgtF_internalName" Type="Str">BenchA_v09_973</Property>
-				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 Kemira Oyj</Property>
-				<Property Name="TgtF_productName" Type="Str">BenchA_v09_973</Property>
-				<Property Name="TgtF_targetfileGUID" Type="Str">{3982FB55-1B26-4B2A-BE50-97920350B668}</Property>
-				<Property Name="TgtF_targetfileName" Type="Str">BenchA_v09_973.exe</Property>
-				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
+			<Item Name="My Installer" Type="Installer">
+				<Property Name="Destination[0].name" Type="Str">BenchA_v09_97</Property>
+				<Property Name="Destination[0].parent" Type="Str">{3912416A-D2E5-411B-AFEE-B63654D690C0}</Property>
+				<Property Name="Destination[0].tag" Type="Str">{4089F59E-3812-4456-84F9-E3CF263AE0AC}</Property>
+				<Property Name="Destination[0].type" Type="Str">userFolder</Property>
+				<Property Name="DestinationCount" Type="Int">1</Property>
+				<Property Name="DistPart[0].flavorID" Type="Str">_full_</Property>
+				<Property Name="DistPart[0].productID" Type="Str">{43879600-D86E-498D-8168-B8BA399E7D29}</Property>
+				<Property Name="DistPart[0].productName" Type="Str">NI USI 17.0.0</Property>
+				<Property Name="DistPart[0].upgradeCode" Type="Str">{D1EDC484-7B17-11D7-83CE-00C0F03EBEBE}</Property>
+				<Property Name="DistPart[1].flavorID" Type="Str">_full_</Property>
+				<Property Name="DistPart[1].productID" Type="Str">{D2A2BFA8-A630-43C4-A1E0-1E8BC47FC8A0}</Property>
+				<Property Name="DistPart[1].productName" Type="Str">NI-DAQmx Runtime 17.0</Property>
+				<Property Name="DistPart[1].upgradeCode" Type="Str">{923C9CD5-A0D8-4147-9A8D-998780E30763}</Property>
+				<Property Name="DistPart[2].flavorID" Type="Str">DefaultFull</Property>
+				<Property Name="DistPart[2].productID" Type="Str">{64F78859-E462-491A-AFD3-F4F58EE22932}</Property>
+				<Property Name="DistPart[2].productName" Type="Str">NI LabVIEW Runtime 2017 (64-bit)</Property>
+				<Property Name="DistPart[2].SoftDep[0].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[0].productName" Type="Str">NI ActiveX Container (64-bit)</Property>
+				<Property Name="DistPart[2].SoftDep[0].upgradeCode" Type="Str">{1038A887-23E1-4289-B0BD-0C4B83C6BA21}</Property>
+				<Property Name="DistPart[2].SoftDep[1].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[1].productName" Type="Str">Math Kernel Libraries</Property>
+				<Property Name="DistPart[2].SoftDep[1].upgradeCode" Type="Str">{699C1AC5-2CF2-4745-9674-B19536EBA8A3}</Property>
+				<Property Name="DistPart[2].SoftDep[10].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[10].productName" Type="Str">NI Deployment Framework 2017</Property>
+				<Property Name="DistPart[2].SoftDep[10].upgradeCode" Type="Str">{838942E4-B73C-492E-81A3-AA1E291FD0DC}</Property>
+				<Property Name="DistPart[2].SoftDep[11].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[11].productName" Type="Str">NI Error Reporting 2017 (64-bit)</Property>
+				<Property Name="DistPart[2].SoftDep[11].upgradeCode" Type="Str">{785BE224-E5B2-46A5-ADCB-55C949B5C9C7}</Property>
+				<Property Name="DistPart[2].SoftDep[2].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[2].productName" Type="Str">NI Logos 5.9</Property>
+				<Property Name="DistPart[2].SoftDep[2].upgradeCode" Type="Str">{5E4A4CE3-4D06-11D4-8B22-006008C16337}</Property>
+				<Property Name="DistPart[2].SoftDep[3].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[3].productName" Type="Str">NI TDM Streaming 17.0</Property>
+				<Property Name="DistPart[2].SoftDep[3].upgradeCode" Type="Str">{4CD11BE6-6BB7-4082-8A27-C13771BC309B}</Property>
+				<Property Name="DistPart[2].SoftDep[4].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[4].productName" Type="Str">NI LabVIEW Web Server 2017 (64-bit)</Property>
+				<Property Name="DistPart[2].SoftDep[4].upgradeCode" Type="Str">{5F449D4C-83B9-492E-986B-6B85A29C431D}</Property>
+				<Property Name="DistPart[2].SoftDep[5].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[5].productName" Type="Str">NI LabVIEW Real-Time NBFifo 2017</Property>
+				<Property Name="DistPart[2].SoftDep[5].upgradeCode" Type="Str">{4F261250-2C38-488D-A9EC-9D1EFCC24D4B}</Property>
+				<Property Name="DistPart[2].SoftDep[6].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[6].productName" Type="Str">NI VC2008MSMs</Property>
+				<Property Name="DistPart[2].SoftDep[6].upgradeCode" Type="Str">{FDA3F8BB-BAA9-45D7-8DC7-22E1F5C76315}</Property>
+				<Property Name="DistPart[2].SoftDep[7].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[7].productName" Type="Str">NI VC2010MSMs</Property>
+				<Property Name="DistPart[2].SoftDep[7].upgradeCode" Type="Str">{EFBA6F9E-F934-4BD7-AC51-60CCA480489C}</Property>
+				<Property Name="DistPart[2].SoftDep[8].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[8].productName" Type="Str">NI VC2015 Runtime</Property>
+				<Property Name="DistPart[2].SoftDep[8].upgradeCode" Type="Str">{D42E7BAE-6589-4570-B6A3-3E28889392E7}</Property>
+				<Property Name="DistPart[2].SoftDep[9].exclude" Type="Bool">false</Property>
+				<Property Name="DistPart[2].SoftDep[9].productName" Type="Str">NI mDNS Responder 14.0</Property>
+				<Property Name="DistPart[2].SoftDep[9].upgradeCode" Type="Str">{9607874B-4BB3-42CB-B450-A2F5EF60BA3B}</Property>
+				<Property Name="DistPart[2].SoftDepCount" Type="Int">12</Property>
+				<Property Name="DistPart[2].upgradeCode" Type="Str">{0A5935DD-3D5B-4396-8769-038C205F86EA}</Property>
+				<Property Name="DistPartCount" Type="Int">3</Property>
+				<Property Name="INST_author" Type="Str">Kemira Oyj</Property>
+				<Property Name="INST_autoIncrement" Type="Bool">true</Property>
+				<Property Name="INST_buildLocation" Type="Path">../builds/BenchA_v09_97/My Installer</Property>
+				<Property Name="INST_buildLocation.type" Type="Str">relativeToCommon</Property>
+				<Property Name="INST_buildSpecName" Type="Str">My Installer</Property>
+				<Property Name="INST_defaultDir" Type="Str">{4089F59E-3812-4456-84F9-E3CF263AE0AC}</Property>
+				<Property Name="INST_productName" Type="Str">BenchA_v09_97</Property>
+				<Property Name="INST_productVersion" Type="Str">1.0.1</Property>
+				<Property Name="InstSpecBitness" Type="Str">64-bit</Property>
+				<Property Name="InstSpecVersion" Type="Str">17008006</Property>
+				<Property Name="MSI_arpCompany" Type="Str">Kemira Oyj</Property>
+				<Property Name="MSI_autoselectDrivers" Type="Bool">true</Property>
+				<Property Name="MSI_distID" Type="Str">{1154EB17-8709-4620-8B9C-22C6EECB5C86}</Property>
+				<Property Name="MSI_hideNonRuntimes" Type="Bool">true</Property>
+				<Property Name="MSI_osCheck" Type="Int">0</Property>
+				<Property Name="MSI_upgradeCode" Type="Str">{91FE3483-88B7-456E-AF76-71CA9A48896C}</Property>
+				<Property Name="RegDest[0].dirName" Type="Str">Software</Property>
+				<Property Name="RegDest[0].dirTag" Type="Str">{DDFAFC8B-E728-4AC8-96DE-B920EBB97A86}</Property>
+				<Property Name="RegDest[0].parentTag" Type="Str">2</Property>
+				<Property Name="RegDestCount" Type="Int">1</Property>
+				<Property Name="Source[0].dest" Type="Str">{4089F59E-3812-4456-84F9-E3CF263AE0AC}</Property>
+				<Property Name="Source[0].File[0].dest" Type="Str">{4089F59E-3812-4456-84F9-E3CF263AE0AC}</Property>
+				<Property Name="Source[0].File[0].name" Type="Str">BenchA_v09_99.exe</Property>
+				<Property Name="Source[0].File[0].Shortcut[0].destIndex" Type="Int">0</Property>
+				<Property Name="Source[0].File[0].Shortcut[0].name" Type="Str">BenchA_v09_99</Property>
+				<Property Name="Source[0].File[0].Shortcut[0].subDir" Type="Str">BenchA_v09_97</Property>
+				<Property Name="Source[0].File[0].ShortcutCount" Type="Int">1</Property>
+				<Property Name="Source[0].File[0].tag" Type="Str">{CDA22CD4-7D35-4B9C-96C2-0A789DEF5C6D}</Property>
+				<Property Name="Source[0].FileCount" Type="Int">1</Property>
+				<Property Name="Source[0].name" Type="Str">BenchA_v09_99</Property>
+				<Property Name="Source[0].tag" Type="Ref">/My Computer/Build Specifications/BenchA_v09_99</Property>
+				<Property Name="Source[0].type" Type="Str">EXE</Property>
+				<Property Name="SourceCount" Type="Int">1</Property>
 			</Item>
 		</Item>
 	</Item>
