@@ -55,11 +55,11 @@ math.cpp(2131): warning C4244: '=': conversion from 'double' to 'long', possible
 math.cpp(2132): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
-serialcomm.cpp(25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-serialcomm.cpp(46): warning C4101: 'mode': unreferenced local variable
-serialcomm.cpp(28): warning C4101: 'msg': unreferenced local variable
-serialcomm.cpp(24): warning C4101: 'ch': unreferenced local variable
+serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+serialcomm.cpp(47): warning C4101: 'mode': unreferenced local variable
+serialcomm.cpp(29): warning C4101: 'msg': unreferenced local variable
+serialcomm.cpp(25): warning C4101: 'ch': unreferenced local variable
   Generating Code...
-     Creating library C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.lib and object C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.exp
-  RS_TEST.vcxproj -> C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.dll
-  RS_TEST.vcxproj -> C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.pdb (Full PDB)
+     Creating library C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.lib and object C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.exp
+  RS_TEST.vcxproj -> C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.dll
+  RS_TEST.vcxproj -> C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.pdb (Full PDB)
