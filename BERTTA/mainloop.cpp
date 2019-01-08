@@ -191,6 +191,32 @@ __declspec(dllexport) double lauda_tin(int port) {
 
 }
 
+__declspec(dllexport) void lauda_mode(int port, int mode) {
+
+	char * msg0;
+	msg0 = "OUT_MODE_01_0\r\n";
+
+	char * msg1;
+	msg1 = "OUT_MODE_01_1\r\n";
+
+	char q_[50] = { 0 };
+	
+		if (mode == 0) {
+
+			strcpy(q_, read(port, 2, msg0).c_str());
+			cout << q_ << endl;
+		}
+
+		if (mode == 1) {
+
+			strcpy(q_, read(port, 2, msg1).c_str());
+			cout << q_ << endl;
+		}
+	
+	Sleep(60);
+
+}
+
 __declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable) {
 
 	char * msg0;
@@ -422,8 +448,8 @@ __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, 
 }
 
 
-/*
 
+/*
 int main() {
 
 	
@@ -431,7 +457,7 @@ int main() {
 
 	for (int(i) = 0; i < 100; i++) {
 	//	ReadRS232(9, 4, 9, 5, 10, 1, 11, 1, 12, 1, 13, 2, 13, 3, 0, 0, res_vec);
-	   MReadRS232(9, 1, 9, 2, 13, 3, 13, 4, 10, 5, 11, 5, 12, 5, 0, 0, res_vec);
+	   MReadRS232(1, 1, 1, 2, 2, 3, 2, 4, 3, 5, 4, 5, 5, 5, 0, 0, res_vec);
 
 		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
 			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
@@ -441,6 +467,7 @@ int main() {
 	getch();
 
 }
+
 
 
 */
