@@ -78,7 +78,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 			OPEN_EXISTING,
 			0,
 			NULL);
-
+		
 		if (INVALID_HANDLE_VALUE == file) {
 			sys_err("ERR_INVALID_HANDLE_VALUE");
 			return "1";
@@ -111,9 +111,9 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 		Sleep(50);
 		WriteFile(file, msg_, buff_size, &written, NULL);
 		if (device == 1) Sleep(100); //100 toimii varmasti
-		Sleep(100);
-
+		
 		ReadFile(file, buffer, sizeof(buffer), &read, NULL);
+		//cout << buffer << endl;
 
 		CloseHandle(file);
 

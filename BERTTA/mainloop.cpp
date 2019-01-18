@@ -24,31 +24,41 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	string val;
 	int msglen;
 
-	if (msg == 1) msg_ = "S\r\n";
-	
-	strcpy(mettler_str, read(port,1,msg_).c_str());
-	Sleep(10);
-	msglen = strlen(mettler_str);
+	double retval = 0;
 
-	int v = 0;
+	while (msglen == 0) {
+		if (msg == 1) msg_ = "SI\r\n";
 
-	for(int i=0;i<msglen;i++) {
-		if (isdigit(mettler_str[i])) {
-			val += mettler_str[i]; v += 1;
-		}
-		if (mettler_str[i] == '.') {
-			val += mettler_str[i]; v += 1;
-		}
-		if (mettler_str[i] == '+') {
-			val += mettler_str[i]; v += 1;
-		}
-		if (mettler_str[i] == '-') {
-			val += mettler_str[i]; v += 1;
-		}
+		strcpy(mettler_str, read(port, 1, msg_).c_str());
+		Sleep(10);
+		msglen = strlen(mettler_str);
 
+		int v = 0;
+
+		for (int i = 0; i < msglen; i++) {
+			if (isdigit(mettler_str[i])) {
+				val += mettler_str[i]; v += 1;
+			}
+			if (mettler_str[i] == '.') {
+				val += mettler_str[i]; v += 1;
+			}
+			if (mettler_str[i] == '+') {
+				val += mettler_str[i]; v += 1;
+			}
+			if (mettler_str[i] == '-') {
+				val += mettler_str[i]; v += 1;
+			}
+
+		}
+		val[v] = '\0';
+		
+
+
+		retval = atof(val.c_str());
 	}
-	val[v] = '\0';
-	return atof(val.c_str());
+
+	return retval;
+	//return atof(val.c_str());
 	
 }
 
@@ -113,6 +123,7 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 	char * msg;
 	msg = "IN_PV_03\r\n";
+	cout << msg << endl;
 
 
 	char q_[50] = { 0 };
@@ -121,7 +132,7 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 	strcpy(q_, read(port, 3, msg).c_str());
 
-//	cout << q_ << endl;
+	cout << q_ << endl;
 
 	//Sleep(60);
 
@@ -190,6 +201,34 @@ __declspec(dllexport) double lauda_tin(int port) {
 	return atof(val.c_str());
 
 }
+
+__declspec(dllexport) void lauda_mode(int port, int mode) {
+
+	char * msg0;
+	msg0 = "OUT_MODE_01_0\r\n";
+
+	char * msg1;
+	msg1 = "OUT_MODE_01_1\r\n";
+
+	char q_[50] = { 0 };
+
+		if (mode == 0) {
+
+			strcpy(q_, read(port, 2, msg0).c_str());
+			cout << q_ << endl;
+		}
+
+		if (mode == 1) {
+
+			strcpy(q_, read(port, 2, msg1).c_str());
+			cout << q_ << endl;
+		}
+
+
+	Sleep(60);
+
+}
+
 
 __declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable) {
 
@@ -422,7 +461,7 @@ __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, 
 }
 
 
-/*
+
 
 int main() {
 
@@ -431,16 +470,26 @@ int main() {
 
 	for (int(i) = 0; i < 100; i++) {
 	//	ReadRS232(9, 4, 9, 5, 10, 1, 11, 1, 12, 1, 13, 2, 13, 3, 0, 0, res_vec);
-	   MReadRS232(9, 1, 9, 2, 13, 3, 13, 4, 10, 5, 11, 5, 12, 5, 0, 0, res_vec);
+//	   MReadRS232(7, 1, 7, 2, 2, 3, 2, 4, 5, 5, 4, 5, 3, 5, 0, 0, res_vec);
 
-		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
-			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
+//		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
+//			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
+
+		cout << lauda_tin(7) << endl;
 
 	}
+
+	
+
+//	for (int i = 0; i < 1000; i++) {
+//		cout << mettler(5, 1) << endl;
+//		Sleep(200);
+//	}
 		
 	getch();
+
 
 }
 
 
-*/
+

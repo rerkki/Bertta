@@ -11,6 +11,8 @@
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="Arttu_v09_97.vi" Type="VI" URL="../Arttu_v09_97.vi"/>
+		<Item Name="Arttu_v09_99.vi" Type="VI" URL="../Arttu_v09_99.vi"/>
+		<Item Name="LaudaLedCtrl2.vi" Type="VI" URL="../LaudaLedCtrl2.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="__closeStorageFromObject.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/storage/Storage.llb/__closeStorageFromObject.vi"/>
@@ -522,6 +524,7 @@
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 				<Item Name="Write File+ (string).vi" Type="VI" URL="/&lt;vilib&gt;/Utility/file.llb/Write File+ (string).vi"/>
 			</Item>
+			<Item Name="BERTTA.dll" Type="Document" URL="../../../../../../../Desktop/Bertta-Bertta_deploy/Bertta-Bertta_deploy/BERTTA/x64/Debug/BERTTA.dll"/>
 			<Item Name="BERTTA.dll" Type="Document" URL="../../x64/Debug/BERTTA.dll"/>
 			<Item Name="count_rising_edge.vi" Type="VI" URL="../../x64/Debug/count_rising_edge.vi"/>
 			<Item Name="filenameparser_09.vi" Type="VI" URL="../../x64/Debug/filenameparser_09.vi"/>
@@ -544,6 +547,46 @@
 			<Item Name="STEPINDICATOR_091_4.vi" Type="VI" URL="../../x64/Debug/STEPINDICATOR_091_4.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
+			<Item Name="Arttu_v09_99" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{4BFD09A9-400D-44DC-B590-65DE733D757C}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{3A24DB92-9916-4B8C-B5A5-6FF6DC44E423}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="App_winsec.description" Type="Str">http://www.Kemira.com</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{E109342E-B034-41C2-8087-FA4504B914B8}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">Arttu_v09_99</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/Arttu_v09_99</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{9DA6E611-21D6-46A6-AAD6-F62D4A4EED39}</Property>
+				<Property Name="Bld_version.build" Type="Int">2</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">Arttu_v09_99.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/Arttu_v09_99/Arttu_v09_99.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/Arttu_v09_99/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{59111A0F-1047-41EE-9C76-40BFEF6F1AB9}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/Arttu_v09_99.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">Kemira</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">Arttu_v09_99</Property>
+				<Property Name="TgtF_internalName" Type="Str">Arttu_v09_99</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2019 Kemira</Property>
+				<Property Name="TgtF_productName" Type="Str">Arttu_v09_99</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{9063DA24-D7C6-4352-8774-5B9E2C57A311}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">Arttu_v09_99.exe</Property>
+			</Item>
 			<Item Name="Arttu_v09_972" Type="EXE">
 				<Property Name="App_copyErrors" Type="Bool">true</Property>
 				<Property Name="App_INI_aliasGUID" Type="Str">{A0B83C52-4C8D-438D-8DF9-9DD59DD7A015}</Property>
@@ -677,6 +720,46 @@
 				<Property Name="Source[0].tag" Type="Ref">/My Computer/Build Specifications/Arttu_v09_972</Property>
 				<Property Name="Source[0].type" Type="Str">EXE</Property>
 				<Property Name="SourceCount" Type="Int">1</Property>
+			</Item>
+			<Item Name="Arttu_v10_TEST" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{C578A646-8789-4193-BF70-531324410D24}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{82AE8817-10B8-4274-98BF-4E03F6C5BDEE}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="App_winsec.description" Type="Str">http://www.Kemira.com</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{0512373D-88B8-4632-8D1B-84745EDFED6D}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">Arttu_v10_TEST</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/Arttu_v10_TEST</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{40F1641D-0F10-4463-AA72-CD2E99DA0776}</Property>
+				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">Arttu_v10_TEST.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/Arttu_v10_TEST/Arttu_v10_TEST.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/Arttu_v10_TEST/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{01A51BE5-A852-44E1-8A80-B503DABCB73B}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/Arttu_v09_97.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">Kemira</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">Arttu_v10_TEST</Property>
+				<Property Name="TgtF_internalName" Type="Str">Arttu_v10_TEST</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 Kemira</Property>
+				<Property Name="TgtF_productName" Type="Str">Arttu_v10_TEST</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{7BBF3984-3564-47CC-8BFE-C0279699FC2D}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">Arttu_v10_TEST.exe</Property>
 			</Item>
 		</Item>
 	</Item>
