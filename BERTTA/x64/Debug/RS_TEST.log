@@ -1,65 +1,64 @@
 ﻿  mainloop.cpp
-mainloop.cpp(31): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-mainloop.cpp(29): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(90): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-mainloop.cpp(84): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(128): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-mainloop.cpp(122): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(169): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-mainloop.cpp(163): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(207): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(213): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: see declaration of 'strcpy'
-mainloop.cpp(226): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-mainloop.cpp(239): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(31): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(29): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(90): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(84): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(128): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(122): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(169): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(163): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(207): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(213): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(226): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(239): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
-math.cpp(15): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
-math.cpp(34): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
-math.cpp(81): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-math.cpp(150): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-math.cpp(223): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-math.cpp(365): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
-math.cpp(1086): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1196): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1201): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1206): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1211): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1216): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1270): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
-math.cpp(1294): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1412): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1418): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1424): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1430): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1436): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1491): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1681): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1768): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1774): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1780): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1786): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1792): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1843): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
-math.cpp(1901): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2131): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-math.cpp(2132): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(15): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(34): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdlib.h(1334): note: see declaration of 'itoa'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(81): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(150): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(223): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(365): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1086): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1196): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1201): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1206): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1211): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1216): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1270): warning C4244: '=': conversion from 'time_t' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1294): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1412): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1418): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1424): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1430): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1436): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1491): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1681): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1768): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1774): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1780): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1786): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1792): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1843): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1901): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(2131): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(2132): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
-serialcomm.cpp(25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-serialcomm.cpp(46): warning C4101: 'mode': unreferenced local variable
-serialcomm.cpp(28): warning C4101: 'msg': unreferenced local variable
-serialcomm.cpp(24): warning C4101: 'ch': unreferenced local variable
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\serialcomm.cpp(25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\serialcomm.cpp(46): warning C4101: 'mode': unreferenced local variable
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\serialcomm.cpp(28): warning C4101: 'msg': unreferenced local variable
+c:\users\p3cn\onedrive - kemira oyj\documents\github\bertta\bertta\serialcomm.cpp(24): warning C4101: 'ch': unreferenced local variable
   Generating Code...
-     Creating library C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.lib and object C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.exp
-  RS_TEST.vcxproj -> C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.dll
-  RS_TEST.vcxproj -> C:\Users\shresplab\OneDrive - Kemira Oyj\Documents\Visual Studio 2017\Projects\Bertta\BERTTA\x64\Debug\BERTTA.pdb (Full PDB)
+     Creating library C:\Users\p3cn\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.lib and object C:\Users\p3cn\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.exp
+  RS_TEST.vcxproj -> C:\Users\p3cn\OneDrive - Kemira Oyj\Documents\GitHub\Bertta\BERTTA\x64\Debug\BERTTA.dll

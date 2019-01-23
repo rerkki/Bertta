@@ -19,12 +19,13 @@ __declspec(dllexport) void ismatec(int port, double speed);
 __declspec(dllexport) void heidolph(int port, int speed);
 __declspec(dllexport) double mettler(int port, int msg);
 __declspec(dllexport) void lauda(int port, double set_temp);
-__declspec(dllexport) void Compute_PID(double errSum, double lastErr, double last_time, double last_timeChange, double Input, double Setpoint, double kp, double ki, double kd, double * params);
 __declspec(dllexport) void elapsed( long int last_time, long int * params);
 __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold, int seq_previous, int * params);
 __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, long int elapsed_previous, long int elapsed_total, long int * params);
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params);
 __declspec(dllexport) long int millisec();
+__declspec(dllexport) void millisec2(long int lastTime, long int * params);
+__declspec(dllexport) long int millisec3();
 __declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params);
 __declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int bal_start, long int step, long int * params);
 __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double * target, double * time_, double * params);
@@ -49,4 +50,10 @@ __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, 
 __declspec(dllexport) void MWriteRS232(int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4);
 __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params);
 __declspec(dllexport) void rising_edge(int reset, int input, int prev_input, int prev_count, int * params);
+__declspec(dllexport) void FlowControl(long int lastTime, long int lastErr, long int errSum, double Input, double Setpoint, double kp, double ki, double kd, long int * PIDparams);
+__declspec(dllexport) void FlowControl2(double lastTime, double lastErr, double errSum, double Input, double Setpoint, double kp, double ki, double kd, double * PIDparams);
+__declspec(dllexport) void millisec4(double lastTime, double * params);
+__declspec(dllexport) void FlowIsma(double lastTime, double lastErr, double lastWeight, double errSum, double Setpoint_W, double Setpoint_T, double kp, double ki, double kd, int port_isma, int port_mettler, double * PIDparams);
+__declspec(dllexport) void mettler2(int port, int msg, double * weight);
+__declspec(dllexport) double mettler1(int port, int msg);
 }

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
+#include <stdlib.h>
 
 // PID parameters
 double Setpoint, Input, Output;
@@ -24,7 +25,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	string val;
 	int msglen;
 
-	if (msg == 1) msg_ = "S\r\n";
+	if (msg == 1) msg_ = "SI\r\n";
 	
 	strcpy(mettler_str, read(port,1,msg_).c_str());
 	Sleep(10);
@@ -48,8 +49,66 @@ __declspec(dllexport) double mettler(int port, int msg) {
 
 	}
 	val[v] = '\0';
-	return atof(val.c_str());
+	return double(atof(val.c_str()));
 	
+}
+
+// Function to call Mettler balance, returns weight in grams
+__declspec(dllexport) double mettler1(int port, int msg) {
+
+	char * msg_;
+	char mettler_str[50] = { 0 };
+	char* pEnd;
+	string val;
+	int msglen;
+	int a;
+
+	int v = 0;
+
+	if (msg == 1) msg_ = "SI\r\n";
+
+//	strcpy(mettler_str, read(port, 1, msg_).c_str());
+//	Sleep(10);
+
+	strcpy(mettler_str, "  SI =  -10.04 g  ");
+
+	msglen = strlen(mettler_str);
+
+	for (int i = 0; i<msglen; i++) {
+		if (isdigit(mettler_str[i])) {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '.') {
+	//		val += mettler_str[i]; 
+			v += 1; a = v;
+		}
+		if (mettler_str[i] == '+') {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '-') {
+			val += mettler_str[i]; v += 1;
+
+		}
+
+	}
+
+//	val[v] = '\0';
+
+	int c = pow(10, v - a);
+
+//	cout << val << "   " << v << "   " << a << "   " << c << endl;
+
+	return strtod(val.c_str(), &pEnd)/c;
+
+
+}
+
+// Function to call Mettler balance, returns weight in grams
+__declspec(dllexport) void mettler2(int port, int msg, double * weight) {
+
+	double w = mettler1(port, msg);
+	weight[0] = w*1000;
+
 }
 
 //muutetaan: palauttaa rpm_arvon (int)
@@ -319,12 +378,15 @@ __declspec(dllexport) double device(int port, int dev) {
 
 	double retval = 0;
 
-	if (dev == 1) retval = lauda_tex(port);
-	if (dev == 2) retval = lauda_tin(port);
-	if (dev == 3) retval = hei_query(port, 1);
-	if (dev == 4) retval = hei_query(port, 2);
-	if (dev == 5) retval = mettler(port, 1);
-	if (dev < 1 || dev > 5) retval = 0;
+	if (port > 0) {
+
+		if (dev == 1) retval = lauda_tex(port);
+		if (dev == 2) retval = lauda_tin(port);
+		if (dev == 3) retval = hei_query(port, 1);
+		if (dev == 4) retval = hei_query(port, 2);
+		if (dev == 5) retval = mettler(port, 1);
+		if (dev < 1 || dev > 5) retval = 0;
+	}
 
 	return retval;
 }
@@ -423,24 +485,33 @@ __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, 
 
 
 /*
-
 int main() {
 
-	
-	double res_vec[8] = { 0 };
+	//	ismatec(73, 100);
+	//	lauda(1, 23.45);
+	cout << mettler1(35,1) << endl;
 
-	for (int(i) = 0; i < 100; i++) {
-	//	ReadRS232(9, 4, 9, 5, 10, 1, 11, 1, 12, 1, 13, 2, 13, 3, 0, 0, res_vec);
-	   MReadRS232(9, 1, 9, 2, 13, 3, 13, 4, 10, 5, 11, 5, 12, 5, 0, 0, res_vec);
-
-		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
-			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
-
-	}
-		
 	getch();
 
 }
 
 
+
+	double res_vec[8] = { 0 };
+
+	for (int(i) = 0; i < 100; i++) {
+	//	ReadRS232(9, 4, 9, 5, 10, 1, 11, 1, 12, 1, 13, 2, 13, 3, 0, 0, res_vec);
+	   MReadRS232(25, 1, 25, 2, 27, 3, 27, 4, 29, 5, 30, 5, 31, 5, 0, 0, res_vec);
+
+		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
+			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
+
+	}
+	
+		
+	getch();
+
+}
+
 */
+

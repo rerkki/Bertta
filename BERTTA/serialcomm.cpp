@@ -66,6 +66,27 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 	if(com_port == 18) port_name = L"\\\\.\\COM18";
 	if(com_port == 19) port_name = L"\\\\.\\COM19";
 	if (com_port == 20) port_name = L"\\\\.\\COM20";
+	if (com_port == 21) port_name = L"\\\\.\\COM21";
+	if (com_port == 22) port_name = L"\\\\.\\COM22";
+	if (com_port == 23) port_name = L"\\\\.\\COM23";
+	if (com_port == 24) port_name = L"\\\\.\\COM24";
+	if (com_port == 25) port_name = L"\\\\.\\COM25";
+	if (com_port == 26) port_name = L"\\\\.\\COM26";
+	if (com_port == 27) port_name = L"\\\\.\\COM27";
+	if (com_port == 28) port_name = L"\\\\.\\COM28";
+	if (com_port == 29) port_name = L"\\\\.\\COM29";
+	if (com_port == 30) port_name = L"\\\\.\\COM30";
+	if (com_port == 31) port_name = L"\\\\.\\COM31";
+	if (com_port == 32) port_name = L"\\\\.\\COM32";
+	if (com_port == 33) port_name = L"\\\\.\\COM33";
+	if (com_port == 34) port_name = L"\\\\.\\COM34";
+	if (com_port == 35) port_name = L"\\\\.\\COM35";
+	if (com_port == 36) port_name = L"\\\\.\\COM36";
+	if (com_port == 37) port_name = L"\\\\.\\COM37";
+	if (com_port == 38) port_name = L"\\\\.\\COM38";
+	if (com_port == 39) port_name = L"\\\\.\\COM39";
+	if (com_port == 40) port_name = L"\\\\.\\COM40";
+	if (com_port == 73) port_name = L"\\\\.\\COM73";
 
     char init[] = "";
 

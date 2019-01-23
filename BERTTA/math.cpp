@@ -305,6 +305,150 @@ __declspec(dllexport) long int millisec() {
 
 }
 
+__declspec(dllexport) long int millisec3() {
+
+	//	long unsigned int sysTime = time(0);
+	//	long unsigned int sysTimeMS = sysTime * 1000;
+
+	//	return sysTimeMS;
+
+	SYSTEMTIME time;
+	GetSystemTime(&time);
+	LONG time_ms = (time.wMinute * 60 * 1000) + (time.wSecond * 1000) + time.wMilliseconds;
+
+	return time_ms;
+
+}
+
+
+
+__declspec(dllexport) void millisec4(double lastTime, double * params) {
+
+	SYSTEMTIME time;
+	GetSystemTime(&time);
+
+	LONG time_ms = (time.wMinute * 60 * 1000) + (time.wSecond * 1000) + time.wMilliseconds;
+
+
+	params[0] = double(time_ms);
+
+	params[1] = double(time_ms - lastTime);
+
+}
+
+
+__declspec(dllexport) void millisec2(long int lastTime, long int * params) {
+
+	//	long unsigned int sysTime = time(0);
+	//	long unsigned int sysTimeMS = sysTime * 1000;
+
+	//	return sysTimeMS;
+
+	SYSTEMTIME time;
+	GetSystemTime(&time);
+
+//	LONG time_ms = (time.wMinute * 60* 1000) + (time.wSecond * 1000) + time.wMilliseconds;
+	LONG time_ms = (time.wMinute * 60 * 1000) + (time.wSecond * 1000) + time.wMilliseconds;
+	
+
+	params[0] = time_ms;
+
+	params[1] = time_ms - lastTime;
+
+}
+
+
+
+__declspec(dllexport) void FlowControl (long int lastTime, long int lastErr, long int errSum, double Input, double Setpoint, double kp, double ki, double kd, long int * PIDparams) {
+
+
+	long int now = millisec3();
+	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 6000;
+
+	double error = Setpoint - Input;
+	double errSum_ = (double)errSum/1000 + (error * (double)timeChange);
+	double dErr = (error - (double)lastErr/1000) / (double)timeChange;
+	double Output_ = kp * error + ki * errSum_ + kd * dErr;
+
+
+	PIDparams[0] = now; //lastTime
+	PIDparams[1] = timeChange;
+	PIDparams[2] = (long int)(error * 1000);
+	PIDparams[3] = (long int)(errSum_* 1000);
+	PIDparams[4] = (long int)(Output_ * 1000);
+
+}
+
+
+__declspec(dllexport) void FlowControl2(double lastTime, double lastErr, double errSum, double Input, double Setpoint, double kp, double ki, double kd, double * PIDparams) {
+
+	long int now = millisec3();
+	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 6000;
+
+	double error = Setpoint - Input;
+	double errSum_ = errSum + (error * timeChange);
+	double dErr = (error - lastErr) / timeChange;
+	double Output_ = kp * error + ki * errSum_ + kd * dErr;
+
+	PIDparams[0] = double(now); //lastTime
+	PIDparams[1] = double(timeChange);
+	PIDparams[2] = error;
+	PIDparams[3] = errSum_;
+	PIDparams[4] = Output_;
+
+
+}
+
+__declspec(dllexport) void FlowIsma(double lastTime, double lastErr, double lastWeight, double errSum, double Setpoint_W, double Setpoint_T, double kp, double ki, double kd, int port_isma, int port_mettler, double * PIDparams) {
+
+	double weightChange = 0;
+	double weight = 0;
+	long int now = millisec3();
+	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 6000;
+	if (timeChange < 1) timeChange = 1;
+
+	weight = mettler1(port_mettler, 1);
+	weightChange = weight - lastWeight;
+
+	if (weightChange < 0) weightChange = 0;
+
+
+	double fr = weightChange / (double(timeChange)/60000); //g/min
+
+	double Input = fr * 4.5139;
+
+	double Setpoint = (Setpoint_W / Setpoint_T) *4.5139;
+
+	double error = Setpoint - Input;
+	double errSum_ = errSum + (error * timeChange);
+	double dErr = (error - lastErr) / timeChange;
+	double Output_ = kp * error + ki * errSum_ + kd * dErr;
+
+	if (errSum < 0) errSum = 0;
+	if (errSum > 10000) errSum = 10000;
+
+
+	if (Output_ > 100) Output_ = 100;
+	if (Output_ < 0) Output_ = 0;
+
+//	ismatec(port_isma, 20);
+
+	PIDparams[0] =  double(now); //lastTime
+	PIDparams[1] =  double(timeChange);
+	PIDparams[2] =  error;
+	PIDparams[3] =  errSum_;
+	PIDparams[4] =  Output_;
+	PIDparams[5] =  weight;
+	PIDparams[6] =  Setpoint;
+
+}
+
+
+
+
 __declspec(dllexport) void elapsed(long int last_time, long int * params) {
 
 	long int time_now = millisec();
@@ -1890,6 +2034,7 @@ __declspec(dllexport) long int time_left(long int rt, long int start_time) {
 
 }
 
+/*
 __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double last_time, double last_timeChange, double Input, double Setpoint, double kp, double ki, double kd, double * params)
 {
 	time_t seconds;
@@ -1918,6 +2063,7 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 	params[4] = timeChange;
 
 }
+*/
 
 __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params) {
 
