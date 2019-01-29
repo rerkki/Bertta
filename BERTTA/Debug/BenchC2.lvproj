@@ -11,6 +11,7 @@
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="BenchC2.vi" Type="VI" URL="../BenchC2.vi"/>
+		<Item Name="BenchC2_DEV.vi" Type="VI" URL="../BenchC2_DEV.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="__closeStorageFromObject.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/storage/Storage.llb/__closeStorageFromObject.vi"/>
@@ -536,6 +537,7 @@
 			<Item Name="nilvaiu.dll" Type="Document" URL="nilvaiu.dll">
 				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
 			</Item>
+			<Item Name="PID_Flow Ctrl_2.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2.vi"/>
 			<Item Name="pumpsec_09_P1.vi" Type="VI" URL="../../x64/Debug/pumpsec_09_P1.vi"/>
 			<Item Name="pumpsec_09_P2.vi" Type="VI" URL="../../x64/Debug/pumpsec_09_P2.vi"/>
 			<Item Name="pumpsec_09_P3.vi" Type="VI" URL="../../x64/Debug/pumpsec_09_P3.vi"/>
@@ -583,6 +585,46 @@
 				<Property Name="TgtF_productName" Type="Str">BenchC2</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{BFEF9D04-5523-4E09-A7BE-5C11C531FFDA}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">BenchC2.exe</Property>
+			</Item>
+			<Item Name="BenchC2_DEV" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{A824A326-1A13-4683-B756-150B1DAAFAD3}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{E6F271A9-553A-4581-9692-A03230BB1732}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="App_winsec.description" Type="Str">http://www.Kemira.com</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{3038E95A-2321-48F4-8669-DF22E9FF8023}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">BenchC2_DEV</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/BenchC2_DEV</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{A790C363-FAF9-479F-A9AA-6AA24676D647}</Property>
+				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">BenchC2_DEV.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchC2_DEV/BenchC2_DEV.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchC2_DEV/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{2257DD93-F3B0-4234-8F2D-9FC775597558}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/BenchC2_DEV.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">Kemira</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">BenchC2_DEV</Property>
+				<Property Name="TgtF_internalName" Type="Str">BenchC2_DEV</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2019 Kemira</Property>
+				<Property Name="TgtF_productName" Type="Str">BenchC2_DEV</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{38F70638-01F4-403F-889B-49042D9A92F6}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">BenchC2_DEV.exe</Property>
 			</Item>
 		</Item>
 	</Item>

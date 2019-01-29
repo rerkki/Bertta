@@ -50,4 +50,9 @@ __declspec(dllexport) void MWriteRS232(int port1, int dev1, double param1, int p
 __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params);
 __declspec(dllexport) void rising_edge(int reset, int input, int prev_input, int prev_count, int * params);
 __declspec(dllexport) void lauda_mode(int port, int mode);
+__declspec(dllexport) long int millisec3();
+__declspec(dllexport) double mettler1(int port, int msg);
+__declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams);
+
+
 }

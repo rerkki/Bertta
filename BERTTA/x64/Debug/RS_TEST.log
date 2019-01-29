@@ -1,26 +1,31 @@
 ﻿  mainloop.cpp
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(31): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(29): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(41): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(60): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(39): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(90): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(84): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(73): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(262): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(260): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(128): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(122): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(321): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(315): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(169): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(163): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(359): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(353): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(206): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(400): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(394): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(212): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(437): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(233): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(443): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(239): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(464): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(252): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(265): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(470): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: see declaration of 'strcpy'
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(483): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(496): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(15): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'

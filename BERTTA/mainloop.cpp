@@ -15,6 +15,237 @@ double Setpoint, Input, Output;
 double Kp=2, Ki=5, Kd=1;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, 1);
 
+__declspec(dllexport) long int millisec3() {
+
+	SYSTEMTIME time;
+	GetSystemTime(&time);
+	LONG time_ms = (time.wMinute * 60 * 1000) + (time.wSecond * 1000) + time.wMilliseconds;
+	return time_ms;
+
+}
+
+__declspec(dllexport) double mettler1(int port, int msg) {
+
+	char * msg_;
+	char mettler_str[50] = { 0 };
+	char* pEnd;
+	string val;
+	int msglen;
+	int a;
+	int v = 0;
+
+	if (msg == 1) msg_ = "SI\r\n";
+
+	strcpy(mettler_str, read(port, 1, msg_).c_str()); 
+	Sleep(10); 
+	msglen = strlen(mettler_str);
+
+	for (int i = 0; i < msglen; i++) {
+		if (isdigit(mettler_str[i])) {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '.') {
+			//val += mettler_str[i];  
+			v += 1; a = v;
+		}
+		if (mettler_str[i] == '+') {
+			val += mettler_str[i]; v += 1;
+		}
+		if (mettler_str[i] == '-') {
+			val += mettler_str[i]; v += 1;
+		}
+
+	}
+		//	val[v] = '\0'; 
+		int c = pow(10, v - a);
+		//	cout << val << "   " << v << "   " << a << "   " << c << endl; 
+
+		return strtod(val.c_str(), &pEnd) / c;
+
+}
+
+
+
+__declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
+
+	long int now = millisec3();
+	double RPM = 0;
+	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 6000;
+	if (timeChange < 1) timeChange = 1;
+
+	if (enable == 1) {
+		elapsed += double(timeChange);
+	}
+
+	double weightChange =  lastWeight - weight;
+
+	double Setpoint_W_ = Setpoint_W[0];
+	double Setpoint_T_ = Setpoint_T[0];
+	double step = 0;
+	double step_amount = 0;
+	double time_to_target = 0;
+	double LED1 = 0;
+	double LED2 = 0;
+	double LED3 = 0;
+	double LED4 = 0;
+	double LED5 = 0;
+	double LED_stop = 0;
+	double LED_manual = 0;
+	double elapsed_step = 0;
+	double PumpCTRL = 0;
+
+	if (step == 0) {
+		step_amount = -1 * weight;
+		elapsed_step = elapsed / 1000;
+	}
+
+	if (-1 * weight > Setpoint_W[0]) {
+		Setpoint_W_ = Setpoint_W[1];
+		Setpoint_T_ = Setpoint_T[1];
+		step_amount = -1 * weight - Setpoint_W[0];
+		elapsed_step = (elapsed - Setpoint_T[0] * 60000) / 1000;
+		step = 1;
+	}
+	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1]) {
+		Setpoint_W_ = Setpoint_W[2];
+		Setpoint_T_ = Setpoint_T[2];
+		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1];
+		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1]) * 60000)/1000;
+		step = 2;
+	}
+	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2]) {
+		Setpoint_W_ = Setpoint_W[3];
+		Setpoint_T_ = Setpoint_T[3];
+		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2];
+		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2]) * 60000)/1000;
+		step = 3;
+	}
+	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3]) {
+		Setpoint_W_ = Setpoint_W[4];
+		Setpoint_T_ = Setpoint_T[4];
+		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3];
+		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3]) * 60000)/1000;
+		step = 4;
+	}
+	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) {
+		Setpoint_W_ = 0;
+		Setpoint_T_ = 1;
+		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4];
+		elapsed_step = 0;// (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4]) * 60000)/1000;
+		elapsed = 0;
+		step = 5;
+	}
+
+	if (elapsed_step < 0) elapsed_step = 0;
+
+	if (manual == 0) {
+		if (step == 0) LED1 = 1;
+		if (step == 1) LED2 = 1;
+		if (step == 2) LED3 = 1;
+		if (step == 3) LED4 = 1;
+		if (step == 4) LED5 = 1;
+		if (step == 5) LED_stop = 1;
+	}
+
+	double fr = 0.1* weightChange*60000 / double(timeChange) + 0.9 * lastFr; //g/min 
+
+	if (fr > 1.2 * Setpoint_W_ / Setpoint_T_) fr = 1.2 * Setpoint_W_ / Setpoint_T_;
+	if (fr < 0.8 * Setpoint_W_ / Setpoint_T_) fr = 0.8 * Setpoint_W_ / Setpoint_T_;
+
+	double Input = fr * 4.5139;
+
+	double Setpoint = (Setpoint_W_ / Setpoint_T_) * 4.5139;
+
+	double error = 0.2*(Setpoint - Input) + 0.8*lastErr;
+	double errSum_ = errSum + (error * double(timeChange)/60000);
+	double dErr = (error - lastErr) / (double(timeChange)/60000);
+	double Output_ = kp * error + ki * errSum_ + kd * dErr;
+
+	RPM = Setpoint + Output_;
+
+	if (RPM > 1.2 * Setpoint) {
+		RPM = 1.2 * Setpoint;
+	}
+	if (RPM < 0.8 * Setpoint) {
+		RPM = 0.8 * Setpoint;
+	}
+
+	if (lastSP != Setpoint) count = 0;
+
+	if (count < 3) {
+		RPM = Setpoint;
+		fr = Setpoint_W_ / Setpoint_T_;
+		count += 1;
+	}
+
+	if (enable == 0) {
+		RPM = 0;
+		error = 0;
+		errSum_ = 0;
+		dErr = 0;
+		fr = Setpoint_W_ / Setpoint_T_;
+		count = 0;
+	}
+
+	if (fr > 0) {
+		time_to_target = 60 * (Setpoint_W_ - step_amount) / fr;
+		PumpCTRL = fr * 100 / (Setpoint_W_ / Setpoint_T_);
+	}
+	else {
+		time_to_target = 0;
+		PumpCTRL = 0;
+	}
+
+	if (-1 * weight > (Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) - 1) RPM = 0.3*Setpoint;
+
+
+	if (manual == 1) {
+		RPM = FrManual * 4.5139;
+		LED_manual = 1;
+		LED1 = 0;
+		LED2 = 0;
+		LED3 = 0;
+		LED4 = 0;
+		LED5 = 0;
+		LED_stop = 0;
+	}
+
+	if (reset == 1) {
+		step = 0;
+	}
+
+
+	PIDparams[0] = double(now); //lastTime 
+	PIDparams[1] = double(timeChange);
+	PIDparams[2] = error;
+	PIDparams[3] = errSum_;
+	PIDparams[4] = Output_;
+	PIDparams[5] = weight;
+	PIDparams[6] = Setpoint;
+	PIDparams[7] = fr;
+	PIDparams[8] = RPM;
+	PIDparams[9] = weightChange;
+	PIDparams[10] = count;
+	PIDparams[11] = step + 1;
+	PIDparams[12] = LED1;
+	PIDparams[13] = LED2;
+	PIDparams[14] = LED3;
+	PIDparams[15] = LED4;
+	PIDparams[16] = LED5;
+	PIDparams[17] = LED_stop;
+	PIDparams[18] = LED_manual;
+	PIDparams[19] = step_amount;
+	PIDparams[20] = time_to_target;
+	PIDparams[21] = Setpoint_W_;
+	PIDparams[22] = Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4];
+	PIDparams[23] = elapsed;
+	PIDparams[24] = elapsed_step;
+	PIDparams[25] = PumpCTRL;
+
+}
+
+
 
 // Function to call Mettler balance, returns weight in grams
 __declspec(dllexport) double mettler(int port, int msg) {
@@ -24,7 +255,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	string val;
 	int msglen;
 
-	if (msg == 1) msg_ = "S\r\n";
+	if (msg == 1) msg_ = "SI\r\n";
 	
 	strcpy(mettler_str, read(port,1,msg_).c_str());
 	Sleep(10);
@@ -283,56 +514,56 @@ __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, i
 
 __declspec(dllexport) void ReadRS232(int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params) {
 
-	if (dev1 == 1) params[0] = mettler(port1, 1);
+	if (dev1 == 1) params[0] = mettler1(port1, 1);
 	if (dev1 == 2) params[0] = hei_query(port1, 1);
 	if (dev1 == 3) params[0] = hei_query(port1, 2);
 	if (dev1 == 4) params[0] = lauda_tex(port1);
 	if (dev1 == 5) params[0] = lauda_tin(port1);
 	if (dev1 == 0) params[0] = 0;
 
-	if (dev2 == 1) params[1] = mettler(port2, 1);
+	if (dev2 == 1) params[1] = mettler1(port2, 1);
 	if (dev2 == 2) params[1] = hei_query(port2, 1);
 	if (dev2 == 3) params[1] = hei_query(port2, 2);
 	if (dev2 == 4) params[1] = lauda_tex(port2);
 	if (dev2 == 5) params[1] = lauda_tin(port2);
 	if (dev2 == 0) params[1] = 0;
 
-	if (dev3 == 1) params[2] = mettler(port3, 1);
+	if (dev3 == 1) params[2] = mettler1(port3, 1);
 	if (dev3 == 2) params[2] = hei_query(port3, 1);
 	if (dev3 == 3) params[2] = hei_query(port3, 2);
 	if (dev3 == 4) params[2] = lauda_tex(port3);
 	if (dev3 == 5) params[2] = lauda_tin(port3);
 	if (dev3 == 0) params[2] = 0;
 
-	if (dev4 == 1) params[3] = mettler(port4, 1);
+	if (dev4 == 1) params[3] = mettler1(port4, 1);
 	if (dev4 == 2) params[3] = hei_query(port4, 1);
 	if (dev4 == 3) params[3] = hei_query(port4, 2);
 	if (dev4 == 4) params[3] = lauda_tex(port4);
 	if (dev4 == 5) params[3] = lauda_tin(port4);
 	if (dev4 == 0) params[3] = 0;
 
-	if (dev5 == 1) params[4] = mettler(port5, 1);
+	if (dev5 == 1) params[4] = mettler1(port5, 1);
 	if (dev5 == 2) params[4] = hei_query(port5, 1);
 	if (dev5 == 3) params[4] = hei_query(port5, 2);
 	if (dev5 == 4) params[4] = lauda_tex(port5);
 	if (dev5 == 5) params[4] = lauda_tin(port5);
 	if (dev5 == 0) params[4] = 0;
 
-	if (dev6 == 1) params[5] = mettler(port6, 1);
+	if (dev6 == 1) params[5] = mettler1(port6, 1);
 	if (dev6 == 2) params[5] = hei_query(port6, 1);
 	if (dev6 == 3) params[5] = hei_query(port6, 2);
 	if (dev6 == 4) params[5] = lauda_tex(port6);
 	if (dev6 == 5) params[5] = lauda_tin(port6);
 	if (dev6 == 0) params[5] = 0;
 
-	if (dev7 == 1) params[6] = mettler(port7, 1);
+	if (dev7 == 1) params[6] = mettler1(port7, 1);
 	if (dev7 == 2) params[6] = hei_query(port7, 1);
 	if (dev7 == 3) params[6] = hei_query(port7, 2);
 	if (dev7 == 4) params[6] = lauda_tex(port7);
 	if (dev7 == 5) params[6] = lauda_tin(port7);
 	if (dev7 == 0) params[6] = 0;
 
-	if (dev8 == 1) params[7] = mettler(port8, 1);
+	if (dev8 == 1) params[7] = mettler1(port8, 1);
 	if (dev8 == 2) params[7] = hei_query(port8, 1);
 	if (dev8 == 3) params[7] = hei_query(port8, 2);
 	if (dev8 == 4) params[7] = lauda_tex(port8);
@@ -361,8 +592,9 @@ __declspec(dllexport) void dev_ctrl(int port, int dev, double param) {
 
 	if (dev == 1) lauda(port, param);
 	if (dev == 2) ismatec(port, param * 9);
+	if (dev == 3) ismatec(port, param); //PID_FLOW
 
-	if (dev < 1 || dev > 2) retval = 0;
+	if (dev < 1 || dev > 3) retval = 0;
 
 }
 
