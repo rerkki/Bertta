@@ -66,7 +66,7 @@ __declspec(dllexport) double mettler1(int port, int msg) {
 
 
 
-__declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
+__declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
 
 	long int now = millisec3();
 	double RPM = 0;
@@ -94,6 +94,12 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double Fr
 	double LED_manual = 0;
 	double elapsed_step = 0;
 	double PumpCTRL = 0;
+	double tube_coeff = 0;
+
+	if (tube == 0) tube_coeff = 4.5139; //purple tube
+	if (tube == 1) tube_coeff = 16.471; //white tube
+
+
 
 	if (step == 0) {
 		step_amount = -1 * weight;
@@ -148,16 +154,24 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double Fr
 		if (step == 5) LED_stop = 1;
 	}
 
-	double fr = 0.1* weightChange*60000 / double(timeChange) + 0.9 * lastFr; //g/min 
+//	double fr = 0.3* weightChange*60000 / double(timeChange) + 0.7 * lastFr; // g / min 
+	double fr = 0.02* weightChange * 60000 / double(timeChange) + 0.98 * lastFr; // g / min 
 
-	if (fr > 1.2 * Setpoint_W_ / Setpoint_T_) fr = 1.2 * Setpoint_W_ / Setpoint_T_;
-	if (fr < 0.8 * Setpoint_W_ / Setpoint_T_) fr = 0.8 * Setpoint_W_ / Setpoint_T_;
+	if (fr > 1.1 * Setpoint_W_ / Setpoint_T_) {
+		fr = 1.1 * Setpoint_W_ / Setpoint_T_;
+		count = 0;
+	}
+	if (fr < 0.9 * Setpoint_W_ / Setpoint_T_) {
+		fr = 0.9 * Setpoint_W_ / Setpoint_T_;
+		count = 0;
+	}
 
-	double Input = fr * 4.5139;
+	double Input = fr * tube_coeff;// 4.5139;
 
-	double Setpoint = (Setpoint_W_ / Setpoint_T_) * 4.5139;
+	double Setpoint = (Setpoint_W_ / Setpoint_T_) * tube_coeff;// 4.5139;
 
-	double error = 0.2*(Setpoint - Input) + 0.8*lastErr;
+//	double error = 0.2*(Setpoint - Input) + 0.8*lastErr;
+	double error = 0.2*(Setpoint - Input);
 	double errSum_ = errSum + (error * double(timeChange)/60000);
 	double dErr = (error - lastErr) / (double(timeChange)/60000);
 	double Output_ = kp * error + ki * errSum_ + kd * dErr;
@@ -179,14 +193,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double Fr
 		count += 1;
 	}
 
-	if (enable == 0) {
-		RPM = 0;
-		error = 0;
-		errSum_ = 0;
-		dErr = 0;
-		fr = Setpoint_W_ / Setpoint_T_;
-		count = 0;
-	}
+
 
 	if (fr > 0) {
 		time_to_target = 60 * (Setpoint_W_ - step_amount) / fr;
@@ -197,11 +204,22 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double Fr
 		PumpCTRL = 0;
 	}
 
-	if (-1 * weight > (Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) - 1) RPM = 0.3*Setpoint;
+//	if (-1 * weight > (Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) - 1) RPM = 0.3*Setpoint;
+	if (time_to_target < 12) RPM = 0.8*Setpoint;
+	if (time_to_target < 5) RPM = 0.3*Setpoint;
+
+	if (enable == 0) {
+		RPM = 0;
+		error = 0;
+		errSum_ = 0;
+		dErr = 0;
+		fr = Setpoint_W_ / Setpoint_T_;
+		count = 0;
+	}
 
 
 	if (manual == 1) {
-		RPM = FrManual * 4.5139;
+		RPM = FrManual * tube_coeff;// 4.5139;
 		LED_manual = 1;
 		LED1 = 0;
 		LED2 = 0;
@@ -213,6 +231,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, double Fr
 
 	if (reset == 1) {
 		step = 0;
+		count = 0;
 	}
 
 
