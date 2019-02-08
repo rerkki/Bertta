@@ -97,7 +97,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	double tube_coeff = 0;
 
 	if (tube == 0) tube_coeff = 4.5139; //purple tube
-	if (tube == 1) tube_coeff = 16.471; //white tube
+	if (tube == 1) tube_coeff = 8.0195; //yellow tube
+	if (tube == 2) tube_coeff = 16.471; //white tube
 
 
 
@@ -111,28 +112,32 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		Setpoint_T_ = Setpoint_T[1];
 		step_amount = -1 * weight - Setpoint_W[0];
 		elapsed_step = (elapsed - Setpoint_T[0] * 60000) / 1000;
-		step = 1;
+		//step = 1;
+		step += 1;
 	}
 	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1]) {
 		Setpoint_W_ = Setpoint_W[2];
 		Setpoint_T_ = Setpoint_T[2];
 		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1];
 		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1]) * 60000)/1000;
-		step = 2;
+		//step = 2;
+		step += 1;
 	}
 	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2]) {
 		Setpoint_W_ = Setpoint_W[3];
 		Setpoint_T_ = Setpoint_T[3];
 		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2];
 		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2]) * 60000)/1000;
-		step = 3;
+		//step = 3;
+		step += 1;
 	}
 	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3]) {
 		Setpoint_W_ = Setpoint_W[4];
 		Setpoint_T_ = Setpoint_T[4];
 		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3];
 		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3]) * 60000)/1000;
-		step = 4;
+		//step = 4;
+		step += 1;
 	}
 	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) {
 		Setpoint_W_ = 0;
@@ -140,7 +145,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4];
 		elapsed_step = 0;// (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4]) * 60000)/1000;
 		elapsed = 0;
-		step = 5;
+		//step = 5;
+		step += 1;
 	}
 
 	if (elapsed_step < 0) elapsed_step = 0;
