@@ -12,6 +12,10 @@
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="BenchC2.vi" Type="VI" URL="../BenchC2.vi"/>
 		<Item Name="BenchC2_DEV.vi" Type="VI" URL="../BenchC2_DEV.vi"/>
+		<Item Name="BenchC2_DEV_v11.vi" Type="VI" URL="../BenchC2_DEV_v11.vi"/>
+		<Item Name="PID_Flow Ctrl_2 P1.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2 P1.vi"/>
+		<Item Name="PID_Flow Ctrl_2 P2.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2 P2.vi"/>
+		<Item Name="PID_Flow Ctrl_2 P3.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2 P3.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="__closeStorageFromObject.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/storage/Storage.llb/__closeStorageFromObject.vi"/>
