@@ -1919,6 +1919,120 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 
 }
 
+__declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, int Tr_Tj, int port_lauda, double lastTime, double elapsed, double T0, double T_manual, double Tr, double treshold, double * time_set, double * time_wait, double * T_sp, double * params) {
+
+	long int now = millisec3();
+	long int timeChange = now - lastTime;
+	double intercept = 0;
+	double slope = 0;
+	double setpoint = 20;
+	double T0_ = Tr;
+	int step_ = step;
+
+	double T_sp_ = T_sp[step_];
+	double time_set_ = time_set[step_];
+	double time_wait_ = time_wait[step_];
+	if (time_set_ == 0) time_set_ = 1000;
+
+	if (Tr_Tj == 1) lauda_mode(port_lauda, 1);
+	if (Tr_Tj == 0) lauda_mode(port_lauda, 0);
+	
+	if (reset == 1) {
+		step_ = 0;
+		elapsed = 0;
+	}
+
+	int LED_manual = 0;
+	int LED1 = 0;
+	int LED2 = 0;
+	int LED3 = 0;
+	int LED_stop = 0;
+
+	if (enable == 0) {
+		setpoint = Tr;
+		T0_ = Tr;
+		elapsed = 0;
+	}
+
+
+	if (enable == 1) {
+
+		T0_ = T0;
+
+		elapsed += double(timeChange);
+
+		if (time_set_ > 0) {
+
+			slope = (T_sp_ - T0_) / time_set_;
+
+			intercept = T0_;
+
+			setpoint = slope * (elapsed / 60000) + intercept;
+
+		}
+		else setpoint = T_sp_;
+
+		if (slope > 0 && setpoint > T_sp_) {
+				setpoint = T_sp_;
+		}
+		if (slope < 0 && setpoint < T_sp_) {
+			setpoint = T_sp_;
+		}
+
+		int last_step = step_;
+		if (abs(T_sp_ - Tr) < treshold) {
+
+			if (elapsed > (time_set_ + time_wait_) * 60000) {
+				step_ += 1;
+				T0_ = Tr;
+			}
+
+		}
+		if (last_step < step_) elapsed = 0;
+
+
+	}
+
+	if (manual == 0) {
+
+		LED_manual = 0;
+		if (step_ == 0) LED1 = 1;
+		if (step_ == 1) LED2 = 1;
+		if (step_ == 2) LED3 = 1;
+		if (step_ == 3) {
+			LED_stop = 1;
+			setpoint = T_sp[2];
+		}
+
+	}
+
+	if (manual == 1) {
+
+		setpoint = T_manual;
+		LED_manual = 1;
+		LED1 = 0;
+		LED2 = 0;
+		LED3 = 0;
+		LED_stop = 0;
+
+	}
+
+	params[0] = double(now);
+	params[1] = double(timeChange);
+	params[2] = setpoint;
+	params[3] = T0_;
+	params[4] = elapsed;
+	params[5] = step_;
+	params[6] = LED1;
+	params[7] = LED2;
+	params[8] = LED3;
+	params[9] = LED_stop;
+	params[10] = LED_manual;
+
+}
+
+
+
 __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params) {
 
 	double intercept;

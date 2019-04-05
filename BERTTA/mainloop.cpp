@@ -65,6 +65,100 @@ __declspec(dllexport) double mettler1(int port, int msg) {
 }
 
 
+__declspec(dllexport) void ramp_v15(int reset, int enable, int manual, double lastTime, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double lastStep, double count, double * params) {
+
+	long int now = millisec3();
+	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 6000;
+	if (timeChange < 1) timeChange = 1;
+
+	if (enable == 1) {
+		elapsed += double(timeChange);
+	}
+
+	
+	double intercept;
+
+	double slope = 0;
+
+	//	double T0 = Tr;
+
+	double setpoint;
+
+	double step = 0;
+
+	if (reset == 1) {
+
+		params[3] = 0;
+
+		params[4] = Tr_last;
+
+		params[0] = Tr;
+
+		setpoint = Tr_last;
+
+	}
+
+	if (enable == 0 && reset == 0) {
+
+		params[4] = Tr;
+
+		params[0] = T0_;
+
+		if (time_set > 0) {
+
+			slope = (T_sp - T0_) / time_set;
+
+			intercept = T0_;
+
+			setpoint = slope * (elapsed / 60000) + intercept;
+
+		}
+		else setpoint = T_sp;
+
+		if (slope > 0 && setpoint > T_sp) {
+			setpoint = T_sp;
+		}
+		if (slope < 0 && setpoint < T_sp) {
+			setpoint = T_sp;
+		}
+
+	}
+
+	if (enable == 1) {
+
+		if (Tr_last == 0) Tr_last = Tr;
+
+		setpoint = Tr_last;
+
+		if (params[5] == 1) setpoint = T_sp;
+
+		params[4] = Tr_last;
+
+		params[0] = Tr;
+
+	}
+
+	if (enable == 0) setpoint = 20;
+
+	params[6] = 0;
+	if (abs(Tr - T_sp) < treshold) {
+		step += 1;
+	}
+
+	params[1] = setpoint;
+
+	params[2] = slope;
+
+	params[3] = double(now);
+
+	params[6] = step;
+
+	params[7] = elapsed;
+
+}
+
+
 
 __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
 
