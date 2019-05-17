@@ -402,6 +402,24 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	
 }
 
+__declspec(dllexport) void hei_ctrl(int port, int speed, int manual, int prev_status, int * status) {
+
+	int status_ = prev_status;
+	double a = 0;
+
+	if ((manual == 1) && (status_ == 0)) {
+		status_ = 1;
+		a = hei_query(port, 5);
+	}
+	
+	if (manual == 0) {
+		heidolph(port, speed);
+		status_ = 0;
+	}
+
+	status[0] = status_;
+}
+
 //muutetaan: palauttaa rpm_arvon (int)
 //samanlainen funktio momentille
 //__declspec(dllexport) void heidolph(int port, int speed, char * output) {
