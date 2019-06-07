@@ -1919,10 +1919,15 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 
 }
 
-__declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, int Tr_Tj, int S1_S2, int port_lauda, double lastTime, double elapsed, double T0, double T_S2, double Tr, double T_fail, double treshold, double * time_set, double * time_wait, double * T_sp, double * params) {
+__declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual, int step, int Tr_Tj, int S1_S2, int port_lauda, double lastTime, double elapsed, double T0, double T_S2, double Tr, double T_fail, double Tpause, double treshold, double * time_set, double * time_wait, double * T_sp, double * params) {
 
 	long int now = millisec3();
 	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 6000;
+	if (timeChange < 1) timeChange = 1;
+
+	int count_ = count + 1;
+
 	double intercept = 0;
 	double slope = 0;
 	double setpoint = 20;
@@ -1932,8 +1937,12 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 	double T_sp_ = T_sp[step_];
 	double time_set_ = time_set[step_];
 	double time_wait_ = time_wait[step_];
+	double Tpause_ = Tpause;
 
-	if((T_sp_==0) && (time_set_==0) && (time_wait_==0)) T_sp_ = T_fail;
+	if ((T_sp_ == 0) && (time_set_ == 0) && (time_wait_ == 0)) {
+		T_sp_ = T_fail;
+		Tpause_ = Tr;
+	}
 
 	int LED_manual = 0;
 	int LED1 = 0;
@@ -1949,15 +1958,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 	
 	if (manual == 1) {
 		step_ = 0;
-
-	//	T_sp_ = T_manual;
-	//	time_set_ = time_manual;
-	//	time_wait_ = 0;
-		 
+		Tpause_ = Tr;
 	}
-	
-
-	//if (time_set_ == 0) time_set_ = 1;
 
 	if (Tr_Tj == 1) lauda_mode(port_lauda, 1);
 	if (Tr_Tj == 0) lauda_mode(port_lauda, 0);
@@ -1965,25 +1967,22 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 	if (reset == 1) {
 		step_ = 0;
 		elapsed = 0;
+		count_ = 0;
 	}
-
-	//if (update == 1) {
-	//	step_ = 4;
-	//	elapsed = 0;
-	//}
-
 
 
 	if (enable == 0) {
-		setpoint = Tr;
 		T0_ = Tr;
-		elapsed = 0;
+		elapsed += 0;
+		setpoint = Tpause_;
+	//	Tpause_ = Tpause;
 	}
 
 
 	if (enable == 1) {
 
 		T0_ = T0;
+		Tpause_ = Tr;
 		if (reset == 1) T0_ = Tr;
 
 		elapsed += double(timeChange);
@@ -2014,8 +2013,6 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 				T0_ = Tr;
 			}
 
-			//if (step_ > 4) step = 4;
-
 		}
 		if (last_step < step_) elapsed = 0;
 
@@ -2038,7 +2035,6 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 	
 	if (manual == 1) {
 
-	//	setpoint = T_manual;
 		LED_manual = 1;
 		LED1 = 0;
 		LED2 = 0;
@@ -2047,6 +2043,7 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 
 	}
 	
+
 
 	params[0] = double(now);
 	params[1] = double(timeChange);
@@ -2059,6 +2056,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int manual, int step, 
 	params[8] = LED3;
 	params[9] = LED_stop;
 	params[10] = LED_manual;
+	params[11] = Tpause_;
+	params[12] = count;
 
 }
 

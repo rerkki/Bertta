@@ -728,7 +728,7 @@ __declspec(dllexport) void dev_ctrl(int port, int dev, double param) {
 	double retval = 0;
 
 	if (dev == 1) lauda(port, param);
-	if (dev == 2) ismatec(port, param * 9);
+	if (dev == 2) ismatec(port, param);
 	if (dev == 3) ismatec(port, param); //PID_FLOW
 
 	if (dev < 1 || dev > 3) retval = 0;

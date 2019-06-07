@@ -62,8 +62,8 @@ c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1843): warning C4244: '=': conversion from 'time_t' to 'double', possible loss of data
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1901): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1925): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(2275): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(2276): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(2277): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\serialcomm.cpp(26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
