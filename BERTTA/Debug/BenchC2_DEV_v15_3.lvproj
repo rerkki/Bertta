@@ -538,7 +538,7 @@
 			<Item Name="PID_Flow Ctrl_2 P1.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2 P1.vi"/>
 			<Item Name="PID_Flow Ctrl_2 P2.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2 P2.vi"/>
 			<Item Name="PID_Flow Ctrl_2 P3.vi" Type="VI" URL="../../x64/Debug/PID_Flow Ctrl_2 P3.vi"/>
-			<Item Name="Ramp_Lauda_v2.vi" Type="VI" URL="../../x64/Debug/Ramp_Lauda_v2.vi"/>
+			<Item Name="Ramp_Lauda_v3.vi" Type="VI" URL="../../x64/Debug/Ramp_Lauda_v3.vi"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="BenchC2_DEV_v15_3" Type="EXE">
@@ -557,7 +557,7 @@
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{D5D6433E-235A-4941-84E6-5172C8F416D0}</Property>
-				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.build" Type="Int">2</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">BenchC2_DEV_v15_3.exe</Property>
 				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/BenchC2_DEV_v15_3/BenchC2_DEV_v15_3.exe</Property>
