@@ -191,8 +191,9 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	double tube_coeff = 0;
 
 	if (tube == 0) tube_coeff = 4.5139; //purple tube
-	if (tube == 1) tube_coeff = 8.0195; //yellow tube
-	if (tube == 2) tube_coeff = 16.471; //white tube
+	if (tube == 1) tube_coeff = 1.943; //double purple tube
+	if (tube == 2) tube_coeff = 8.0195; //yellow tube
+	if (tube == 3) tube_coeff = 16.471; //white tube
 
 
 
