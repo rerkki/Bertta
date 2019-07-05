@@ -184,6 +184,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	double LED3 = 0;
 	double LED4 = 0;
 	double LED5 = 0;
+	double LED6 = 0;
+	double LED7 = 0;
 	double LED_stop = 0;
 	double LED_manual = 0;
 	double elapsed_step = 0;
@@ -235,12 +237,30 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		step += 1;
 	}
 	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) {
-		Setpoint_W_ = 0;
-		Setpoint_T_ = 1;
+		Setpoint_W_ = Setpoint_W[5];
+		Setpoint_T_ = Setpoint_T[5];
 		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4];
-		elapsed_step = 0;// (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4]) * 60000)/1000;
+		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4]) * 60000)/1000;
 		elapsed = 0;
 		//step = 5;
+		step += 1;
+	}
+	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5]) {
+		Setpoint_W_ = Setpoint_W[6];
+		Setpoint_T_ = Setpoint_T[6];
+		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4] - Setpoint_W[5];
+		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4] + Setpoint_T[5]) * 60000)/1000;
+		elapsed = 0;
+		//step = 6;
+		step += 1;
+	}
+	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5] + Setpoint_W[6]) {
+		Setpoint_W_ = 0;
+		Setpoint_T_ = 1;
+		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4] - Setpoint_W[5] - Setpoint_W[6];
+		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4] + Setpoint_T[5] + Setpoint_T[6]) * 60000)/1000;
+		elapsed = 0;
+		//step = 7;
 		step += 1;
 	}
 
@@ -252,7 +272,9 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		if (step == 2) LED3 = 1;
 		if (step == 3) LED4 = 1;
 		if (step == 4) LED5 = 1;
-		if (step == 5) LED_stop = 1;
+		if (step == 5) LED6 = 1;
+		if (step == 6) LED7 = 1;
+		if (step == 7) LED_stop = 1;
 	}
 
 //	double fr = 0.3* weightChange*60000 / double(timeChange) + 0.7 * lastFr; // g / min 
@@ -327,6 +349,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		LED3 = 0;
 		LED4 = 0;
 		LED5 = 0;
+		LED6 = 0;
+		LED7 = 0;
 		LED_stop = 0;
 	}
 
@@ -362,6 +386,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	PIDparams[23] = elapsed;
 	PIDparams[24] = elapsed_step;
 	PIDparams[25] = PumpCTRL;
+	PIDparams[26] = LED6;
+	PIDparams[27] = LED7;
 
 }
 

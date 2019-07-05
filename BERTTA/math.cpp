@@ -1948,6 +1948,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 	int LED1 = 0;
 	int LED2 = 0;
 	int LED3 = 0;
+	int LED4 = 0;
+	int LED5 = 0;
 	int LED_stop = 0;
 
 	if (S1_S2 == 0) {
@@ -2025,9 +2027,11 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 		if (step_ == 0) LED1 = 1;
 		if (step_ == 1) LED2 = 1;
 		if (step_ == 2) LED3 = 1;
-		if (step_ == 3) {
+		if (step_ == 3) LED4 = 1;
+		if (step_ == 4) LED5 = 1;
+		if (step_ == 5) {
 			LED_stop = 1;
-			setpoint = T_sp[2];
+			setpoint = T_sp[4];
 		}
 
 	}
@@ -2039,6 +2043,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 		LED1 = 0;
 		LED2 = 0;
 		LED3 = 0;
+		LED4 = 0;
+		LED5 = 0;
 		LED_stop = 0;
 
 	}
@@ -2058,6 +2064,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 	params[10] = LED_manual;
 	params[11] = Tpause_;
 	params[12] = count;
+	params[13] = LED2;
+	params[14] = LED3;
 
 }
 
