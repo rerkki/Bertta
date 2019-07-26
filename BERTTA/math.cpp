@@ -2036,6 +2036,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 
 	}
 
+	if (step_ > 5) step_ = 5;
+
 	
 	if (manual == 1) {
 
@@ -2064,8 +2066,8 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 	params[10] = LED_manual;
 	params[11] = Tpause_;
 	params[12] = count;
-	params[13] = LED2;
-	params[14] = LED3;
+	params[13] = LED4;
+	params[14] = LED5;
 
 }
 

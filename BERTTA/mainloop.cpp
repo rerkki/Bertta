@@ -203,66 +203,77 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		step_amount = -1 * weight;
 		elapsed_step = elapsed / 1000;
 	}
+	
+	if (Setpoint_W[0] > 0) {
 
-	if (-1 * weight > Setpoint_W[0]) {
-		Setpoint_W_ = Setpoint_W[1];
-		Setpoint_T_ = Setpoint_T[1];
-		step_amount = -1 * weight - Setpoint_W[0];
-		elapsed_step = (elapsed - Setpoint_T[0] * 60000) / 1000;
-		//step = 1;
-		step += 1;
+		if (-1 * weight > Setpoint_W[0]) {
+			Setpoint_W_ = Setpoint_W[1];
+			Setpoint_T_ = Setpoint_T[1];
+			step_amount = -1 * weight - Setpoint_W[0];
+			elapsed_step = (elapsed - Setpoint_T[0] * 60000) / 1000;
+			//step = 1;
+			step += 1;
+		}
+		if (-1 * weight > Setpoint_W[0] + Setpoint_W[1]) {
+			Setpoint_W_ = Setpoint_W[2];
+			Setpoint_T_ = Setpoint_T[2];
+			step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1];
+			elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1]) * 60000) / 1000;
+			//step = 2;
+			step += 1;
+			time_to_target = 0;
+		}
+		if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2]) {
+			Setpoint_W_ = Setpoint_W[3];
+			Setpoint_T_ = Setpoint_T[3];
+			step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2];
+			elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2]) * 60000) / 1000;
+			//step = 3;
+			step += 1;
+			time_to_target = 0;
+		}
+		if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3]) {
+			Setpoint_W_ = Setpoint_W[4];
+			Setpoint_T_ = Setpoint_T[4];
+			step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3];
+			elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3]) * 60000) / 1000;
+			//step = 4;
+			step += 1;
+			time_to_target = 0;
+		}
+		if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) {
+			Setpoint_W_ = Setpoint_W[5];
+			Setpoint_T_ = Setpoint_T[5];
+			step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4];
+			elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4]) * 60000) / 1000;
+			elapsed = 0;
+			//step = 5;
+			step += 1;
+			time_to_target = 0;
+		}
+		if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5]) {
+			Setpoint_W_ = Setpoint_W[6];
+			Setpoint_T_ = Setpoint_T[6];
+			step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4] - Setpoint_W[5];
+			elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4] + Setpoint_T[5]) * 60000) / 1000;
+			elapsed = 0;
+			//step = 6;
+			step += 1;
+			time_to_target = 0;
+		}
+		if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5] + Setpoint_W[6]) {
+			Setpoint_W_ = 0;
+			Setpoint_T_ = 1;
+			step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4] - Setpoint_W[5] - Setpoint_W[6];
+			elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4] + Setpoint_T[5] + Setpoint_T[6]) * 60000) / 1000;
+			elapsed = 0;
+			//step = 7;
+			step += 1;
+			time_to_target = 0;
+		}
 	}
-	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1]) {
-		Setpoint_W_ = Setpoint_W[2];
-		Setpoint_T_ = Setpoint_T[2];
-		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1];
-		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1]) * 60000)/1000;
-		//step = 2;
-		step += 1;
-	}
-	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2]) {
-		Setpoint_W_ = Setpoint_W[3];
-		Setpoint_T_ = Setpoint_T[3];
-		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2];
-		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2]) * 60000)/1000;
-		//step = 3;
-		step += 1;
-	}
-	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3]) {
-		Setpoint_W_ = Setpoint_W[4];
-		Setpoint_T_ = Setpoint_T[4];
-		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3];
-		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3]) * 60000)/1000;
-		//step = 4;
-		step += 1;
-	}
-	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) {
-		Setpoint_W_ = Setpoint_W[5];
-		Setpoint_T_ = Setpoint_T[5];
-		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4];
-		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4]) * 60000)/1000;
-		elapsed = 0;
-		//step = 5;
-		step += 1;
-	}
-	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5]) {
-		Setpoint_W_ = Setpoint_W[6];
-		Setpoint_T_ = Setpoint_T[6];
-		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4] - Setpoint_W[5];
-		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4] + Setpoint_T[5]) * 60000)/1000;
-		elapsed = 0;
-		//step = 6;
-		step += 1;
-	}
-	if (-1 * weight > Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5] + Setpoint_W[6]) {
-		Setpoint_W_ = 0;
-		Setpoint_T_ = 1;
-		step_amount = -1 * weight - Setpoint_W[0] - Setpoint_W[1] - Setpoint_W[2] - Setpoint_W[3] - Setpoint_W[4] - Setpoint_W[5] - Setpoint_W[6];
-		elapsed_step = (elapsed - (Setpoint_T[0] + Setpoint_T[1] + Setpoint_T[2] + Setpoint_T[3] + Setpoint_T[4] + Setpoint_T[5] + Setpoint_T[6]) * 60000)/1000;
-		elapsed = 0;
-		//step = 7;
-		step += 1;
-	}
+		
+
 
 	if (elapsed_step < 0) elapsed_step = 0;
 
@@ -276,6 +287,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		if (step == 6) LED7 = 1;
 		if (step == 7) LED_stop = 1;
 	}
+
+	if (step > 7) step = 7;
 
 //	double fr = 0.3* weightChange*60000 / double(timeChange) + 0.7 * lastFr; // g / min 
 	double fr = 0.02* weightChange * 60000 / double(timeChange) + 0.98 * lastFr; // g / min 
@@ -326,6 +339,8 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		time_to_target = 0;
 		PumpCTRL = 0;
 	}
+
+	if (LED_stop == 1) PumpCTRL = 100;
 
 //	if (-1 * weight > (Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) - 1) RPM = 0.3*Setpoint;
 	if (time_to_target < 12) RPM = 0.8*Setpoint;
@@ -382,7 +397,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	PIDparams[19] = step_amount;
 	PIDparams[20] = time_to_target;
 	PIDparams[21] = Setpoint_W_;
-	PIDparams[22] = Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4];
+	PIDparams[22] = Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4] + Setpoint_W[5] + Setpoint_W[6];
 	PIDparams[23] = elapsed;
 	PIDparams[24] = elapsed_step;
 	PIDparams[25] = PumpCTRL;
