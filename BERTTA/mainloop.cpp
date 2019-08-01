@@ -444,7 +444,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 	
 }
 
-__declspec(dllexport) void hei_ctrl(int port, int speed, int manual, int prev_status, int * status) {
+__declspec(dllexport) void hei_ctrl(int port, int speed, int manual, int shutdown, int prev_status, int * status) {
 
 	int status_ = prev_status;
 	double a = 0;
@@ -454,8 +454,13 @@ __declspec(dllexport) void hei_ctrl(int port, int speed, int manual, int prev_st
 		a = hei_query(port, 5);
 	}
 	
-	if (manual == 0) {
+	if (manual == 0 && shutdown == 0) {
 		heidolph(port, speed);
+		status_ = 0;
+	}
+
+	if (shutdown == 1) {
+		heidolph(port, 10);
 		status_ = 0;
 	}
 

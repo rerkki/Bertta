@@ -1919,7 +1919,7 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 
 }
 
-__declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual, int step, int Tr_Tj, int S1_S2, int port_lauda, double lastTime, double elapsed, double T0, double T_S2, double Tr, double T_fail, double Tpause, double treshold, double * time_set, double * time_wait, double * T_sp, double * params) {
+__declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int count, int manual, int step, int Tr_Tj, int S1_S2, int port_lauda, double lastTime, double elapsed, double T0, double T_S2, double Tr, double T_fail, double Tpause, double treshold, double * time_set, double * time_wait, double * T_sp, double * params) {
 
 	long int now = millisec3();
 	long int timeChange = now - lastTime;
@@ -2051,7 +2051,7 @@ __declspec(dllexport) void ramp_v2(int reset, int enable, int count, int manual,
 
 	}
 	
-
+	if (shutdown == 1) setpoint = 20;
 
 	params[0] = double(now);
 	params[1] = double(timeChange);
