@@ -340,7 +340,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 		PumpCTRL = 0;
 	}
 
-	if (LED_stop == 1) PumpCTRL = 100;
+	if (LED_stop == 1 || RPM == 0) PumpCTRL = 0;
 
 //	if (-1 * weight > (Setpoint_W[0] + Setpoint_W[1] + Setpoint_W[2] + Setpoint_W[3] + Setpoint_W[4]) - 1) RPM = 0.3*Setpoint;
 	if (time_to_target < 12) RPM = 0.8*Setpoint;
@@ -542,7 +542,7 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 	int msglen = strlen(q_);
 //	cout << msglen << endl;
-	int start_msg = 8;
+	int start_msg = 5;
 //	if (isdigit(q_[start_msg]) == 0) start_msg = 10;
 
 	//	cout << msglen << endl;
@@ -555,6 +555,10 @@ __declspec(dllexport) double lauda_tex(int port) {
 			val += q_[i]; v += 1;
 		}
 		if (q_[i] == '.') {
+			//			cout << q_[i];
+			val += q_[i]; v += 1;
+		}
+		if (q_[i] == '-') {
 			//			cout << q_[i];
 			val += q_[i]; v += 1;
 		}
@@ -577,13 +581,13 @@ __declspec(dllexport) double lauda_tin(int port) {
 
 	strcpy(q_, read(port, 3, msg).c_str());
 
-	//	cout << q_ << endl;
+	//	cout << q_[0] << endl;
 
 	//Sleep(60);
 
 	int msglen = strlen(q_);
 	//	cout << msglen << endl;
-	int start_msg = 8;
+	int start_msg = 5;
 	//	if (isdigit(q_[start_msg]) == 0) start_msg = 10;
 
 	//	cout << msglen << endl;
@@ -597,6 +601,10 @@ __declspec(dllexport) double lauda_tin(int port) {
 		}
 		if (q_[i] == '.') {
 			//			cout << q_[i];
+			val += q_[i]; v += 1;
+		}
+		if (q_[i] == '-') {
+			//			cout << i <<endl;
 			val += q_[i]; v += 1;
 		}
 	}
@@ -864,9 +872,11 @@ __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, 
 }
 
 
-
 /*
+
 int main() {
+
+	for(;;) cout << lauda_tin(1) << endl;
 
 	
 	double res_vec[8] = { 0 };
@@ -879,11 +889,11 @@ int main() {
 			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
 
 	}
+	
 		
 	getch();
 
 }
 
-
-
 */
+

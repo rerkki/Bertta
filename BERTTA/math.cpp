@@ -1941,7 +1941,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 
 	if ((T_sp_ == 0) && (time_set_ == 0) && (time_wait_ == 0)) {
 		T_sp_ = T_fail;
-		Tpause_ = Tr;
+		if(step_ == 0) Tpause_ = Tr;
 	}
 
 	int LED_manual = 0;
@@ -1960,7 +1960,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 	
 	if (manual == 1) {
 		step_ = 0;
-		Tpause_ = Tr;
+		if(enable == 1) Tpause_ = Tr;
 	}
 
 	if (Tr_Tj == 1) lauda_mode(port_lauda, 1);
@@ -1977,7 +1977,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 		T0_ = Tr;
 		elapsed += 0;
 		setpoint = Tpause_;
-	//	Tpause_ = Tpause;
+		Tpause_ = Tpause; //CHECK
 	}
 
 
@@ -2000,10 +2000,10 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 		}
 		else setpoint = T_sp_;
 
-		if (slope > 0 && setpoint > T_sp_) {
+		if (slope > 0 && setpoint > T_sp_) {  // tarvitaanko???
 				setpoint = T_sp_;
 		}
-		if (slope < 0 && setpoint < T_sp_) {
+		if (slope < 0 && setpoint < T_sp_) {  //tarvitaanko??
 			setpoint = T_sp_;
 		}
 
