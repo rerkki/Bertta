@@ -8,13 +8,6 @@
 #include <fstream>
 #include <thread>
 
-// PID parameters
-double Setpoint, Input, Output;
-
-// Specify the links and initial tuning parameters
-double Kp=2, Ki=5, Kd=1;
-PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, 1);
-
 __declspec(dllexport) long int millisec3() {
 
 	SYSTEMTIME time;
@@ -23,7 +16,7 @@ __declspec(dllexport) long int millisec3() {
 	return time_ms;
 
 }
-
+/*
 __declspec(dllexport) double mettler1(int port, int msg) {
 
 	char * msg_;
@@ -62,9 +55,8 @@ __declspec(dllexport) double mettler1(int port, int msg) {
 
 		return strtod(val.c_str(), &pEnd) / c;
 
-}
-
-
+}*/
+/*
 __declspec(dllexport) void ramp_v15(int reset, int enable, int manual, double lastTime, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double lastStep, double count, double * params) {
 
 	long int now = millisec3();
@@ -156,11 +148,11 @@ __declspec(dllexport) void ramp_v15(int reset, int enable, int manual, double la
 
 	params[7] = elapsed;
 
-}
+}*/
 
 
 
-__declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
+__declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube, double density, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
 
 	long int now = millisec3();
 	double RPM = 0;
@@ -192,7 +184,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	double PumpCTRL = 0;
 	double tube_coeff = 0;
 
-	if (tube == 0) tube_coeff = 4.5139; //purple tube
+	if (tube == 0) tube_coeff = 4.5139 * 1.51 / density; //purple tube
 	if (tube == 1) tube_coeff = 1.943; //double purple tube
 	if (tube == 2) tube_coeff = 8.0195; //yellow tube
 	if (tube == 3) tube_coeff = 16.471; //white tube
@@ -291,14 +283,14 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	if (step > 7) step = 7;
 
 //	double fr = 0.3* weightChange*60000 / double(timeChange) + 0.7 * lastFr; // g / min 
-	double fr = 0.02* weightChange * 60000 / double(timeChange) + 0.98 * lastFr; // g / min 
+	double fr = 0.05* weightChange * 60000 / double(timeChange) + 0.95 * lastFr; // g / min 
 
-	if (fr > 1.1 * Setpoint_W_ / Setpoint_T_) {
-		fr = 1.1 * Setpoint_W_ / Setpoint_T_;
+	if (fr > 1.3 * Setpoint_W_ / Setpoint_T_) {
+		fr = 1.3 * Setpoint_W_ / Setpoint_T_;
 		count = 0;
 	}
-	if (fr < 0.9 * Setpoint_W_ / Setpoint_T_) {
-		fr = 0.9 * Setpoint_W_ / Setpoint_T_;
+	if (fr < 0.98 * Setpoint_W_ / Setpoint_T_) {
+		fr = 0.98 * Setpoint_W_ / Setpoint_T_;
 		count = 0;
 	}
 
@@ -314,11 +306,11 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 
 	RPM = Setpoint + Output_;
 
-	if (RPM > 1.2 * Setpoint) {
-		RPM = 1.2 * Setpoint;
+	if (RPM > 1.3 * Setpoint) {
+		RPM = 1.3 * Setpoint;
 	}
-	if (RPM < 0.8 * Setpoint) {
-		RPM = 0.8 * Setpoint;
+	if (RPM < 0.98 * Setpoint) {
+		RPM = 0.98 * Setpoint;
 	}
 
 	if (lastSP != Setpoint) count = 0;
@@ -418,7 +410,7 @@ __declspec(dllexport) double mettler(int port, int msg) {
 
 	if (msg == 1) msg_ = "SI\r\n";
 	
-	strcpy(mettler_str, read(port,1,msg_).c_str());
+	strcpy_s(mettler_str, read(port,1,msg_).c_str());
 	Sleep(10);
 	msglen = strlen(mettler_str);
 
@@ -496,7 +488,7 @@ __declspec(dllexport) double hei_query(int port, int q) {
 
 	string val;
 
-	strcpy(q_, read(port, 5, msg).c_str());
+	strcpy_s(q_, read(port, 5, msg).c_str());
 
 //	cout << q_ << endl;
 
@@ -534,7 +526,7 @@ __declspec(dllexport) double lauda_tex(int port) {
 
 	string val;
 
-	strcpy(q_, read(port, 3, msg).c_str());
+	strcpy_s(q_, read(port, 3, msg).c_str());
 
 //	cout << q_ << endl;
 
@@ -579,7 +571,7 @@ __declspec(dllexport) double lauda_tin(int port) {
 
 	string val;
 
-	strcpy(q_, read(port, 3, msg).c_str());
+	strcpy_s(q_, read(port, 3, msg).c_str());
 
 	//	cout << q_[0] << endl;
 
@@ -626,13 +618,13 @@ __declspec(dllexport) void lauda_mode(int port, int mode) {
 	
 		if (mode == 0) {
 
-			strcpy(q_, read(port, 2, msg0).c_str());
+			strcpy_s(q_, read(port, 2, msg0).c_str());
 			cout << q_ << endl;
 		}
 
 		if (mode == 1) {
 
-			strcpy(q_, read(port, 2, msg1).c_str());
+			strcpy_s(q_, read(port, 2, msg1).c_str());
 			cout << q_ << endl;
 		}
 	
@@ -653,13 +645,13 @@ __declspec(dllexport) void lauda_switch_mode(int port, int mode, int enable) {
 	if (enable == 1) {
 		if (mode == 0) {
 
-			strcpy(q_, read(port, 2, msg0).c_str());
+			strcpy_s(q_, read(port, 2, msg0).c_str());
 			cout << q_ << endl;
 		}
 
 		if (mode == 1) {
 
-			strcpy(q_, read(port, 2, msg1).c_str());
+			strcpy_s(q_, read(port, 2, msg1).c_str());
 			cout << q_ << endl;
 		}
 	}
@@ -703,7 +695,7 @@ __declspec(dllexport) void shut_down(int sh, int port_lauda, int port_ismatec, i
 
 
 }
-
+/*
 __declspec(dllexport) void ReadRS232(int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params) {
 
 	if (dev1 == 1) params[0] = mettler1(port1, 1);
@@ -762,7 +754,7 @@ __declspec(dllexport) void ReadRS232(int port1, int dev1, int port2, int dev2, i
 	if (dev8 == 5) params[7] = lauda_tin(port8);
 	if (dev8 == 0) params[7] = 0;
 
-}
+}*/
 
 __declspec(dllexport) double device(int port, int dev) {
 

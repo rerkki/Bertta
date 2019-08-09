@@ -1,5 +1,4 @@
 #include "serialcomm.h"
-#include "sqlite3.h"
 
 void sys_err(char *name) {
 
@@ -22,11 +21,11 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 {
 	if (com_port > 0) {
 
-		int ch;
+//		int ch;
 		int msglen = strlen(msg_);
 		char buffer[50];
 		for (int i = 0; i < 50; i++) buffer[i] = NULL;
-		char msg[17];
+//		char msg[17];
 		//	int timedelay = 200;
 
 		int buff_size = 17;
@@ -44,7 +43,7 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 		DWORD read, written;
 		DCB port;
 		HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
-		DWORD mode;
+	//	DWORD mode;
 
 		LPCWSTR port_name;
 		if (com_port == 1) port_name = L"\\\\.\\COM1";

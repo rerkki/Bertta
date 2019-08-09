@@ -25,3 +25,11 @@ Cache_Path[Path] Line0002 = "001D13-9E5C-488C-95AA-A5EF9F088F78}.txt"
 Cache_Path[Path] Line0001 = "/C/Users/shresplab/AppData/Local/Temp/AB_Cache_{4D"
 Cache_Path[Path] Line0002 = "88B625-1069-4A16-87AA-2233B882FA7C}.txt"
 
+[AB_Cache_{C2AFA9D9-DE90-40B2-B565-08741CC22274}]
+Cache_Path[Path] Line0001 = "/C/Users/shresplab/AppData/Local/Temp/AB_Cache_{C2"
+Cache_Path[Path] Line0002 = "AFA9D9-DE90-40B2-B565-08741CC22274}.txt"
+
+[AB_Cache_{E5DEF703-C1D8-41F7-AFF9-47A42345A993}]
+Cache_Path[Path] Line0001 = "/C/Users/shresplab/AppData/Local/Temp/AB_Cache_{E5"
+Cache_Path[Path] Line0002 = "DEF703-C1D8-41F7-AFF9-47A42345A993}.txt"
+

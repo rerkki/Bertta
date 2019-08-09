@@ -12,7 +12,7 @@ __declspec(dllexport) void rpm(int speed, char * newRpm) {
 	char buffer[4]={0};
 
 	int msglen = 1;
-	itoa(speed, buffer, 10);
+	_itoa_s(speed, buffer, 10);
 	if (speed>9) msglen = 2;
 	if(speed>99) msglen = 3;
 	if (speed>999) msglen = 4;
@@ -31,7 +31,7 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 	char buffer[4] = { 0 };
 
 	int msglen = 1;
-	itoa(speed, buffer, 10);
+	_itoa_s(speed, buffer, 10);
 	
 	if (speed > 0) {
 		msglen = 1;
@@ -70,7 +70,7 @@ __declspec(dllexport) void stirr(int speed, char * newRpm) {
 
 //	cout << newRpm << endl;
 }
-
+/*
 __declspec(dllexport) void pump2(int enable, float speed_, char * newPump) {
 
 	if (enable == 0) speed_ = 0;
@@ -140,14 +140,14 @@ __declspec(dllexport) void pump2(int enable, float speed_, char * newPump) {
 	}
 
 	//	cout << newPump << endl;
-}
+}*/
 
 __declspec(dllexport) void pump(float speed_, char * newPump) {
 
 	char buffer[5] = { 0 };
 	char buff[5] = { 0 };
 
-	sprintf(buffer, "%.0f", speed_*100);
+	sprintf_s(buffer, "%.0f", speed_*100);
 
 //	cout << buffer << endl;
 
@@ -220,7 +220,7 @@ __declspec(dllexport) void temp(float temp_, char * newTemp) {
 	if (temp_ >= 100) msglen = 5;
 	if (temp_ >= 10) msglen = 4;
 
-	sprintf(buffer, "%.1f", temp_);
+	sprintf_s(buffer, "%.1f", temp_);
 
 	if (msglen == 3) {
 
@@ -290,6 +290,7 @@ __declspec(dllexport) void temp(float temp_, char * newTemp) {
 //	getch();
 }
 
+/*
 __declspec(dllexport) long int millisec() {
 
 //	long unsigned int sysTime = time(0);
@@ -313,8 +314,8 @@ __declspec(dllexport) void elapsed(long int last_time, long int * params) {
 		params[0] = elapsed_;
 		params[1] = time_now;
 
-}
-
+}*/
+/*
 __declspec(dllexport) void time_delay(int start, long int delay, long int start_time, long int start_, long int * params) {
 
 	time_t seconds;
@@ -342,8 +343,8 @@ __declspec(dllexport) void time_delay(int start, long int delay, long int start_
 		}
 	}
 
-}
-
+}*/
+/*
 __declspec(dllexport) void pump_control(int enable, double amount, double target, long int time_limit, long int start_time, long int * params) {
 
 	time_t seconds;
@@ -384,8 +385,8 @@ __declspec(dllexport) void pump_control(int enable, double amount, double target
 		params[4] = target_control;
 	}
 
-}
-
+}*/
+/*
 __declspec(dllexport) void start_time(int enable, long int start_time, long int * params) {
 
 	time_t seconds;
@@ -425,8 +426,8 @@ __declspec(dllexport) void fr_ctrl(int enable, int reset, long int last_time, lo
 
 	params[6] = long int(fr_actual * 1000);
 
-}
-
+}*/
+/*
 __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time, long int elapsed_last,  long int * params) {
 
 	time_t seconds;
@@ -457,8 +458,8 @@ __declspec(dllexport) void elapsed_sec(int enable, int reset, long int last_time
 		params[1] = 0;
 		params[2] = 0;
 	}
-}
-
+}*/
+/*
 __declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long int start_time, long int pause_time, long int paused, long int paused_old, long int * params) {
 
 	time_t seconds;
@@ -490,8 +491,8 @@ __declspec(dllexport) void ramp_timer(int enable, int pause, long int rt, long i
 		params[5] = 0;
 	}
 
-}
-
+}*/
+/*
 __declspec(dllexport) void ramp_watch(int enable, int pause, long int elapsed, long int elapsed_previous, long int elapsed_total, long int * params) {
 
 	if (elapsed < 0) elapsed = elapsed_previous;
@@ -513,8 +514,8 @@ __declspec(dllexport) void sequencer(double Tset, double Tcurrent, int treshold,
 		params[1] = 1; 
 	}
 
-}
-
+}*/
+/*
 __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double step_previous, double amount_step_previous, double * target, double * time_, double * params) {
 
 	double step = 0;
@@ -630,8 +631,8 @@ __declspec(dllexport) void pump_amount4(int master, int pause, int reset, int co
 	params[11] = TOTALTARGET;
 	params[12] = pumpCtrl;
 
-}
-
+}*/
+/*
 __declspec(dllexport) void pump_amount3(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double * target, double * time_, double * params) {
 
 	double step = 0;
@@ -689,8 +690,8 @@ __declspec(dllexport) void pump_amount3(int master, int pause, int reset, int co
 
 
 
-}
-
+}*/
+/*
 __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int count, int manual, double fr_manual, double scale, double elapsed, double * target, double * time_, double * params) {
 
 	//KORJAA previous step ja pumpun pysäytys stepin vaihtuessa siten että steppi ei heti vaihdu!!!!
@@ -772,12 +773,8 @@ __declspec(dllexport) void pump_amount2(int master, int pause, int reset, int co
 	params[4] = amount_step;
 	params[5] = elapsed_step;
 	params[6] = amount_step / (elapsed_step/60); // flow rate
-
-
-
-
-}
-
+} */
+/*
 __declspec(dllexport) void pump_amount(int enable, int reset, double target, double bal, long int bal_previous, long int bal_start, long int step, long int * params){
 
 	if (reset == 1) {
@@ -844,7 +841,8 @@ __declspec(dllexport) void pump_amount(int enable, int reset, double target, dou
 	params[3] = step;
 
 }
-
+*/
+/*
 __declspec(dllexport) double hold(int enable, double in1, double in2) {
 
 	double retval = in1;
@@ -885,7 +883,8 @@ __declspec(dllexport) void hold2(int enable, double in1, double in2, double coun
 
 	params[0] = retval;
 }
-
+*/
+/*
 __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * params) {
 
 	params[0] = in1;
@@ -893,8 +892,8 @@ __declspec(dllexport) void seq_count(int in1, int in2, int in3, int in4, int * p
 	params[2] = in3;
 	if (in4 == 1) params[2] += 1;
 
-}
-
+}*/
+/*
 __declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int elapsed, double Tset, double Tcurrent, double Tcurr_prev, int direction) {
 
 	double setpoint = 0;
@@ -915,7 +914,8 @@ __declspec(dllexport) double t_ramp(int enable, long int ramp_time, long int ela
 
 	return setpoint;
 }
-
+*/
+/*
 __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_or_Tj, double Tr, double Tr_last, long int elapsed, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 
 	double Tinit_0 = SeqParams[0];
@@ -1072,8 +1072,8 @@ __declspec(dllexport) void t_ramp3(int master, int pause, int shutdown, int Tr_o
 	params[6] = Time_;
 	params[7] = step;
 
-}
-
+}*/
+/*
 __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust,  double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 	
 	time_t seconds;
@@ -1280,8 +1280,8 @@ __declspec(dllexport) void t_ramp4(int master, int pause, int reset, int manual,
 	params[6] = double(start_time_);// Time_;
 	params[7] = step;
 
-}
-
+}*/
+/*
 __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 
 	time_t seconds;
@@ -1358,51 +1358,51 @@ __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual,
 		Tset_ = Tset_1;
 		Tinit_ = Tinit_1;
 		Fail_ = Fail_1;
-		} */
+		} 
 	}
 
 	if (step == 2) {
 		Tset_ = Tset_2;
 		Tinit_ = Tinit_2;
 		Fail_ = Fail_2;
-		/*		if (elapsed - Time_1 > 0) {
-		Tset_ = Tset_2;
-		Tinit_ = Tinit_2;
-		Fail_ = Fail_2;
-		} */
+		//		if (elapsed - Time_1 > 0) {
+		//Tset_ = Tset_2;
+		((Tinit_ = Tinit_2;
+		//Fail_ = Fail_2;
+		//} 
 	}
 
 	if (step == 3) {
 		Tset_ = Tset_3;
 		Tinit_ = Tinit_3;
 		Fail_ = Fail_3;
-		/*		if (elapsed - Time_2 > 0) {
-		Tset_ = Tset_3;
-		Tinit_ = Tinit_3;
-		Fail_ = Fail_3;
-		}*/
+		//	if (elapsed - Time_2 > 0) {
+		//Tset_ = Tset_3;
+		//Tinit_ = Tinit_3;
+		//Fail_ = Fail_3;
+		//}
 	}
 
 	if (step == 4) {
 		Tset_ = Tset_4;
 		Tinit_ = Tinit_4;
 		Fail_ = Fail_4;
-		/*		if (elapsed - Time_3 > 0) {
-		Tset_ = Tset_4;
-		Tinit_ = Tinit_4;
-		Fail_ = Fail_4;
-		} */
+		///*		if (elapsed - Time_3 > 0) {
+		//Tset_ = Tset_4;
+		//Tinit_ = Tinit_4;
+		//Fail_ = Fail_4;
+		//} 
 	}
 
 	//	if (step == 5) {
 	//		Tset_ = Tset_5;
 	//		Tinit_ = Tinit_5;
 	//		Fail_ = Fail_5;
-	/*		if (elapsed - Time_4 > 0) {
-	Tset_ = 20;
-	Tinit_ = Tset_4;
-	Fail_ = 20;
-	}*/
+	//		if (elapsed - Time_4 > 0) {
+	//Tset_ = 20;
+	//Tinit_ = Tset_4;
+	//Fail_ = 20;
+	//}
 	//	}
 
 	//Jos tavoitelämpötila saavutetaan, siirrytään seuraavaan steppiin ja nollataan kello (wait)
@@ -1501,8 +1501,8 @@ __declspec(dllexport) void t_ramp5(int master, int pause, int reset, int manual,
 	params[6] = double(start_time);// Time_;
 	params[7] = step;
 
-}
-
+}*/
+/*
 __declspec(dllexport) double flow_pump3(int enable, int manual, double flow, int port) { //this subroutine only for reglo D
 
 	double reglo_signal = 0;
@@ -1516,9 +1516,8 @@ __declspec(dllexport) double flow_pump3(int enable, int manual, double flow, int
 		}
 
 	return reglo_signal;
-}
-
-
+}*/
+/*
 __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int pump_type, int port, double * pump_ctrl) {
 
 	double analog_signal = 0.004;
@@ -1552,7 +1551,8 @@ __declspec(dllexport) void flow_pump2(int enable, int manual, double flow, int p
 	pump_ctrl[2] = reglo_signal;
 
 }
-
+*/
+/*
 __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, double * pump_ctrl) {
 
 	double analog_signal = 0.004;
@@ -1582,8 +1582,8 @@ __declspec(dllexport) void flow_pump(double flow, int pump_type, int port, doubl
 	pump_ctrl[1] = pam_signal;
 	pump_ctrl[2] = reglo_signal;
 
-}
-
+}*/
+/*
 __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, int err, double Tinit, double Tset, double Xe, double T_low, double T_up, double Tcurrent, double Tlast, double Tbyp, double Tfail, double Treshold, long int ramp_time, long int elapsed, double sp_old, double step, double reset_last, double count_last, double * params) {
 
 	int direction = 0;
@@ -1670,7 +1670,8 @@ __declspec(dllexport) void t_ramp2(int res, int enable, int pause, int bypass, i
 	params[3] = double(reset);
 	params[4] = double(count); //count -parametrin voi poistaa
 }
-
+*/
+/*
 __declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual, int shutdown, int Tr_or_Tj, double Tr, double adjust, double Tr_last, double start_time, double step_previous, double * SeqParams, long int * TimeParams, double * params) {
 
 	time_t seconds;
@@ -1854,7 +1855,8 @@ __declspec(dllexport) void t_ramp6(int master, int pause, int reset, int manual,
 	params[7] = step;
 
 }
-
+*/
+/*
 __declspec(dllexport) void rising_edge(int reset, int input, int prev_input, int prev_count, int * params) {
 
 	params[0] = prev_count;
@@ -1868,7 +1870,8 @@ __declspec(dllexport) void rising_edge(int reset, int input, int prev_input, int
 	}
 	
 }
-
+*/
+/*
 __declspec(dllexport) int ramp_test(int last_count) {
 
 	int count = last_count + 1;
@@ -1878,7 +1881,8 @@ __declspec(dllexport) int ramp_test(int last_count) {
 	return count;
 
 }
-
+*/
+/*
 __declspec(dllexport) long int time_left(long int rt, long int start_time) {
 
 	time_t seconds;
@@ -1889,7 +1893,8 @@ __declspec(dllexport) long int time_left(long int rt, long int start_time) {
 	return rt - (seconds_ - start_time);
 
 }
-
+*/
+/*
 __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double last_time, double last_timeChange, double Input, double Setpoint, double kp, double ki, double kd, double * params)
 {
 	time_t seconds;
@@ -1918,6 +1923,8 @@ __declspec(dllexport) void Compute_PID(double errSum, double lastErr, double las
 	params[4] = timeChange;
 
 }
+*/
+
 
 __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int count, int manual, int step, int Tr_Tj, int S1_S2, int port_lauda, double lastTime, double elapsed, double T0, double T_S2, double Tr, double T_fail, double Tpause, double treshold, double * time_set, double * time_wait, double * T_sp, double * params) {
 
@@ -1961,6 +1968,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 	if (manual == 1) {
 		step_ = 0;
 		if(enable == 1) Tpause_ = Tr;
+		if (T_sp_ == 0) T_sp_ = T_fail;
 	}
 
 	if (Tr_Tj == 1) lauda_mode(port_lauda, 1);
@@ -1986,6 +1994,8 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 		T0_ = T0;
 		Tpause_ = Tr;
 		if (reset == 1) T0_ = Tr;
+		if (T_sp_ == 0) T_sp_ = T_fail;
+
 
 		elapsed += double(timeChange);
 
@@ -2021,6 +2031,8 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 
 	}
 
+	if (step_ > 5) step_ = 5;
+
 	if (manual == 0) {
 
 		LED_manual = 0;
@@ -2036,7 +2048,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 
 	}
 
-	if (step_ > 5) step_ = 5;
+	
 
 	
 	if (manual == 1) {
@@ -2072,7 +2084,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 }
 
 
-
+/*
 __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double elapsed, double time_set, double T0_, double Tr, double Tr_last, double T_sp, double treshold, double * params) {
 
 	double intercept;
@@ -2146,8 +2158,8 @@ __declspec(dllexport) void ramp_simple(int pause, int reset, int master, double 
 	params[3] = elapsed / 60000;
 
 }
-
-
+*/
+/*
 __declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, int manual, double T_man, long int start_time, long int last_time, long int elapsed_total, long int step, double Tr, double treshold, double * Seq, long int * TimeParams, long int * params) {
 
 	if (treshold < 0.5) treshold = 0.5;
@@ -2288,7 +2300,8 @@ __declspec(dllexport) void ramp(int pause, int shutdown, int reset, int grad, in
 	timer_1(pause, reset, start_time, last_time, elapsed_total, params);
 
 }
-
+*/
+/*
 __declspec(dllexport) void timer_1(int pause, int reset, long int start_time, long int last_time, long int elapsed_total, long int * params) {
 
 
@@ -2316,5 +2329,5 @@ __declspec(dllexport) void timer_1(int pause, int reset, long int start_time, lo
 	params[1] = start_time;
 	params[2] = elapsed_total + elapsed_sec;
 
-}
+}*/
 
