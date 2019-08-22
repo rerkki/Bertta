@@ -146,8 +146,9 @@ __declspec(dllexport) void pump(float speed_, char * newPump) {
 
 	char buffer[5] = { 0 };
 	char buff[5] = { 0 };
-
-	sprintf_s(buffer, "%.0f", speed_*100);
+	if (speed_ < 0) speed_ = 0;
+	if (speed_ > 300) speed_ = 150;
+	sprintf(buffer, "%.0f", speed_*100);
 
 //	cout << buffer << endl;
 
@@ -189,6 +190,20 @@ __declspec(dllexport) void pump(float speed_, char * newPump) {
 		newPump[5] = '0';
 		newPump[6] = buffer[0];
 		newPump[7] = buffer[1];
+		newPump[8] = '\r';
+		newPump[9] = '\n';
+	}
+
+	if (speed_ == 0) {
+
+		newPump[0] = '1';
+		newPump[1] = 'S';
+		newPump[2] = '0';
+		newPump[3] = '0';
+		newPump[4] = '0';
+		newPump[5] = '0';
+		newPump[6] = '0';
+		newPump[7] = '0';
 		newPump[8] = '\r';
 		newPump[9] = '\n';
 	}
@@ -2048,9 +2063,6 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 
 	}
 
-	
-
-	
 	if (manual == 1) {
 
 		LED_manual = 1;
@@ -2063,6 +2075,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 
 	}
 	
+	if (T_sp_ == 0 || setpoint == 0) setpoint = T_fail;
 	if (shutdown == 1) setpoint = 20;
 
 	params[0] = double(now);

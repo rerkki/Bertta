@@ -150,8 +150,6 @@ __declspec(dllexport) void ramp_v15(int reset, int enable, int manual, double la
 
 }*/
 
-
-
 __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube, double density, double FrManual, double lastTime, double elapsed, double lastErr, double weight, double lastWeight, double lastFr, double errSum, double * Setpoint_W, double * Setpoint_T, double lastSP, double kp, double ki, double kd, int port_isma, int port_mettler, double count, double * PIDparams) {
 
 	long int now = millisec3();
@@ -184,7 +182,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	double PumpCTRL = 0;
 	double tube_coeff = 0;
 
-	if (tube == 0) tube_coeff = 4.5139 * 1.51 / density; //purple tube
+	if (tube == 0) tube_coeff = 4.5139 * 1.45 / density; //purple tube
 	if (tube == 1) tube_coeff = 1.943; //double purple tube
 	if (tube == 2) tube_coeff = 8.0195; //yellow tube
 	if (tube == 3) tube_coeff = 16.471; //white tube
@@ -395,6 +393,190 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	PIDparams[25] = PumpCTRL;
 	PIDparams[26] = LED6;
 	PIDparams[27] = LED7;
+
+}
+
+__declspec(dllexport) void FlowIsma2(double * paramsIn, double * paramsOut) {
+
+	double lastTime = paramsIn[0];
+	double elapsed = paramsIn[1];
+	double enable = paramsIn[2];
+	double Setpoint_W = paramsIn[3];
+	double Setpoint_T = paramsIn[4];
+	double weight = paramsIn[5];
+	double lastWeight = paramsIn[6];
+	double lastRpm = paramsIn[7];
+	double lastFR = paramsIn[8];
+	double lastCount = paramsIn[9];
+	double lastAmount = paramsIn[10];
+	double step = paramsIn[11];
+	double manual = paramsIn[12];
+	double FR_manual = paramsIn[13];
+	double reset = paramsIn[14];
+	double pause = paramsIn[15];
+
+	if (manual == 1) {
+		Setpoint_W = FR_manual;
+		Setpoint_T = 1;
+		enable = 1;
+		pause = 1;
+	}
+	
+	double RPM = 0;
+	double RPM_init = RPM = 4.5139 * (Setpoint_W / Setpoint_T);
+	double count = lastCount + 1;
+	double FR = 0;
+	double FR_offset = 0;
+
+	long int now = millisec3();
+	long int timeChange = now - lastTime;
+	if (timeChange > 6000) timeChange = 3000;
+	if (timeChange < 1) timeChange = 3000;
+
+	if (enable == 1 && pause == 1) {
+		elapsed += double(timeChange);
+		lastAmount += (lastWeight - weight);
+	}
+
+	FR = lastAmount * 60000 / elapsed;
+
+	FR_offset = FR/(Setpoint_W / Setpoint_T);
+
+	if (Setpoint_T > 0) RPM = 4.5139 * (Setpoint_W / Setpoint_T)/FR_offset;
+	if (RPM > RPM_init*1.6 || RPM < RPM_init*0.4) RPM = RPM_init;
+
+	if (manual == 0) {
+		if ((Setpoint_W - lastAmount) * 60000 / FR < 6000) RPM /= 3;
+		if (Setpoint_W < lastAmount) {
+			//RPM = 0;
+			step += 1;
+			elapsed = 0;
+			lastAmount = 0;
+		}
+	}
+
+	if (enable == 0 || reset == 1) {
+		FR = 0;
+		RPM = 0;
+		elapsed = 0;
+		lastAmount = 0;
+		count = 0;
+		step = 0;
+	}
+
+	if (pause == 0) {
+		RPM = 0;
+	}
+
+
+	if (Setpoint_W == 0 && step > 0) {
+		FR = 0;
+		RPM = 0;
+		step += 1;
+	}
+
+	if (step >= 7) step = 7;
+
+	if (isnan(FR)) FR = 0;
+	
+
+	paramsOut[0] = double(now);
+	paramsOut[1] = elapsed;
+	paramsOut[2] = 0;
+	paramsOut[3] = 0;
+	paramsOut[4] = 0;
+	paramsOut[5] = 0;
+	paramsOut[6] = weight;
+	paramsOut[7] = RPM;
+	paramsOut[8] = FR;
+	paramsOut[9] = count;
+	paramsOut[10] = lastAmount;
+	paramsOut[11] = step;
+	paramsOut[12] = 0;
+	paramsOut[13] = 0;
+	paramsOut[14] = 0;
+
+}
+
+__declspec(dllexport) void FlowUtil(double * paramsIn, double * paramsOut2) {
+
+	double lastTime = paramsIn[0];
+	double elapsed = paramsIn[1];
+	double enable = paramsIn[2];
+	double Setpoint_W = paramsIn[3];
+	double Setpoint_T = paramsIn[4];
+	double weight = paramsIn[5];
+	double lastWeight = paramsIn[6];
+	double lastRpm = paramsIn[7];
+	double lastFR = paramsIn[8];
+	double lastCount = paramsIn[9];
+	double lastAmount = paramsIn[10];
+	double step = paramsIn[11];
+	double manual = paramsIn[12];
+	double FR_manual = paramsIn[13];
+	double reset = paramsIn[14];
+	double pause = paramsIn[15];
+
+	double time_to_target = 0;
+	double PumpCTRL = 0;
+
+	double LED1 = 0;
+	double LED2 = 0;
+	double LED3 = 0;
+	double LED4 = 0;
+	double LED5 = 0;
+	double LED6 = 0;
+	double LED7 = 0;
+	double LED_stop = 0;
+	double LED_manual = 0;
+
+	if (manual == 0) {
+		if (step == 0) LED1 = 1;
+		if (step == 1) LED2 = 1;
+		if (step == 2) LED3 = 1;
+		if (step == 3) LED4 = 1;
+		if (step == 4) LED5 = 1;
+		if (step == 5) LED6 = 1;
+		if (step == 6) LED7 = 1;
+		if (step == 7) LED_stop = 1;
+		LED_manual = 0;
+	}
+
+	if (manual == 1) {
+		LED1 = 0;
+		LED2 = 0;
+		LED3 = 0;
+		LED4 = 0;
+	    LED5 = 0;
+		LED6 = 0;
+		LED7 = 0;
+		LED_stop = 0;
+		LED_manual = 1;
+	}
+
+	if (lastFR > 0) {
+		time_to_target = 60 * (Setpoint_W - lastAmount) / lastFR;
+		PumpCTRL = lastFR * 100 / (Setpoint_W / Setpoint_T);
+	}
+	else {
+		time_to_target = 0;
+		PumpCTRL = 0;
+	}
+
+	if (LED_stop == 1 || lastRpm == 0) PumpCTRL = 0;
+
+	paramsOut2[0] = LED1;
+	paramsOut2[1] = LED2;
+	paramsOut2[2] = LED3;
+	paramsOut2[3] = LED4;
+	paramsOut2[4] = LED5;
+	paramsOut2[5] = LED6;
+	paramsOut2[6] = LED7;
+	paramsOut2[7] = LED_stop;
+	paramsOut2[8] = LED_manual;
+	paramsOut2[9] = time_to_target;
+	paramsOut2[10] = elapsed;
+	paramsOut2[11] = PumpCTRL;
 
 }
 
@@ -665,7 +847,7 @@ __declspec(dllexport) void ismatec(int port, double speed) {
 	if (port > 0) {
 		char rpm_[12] = { 0 };
 		pump(speed, rpm_);
-		cout << rpm_ << endl;
+	//	cout << rpm_ << endl;
 		read(port, 2, rpm_);
 		Sleep(100);
 		read(port, 2, "1H\r\n");
@@ -678,7 +860,7 @@ __declspec(dllexport) void lauda(int port, double set_temp) {
 
 	char temp_[18] = { 0 };
 	temp(set_temp, temp_);
-	cout << temp_ << endl;
+	//cout << temp_ << endl;
 	read(port,3,temp_);
 }
 
