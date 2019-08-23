@@ -182,7 +182,7 @@ __declspec(dllexport) void FlowIsma(int reset, int enable, int manual, int tube,
 	double PumpCTRL = 0;
 	double tube_coeff = 0;
 
-	if (tube == 0) tube_coeff = 4.5139 * 1.45 / density; //purple tube
+	if (tube == 0) tube_coeff = 4.5139; //purple tube
 	if (tube == 1) tube_coeff = 1.943; //double purple tube
 	if (tube == 2) tube_coeff = 8.0195; //yellow tube
 	if (tube == 3) tube_coeff = 16.471; //white tube
@@ -414,6 +414,14 @@ __declspec(dllexport) void FlowIsma2(double * paramsIn, double * paramsOut) {
 	double FR_manual = paramsIn[13];
 	double reset = paramsIn[14];
 	double pause = paramsIn[15];
+	int tube = int(paramsIn[16]);
+	
+	double tube_coeff = 4.5139;
+
+	if (tube == 0) tube_coeff = 4.5139; //purple tube
+	if (tube == 1) tube_coeff = 1.943; //double purple tube
+	if (tube == 2) tube_coeff = 8.0195; //yellow tube
+	if (tube == 3) tube_coeff = 16.471; //white tube
 
 	if (manual == 1) {
 		Setpoint_W = FR_manual;
@@ -423,7 +431,7 @@ __declspec(dllexport) void FlowIsma2(double * paramsIn, double * paramsOut) {
 	}
 	
 	double RPM = 0;
-	double RPM_init = RPM = 4.5139 * (Setpoint_W / Setpoint_T);
+	double RPM_init = tube_coeff * (Setpoint_W / Setpoint_T);
 	double count = lastCount + 1;
 	double FR = 0;
 	double FR_offset = 0;
@@ -442,11 +450,11 @@ __declspec(dllexport) void FlowIsma2(double * paramsIn, double * paramsOut) {
 
 	FR_offset = FR/(Setpoint_W / Setpoint_T);
 
-	if (Setpoint_T > 0) RPM = 4.5139 * (Setpoint_W / Setpoint_T)/FR_offset;
-	if (RPM > RPM_init*1.6 || RPM < RPM_init*0.4) RPM = RPM_init;
+	if (Setpoint_T > 0) RPM = tube_coeff * (Setpoint_W / Setpoint_T)/FR_offset;
+	if (RPM > RPM_init*1.3 || RPM < RPM_init*0.4) RPM = RPM_init;
 
 	if (manual == 0) {
-		if ((Setpoint_W - lastAmount) * 60000 / FR < 6000) RPM /= 3;
+		if ((Setpoint_W - lastAmount) * 60000 / FR < 6000) RPM /= 4;
 		if (Setpoint_W < lastAmount) {
 			//RPM = 0;
 			step += 1;
@@ -495,6 +503,9 @@ __declspec(dllexport) void FlowIsma2(double * paramsIn, double * paramsOut) {
 	paramsOut[12] = 0;
 	paramsOut[13] = 0;
 	paramsOut[14] = 0;
+	paramsOut[15] = 0;
+	paramsOut[16] = 0;
+	paramsOut[17] = timeChange;
 
 }
 
@@ -516,6 +527,7 @@ __declspec(dllexport) void FlowUtil(double * paramsIn, double * paramsOut2) {
 	double FR_manual = paramsIn[13];
 	double reset = paramsIn[14];
 	double pause = paramsIn[15];
+	double timeChange = paramsIn[17];
 
 	double time_to_target = 0;
 	double PumpCTRL = 0;
@@ -575,8 +587,10 @@ __declspec(dllexport) void FlowUtil(double * paramsIn, double * paramsOut2) {
 	paramsOut2[7] = LED_stop;
 	paramsOut2[8] = LED_manual;
 	paramsOut2[9] = time_to_target;
-	paramsOut2[10] = elapsed;
+	paramsOut2[10] = elapsed/1000;
 	paramsOut2[11] = PumpCTRL;
+	paramsOut2[12] = timeChange;
+	paramsOut2[13] = lastAmount;
 
 }
 
