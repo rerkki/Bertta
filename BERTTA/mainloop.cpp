@@ -1003,6 +1003,36 @@ __declspec(dllexport) void MWriteRS232(int port1, int dev1, double param1, int p
 
 }
 
+__declspec(dllexport) void MWriteRS232_2(int enable2, int enable3, int enable4, int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4) {
+
+	if (enable2 == 0) dev2 = 0;
+	if (enable3 == 0) dev3 = 0;
+	if (enable4 == 0) dev4 = 0;
+
+
+	thread t1([port1, dev1, param1] {
+		dev_ctrl(port1, dev1, param1);
+	});
+
+	thread t2([port2, dev2, param2] {
+		dev_ctrl(port2, dev2, param2);
+	});
+
+	thread t3([port3, dev3, param3] {
+		dev_ctrl(port3, dev3, param3);
+	});
+
+	thread t4([port4, dev4, param4] {
+		dev_ctrl(port4, dev4, param4);
+	});
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+
+}
+
 __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params) {
 
 	double x1{ 0 };
@@ -1024,6 +1054,69 @@ __declspec(dllexport) void MReadRS232(int port1, int dev1, int port2, int dev2, 
 		x3 = device(port3, dev3);
 		x4 = device(port4, dev4);
 	});
+
+	thread t3([&x5, port5, dev5] {
+		x5 = device(port5, dev5);
+	});
+
+	thread t4([&x6, port6, dev6] {
+		x6 = device(port6, dev6);
+	});
+
+	thread t5([&x7, port7, dev7] {
+		x7 = device(port7, dev7);
+	});
+
+	thread t6([&x8, port8, dev8] {
+		x8 = device(port8, dev8);
+	});
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+	t5.join();
+	t6.join();
+
+	params[0] = x1;
+	params[1] = x2;
+	params[2] = x3;
+	params[3] = x4;
+	params[4] = x5;
+	params[5] = x6;
+	params[6] = x7;
+
+
+}
+
+
+__declspec(dllexport) void MReadRS232_2(int enable5, int enable6, int enable7, int enable8, int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params) {
+
+	double x1{ 0 };
+	double x2{ 0 };
+	double x3{ 0 };
+	double x4{ 0 };
+	double x5{ 0 };
+	double x6{ 0 };
+	double x7{ 0 };
+	double x8{ 0 };
+
+	if (enable5 == 0) dev5 = 0;
+	if (enable6 == 0) dev6 = 0;
+	if (enable7 == 0) dev7 = 0;
+	if (enable8 == 0) dev8 = 0;
+
+
+	thread t1([&x1, &x2, port1, port2, dev1, dev2] {
+		x1 = device(port1, dev1);
+		x2 = device(port2, dev2);
+	});
+
+	thread t2([&x3, &x4, port3, port4, dev3, dev4] {
+		x3 = device(port3, dev3);
+		x4 = device(port4, dev4);
+	});
+
 
 	thread t3([&x5, port5, dev5] {
 		x5 = device(port5, dev5);
