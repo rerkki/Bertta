@@ -2,15 +2,15 @@
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(157): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(440): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(611): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(693): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(731): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(776): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(863): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(876): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(694): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(732): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(777): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(864): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\mainloop.cpp(877): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   math.cpp
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(151): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(152): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: see declaration of 'sprintf'
-c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1947): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
+c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\math.cpp(1948): warning C4244: 'initializing': conversion from 'double' to 'long', possible loss of data
   PID_v1.cpp
   serialcomm.cpp
 c:\users\shresplab\onedrive - kemira oyj\documents\github\bertta\bertta\serialcomm.cpp(25): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data

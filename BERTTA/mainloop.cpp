@@ -688,8 +688,9 @@ __declspec(dllexport) double hei_query(int port, int q) {
 
 //	cout << q_ << endl;
 
-	Sleep(60);
+	Sleep(100);
 
+	//Tässä ehkä tulee debug assertion failure, korjaa!!
 	int msglen = strlen(q_);
 
 //	cout << msglen << endl;
@@ -972,9 +973,6 @@ __declspec(dllexport) void dev_ctrl(int port, int dev, double param) {
 
 	if (dev == 1) lauda(port, param);
 	if (dev == 2) ismatec(port, param);
-	if (dev == 3) ismatec(port, param); //PID_FLOW
-
-	if (dev < 1 || dev > 3) retval = 0;
 
 }
 
@@ -1152,29 +1150,190 @@ __declspec(dllexport) void MReadRS232_2(int enable5, int enable6, int enable7, i
 
 }
 
+__declspec(dllexport) void ReadMoxa12(int * ports, double * params) {
 
-/*
+	double x1{ 0 };
+	double x2{ 0 };
+	double x3{ 0 };
+	double x4{ 0 };
+	double x5{ 0 };
+	double x6{ 0 };
+	double x7{ 0 };
+	double x8{ 0 };
+	double x9{ 0 };
+	double x10{ 0 };
+	double x11{ 0 };
+	double x12{ 0 };
 
-int main() {
+	int port1 = ports[0];
+	int port2 = ports[1];
+	int port3 = ports[2];
+	int port4 = ports[3];
+	int port5 = ports[4];
+	int port6 = ports[5];
+	int port7 = ports[6];
+	int port8 = ports[7];
+	int port9 = ports[8];
+	int port10 = ports[9];
+	int port11 = ports[10];
+	int port12 = ports[11];
 
-	for(;;) cout << lauda_tin(1) << endl;
+	int dev1 = 1;
+	int dev2 = 2;
+	int dev3 = 3;
+	int dev4 = 4;
+	int dev5 = 5;
 
-	
-	double res_vec[8] = { 0 };
 
-	for (int(i) = 0; i < 100; i++) {
-	//	ReadRS232(9, 4, 9, 5, 10, 1, 11, 1, 12, 1, 13, 2, 13, 3, 0, 0, res_vec);
-	   MReadRS232(1, 1, 1, 2, 2, 3, 2, 4, 3, 5, 4, 5, 5, 5, 0, 0, res_vec);
+	//LAUDA 1
+	thread t1([&x1, &x2, port1, dev1, dev2] {
+		x1 = device(port1, dev1);
+		x2 = device(port1, dev2);
+	});
 
-		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
-			<< "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7] << endl;
+	//LAUDA 2
+	thread t2([&x3, &x4, port2, dev1, dev2] {
+		x3 = device(port2, dev1);
+		x4 = device(port2, dev2);
+	});
 
-	}
-	
-		
-	getch();
+	//HEIDOLPH 1
+	thread t3([&x5, &x6, port3, dev3, dev4] {
+		x5 = device(port3, dev3);
+		x6 = device(port3, dev4);
+	});
+
+	//HEIDOLPH 2
+	thread t4([&x7, &x8, port4, dev3, dev4] {
+		x7 = device(port4, dev3);
+		x8 = device(port4, dev4);
+	});
+
+	//METTLER 1
+	thread t5([&x9, port5, dev5] {
+		x9 = device(port5, dev5);
+	});
+
+	//METTLER 2
+	thread t6([&x10, port6, dev5] {
+		x10 = device(port6, dev5);
+	});
+
+	//METTLER 3
+	thread t7([&x11, port7, dev5] {
+		x11 = device(port7, dev5);
+	});
+
+	//METTLER 4
+	thread t8([&x12, port8, dev5] {
+		x12 = device(port8, dev5);
+	});
+
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+	t5.join();
+	t6.join();
+	t7.join();
+	t8.join();
+
+	params[0] = x1;
+	params[1] = x2;
+	params[2] = x3;
+	params[3] = x4;
+	params[4] = x5;
+	params[5] = x6;
+	params[6] = x7;
+	params[7] = x8;
+	params[8] = x9;
+	params[9] = x10;
+	params[10] = x11;
+	params[11] = x12;
 
 }
 
-*/
+__declspec(dllexport) void WriteMoxa12(int * ports, double * params) {
+
+	double param1 = params[0]; //LAUDA 1
+	double param2 = params[1]; //LAUDA 2
+	double param3 = params[2]; //ISMATEC 1
+	double param4 = params[3]; //ISMATEC 2
+	double param5 = params[4]; //ISMATEC3 3
+	double param6 = params[5]; //ISMATEC 4
+
+	int port1 = ports[0];
+	int port2 = ports[1];
+	int port3 = ports[2];
+	int port4 = ports[3];
+	int port5 = ports[4];
+	int port6 = ports[5];
+
+
+	int dev1 = 1; //LAUDA
+	int dev2 = 2; //ISMATEC
+
+	thread t1([port1, dev1, param1] { //LAUDA 1
+		dev_ctrl(port1, dev1, param1);
+	});
+
+	thread t2([port2, dev1, param2] { //LAUDA 2
+		dev_ctrl(port2, dev1, param2);
+	});
+
+	thread t3([port3, dev2, param3] { //ISMATEC 1
+		dev_ctrl(port3, dev2, param3);
+	});
+
+	thread t4([port4, dev2, param4] { //ISMATEC 2
+		dev_ctrl(port4, dev2, param4);
+	});
+
+	thread t5([port5, dev2, param5] { //ISMATEC 3
+		dev_ctrl(port5, dev2, param5);
+	});
+
+	thread t6([port6, dev2, param6] { //ISMATEC 4
+		dev_ctrl(port6, dev2, param6);
+	});
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+	t5.join();
+	t6.join();
+
+}
+
+
+
+/*
+int main() {
+
+
+	double res_vec[12] = { 0 };
+
+	int ports[12] = {1,2,4,3,6,5,8,0,0,0,0,0};
+
+	for (int(i) = 0; i < 100; i++) {
+
+		cout << lauda_tex(2) << endl;
+
+		ReadMoxa12(ports, res_vec);
+
+		//	ReadRS232(9, 4, 9, 5, 10, 1, 11, 1, 12, 1, 13, 2, 13, 3, 0, 0, res_vec);
+	   //MReadRS232(1, 1, 1, 2, 2, 3, 2, 4, 3, 5, 4, 5, 5, 5, 0, 0, res_vec);
+	//	MWriteRS232(1,1,20,)
+
+		cout << res_vec[0] << "  " << res_vec[1] << "  " << res_vec[2] << "  " << res_vec[3] << "  " << res_vec[4]
+	 << "  " << res_vec[5] << "  " << res_vec[6] << "  " << res_vec[7]
+	 << "  " << res_vec[8] << "  " << res_vec[9] << "  " << res_vec[10] << "  " << res_vec[11] << endl;
+
+	}
+
+	getch();
+
+}*/
 

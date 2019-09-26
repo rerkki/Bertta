@@ -27,6 +27,7 @@ __declspec(dllexport) void rpm(int speed, char * newRpm) {
 __declspec(dllexport) void stirr(int speed, char * newRpm) {
 //
 //	if (speed < 200) speed = 200;
+	//TSEKKAA debug assertion!!
 
 	char buffer[4] = { 0 };
 

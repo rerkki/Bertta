@@ -118,11 +118,13 @@ __declspec(dllexport) string read(int com_port, int device, char *msg_)
 
 		string buff(buffer, 50);
 
+		cout << buff << endl;
+
 		if (buff.find("\r") == false) buff += "\r";
 
 		return buff;
 	}
 	else
-		return "0";
+		return "0/r";
 
 }
