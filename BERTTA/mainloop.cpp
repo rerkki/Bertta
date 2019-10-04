@@ -1261,6 +1261,82 @@ __declspec(dllexport) void ReadMoxa12(int enable1, int enable2, int enable3, int
 
 }
 
+__declspec(dllexport) void ReadMoxa8(int enable1, int enable2, int enable3, int * ports, double * params) {
+
+	double x1{ 0 };
+	double x2{ 0 };
+	double x3{ 0 };
+	double x4{ 0 };
+	double x5{ 0 };
+	double x6{ 0 };
+	double x7{ 0 };
+	double x8{ 0 };
+
+	int port1 = ports[0];
+	int port2 = ports[1];
+	int port3 = ports[2];
+	int port4 = ports[3];
+	int port5 = ports[4];
+	int port6 = ports[5];
+	int port7 = ports[6];
+	int port8 = ports[7];
+
+	int dev1 = 1;
+	int dev2 = 2;
+	int dev3 = 3;
+	int dev4 = 4;
+	int dev5_1 = 5;
+	int dev5_2 = 5;
+	int dev5_3 = 5;
+
+	if (enable1 == 0) dev5_1 = 0;
+	if (enable2 == 0) dev5_2 = 0;
+	if (enable3 == 0) dev5_3 = 0;
+
+	//LAUDA 1
+	thread t1([&x1, &x2, port1, dev1, dev2] {
+		x1 = device(port1, dev1);
+		x2 = device(port1, dev2);
+	});
+
+	//HEIDOLPH 1
+	thread t2([&x3, &x4, port2, dev3, dev4] {
+		x3 = device(port2, dev3);
+		x4 = device(port2, dev4);
+	});
+
+	//METTLER 1
+	thread t3([&x5, port3, dev5_1] {
+		x5 = device(port3, dev5_1);
+	});
+
+	//METTLER 2
+	thread t4([&x6, port4, dev5_2] {
+		x6 = device(port4, dev5_2);
+	});
+
+	//METTLER 3
+	thread t5([&x7, port5, dev5_3] {
+		x7 = device(port5, dev5_3);
+	});
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
+	t5.join();
+
+	params[0] = x1;
+	params[1] = x2;
+	params[2] = x3;
+	params[3] = x4;
+	params[4] = x5;
+	params[5] = x6;
+	params[6] = x7;
+	params[7] = x8;
+
+}
+
 __declspec(dllexport) void WriteMoxa12(int enable1, int enable2, int enable3, int enable4, int * ports, double * params) {
 
 	double param1 = params[0]; //LAUDA 1
@@ -1319,6 +1395,50 @@ __declspec(dllexport) void WriteMoxa12(int enable1, int enable2, int enable3, in
 	t4.join();
 	t5.join();
 	t6.join();
+
+}
+
+__declspec(dllexport) void WriteMoxa8(int enable1, int enable2, int enable3, int * ports, double * params) {
+
+	double param1 = params[0]; //LAUDA 1
+	double param2 = params[1]; //ISMATEC 1
+	double param3 = params[2]; //ISMATEC 2
+	double param4 = params[3]; //ISMATEC3 3
+
+	int port1 = ports[0];
+	int port2 = ports[1];
+	int port3 = ports[2];
+	int port4 = ports[3];
+
+	int dev1 = 1; //LAUDA
+	int dev2_1 = 2; //ISMATEC1
+	int dev2_2 = 2; //ISMATEC2
+	int dev2_3 = 2; //ISMATEC3
+
+	if (enable1 == 0) dev2_1 = 0;
+	if (enable2 == 0) dev2_2 = 0;
+	if (enable3 == 0) dev2_3 = 0;
+
+	thread t1([port1, dev1, param1] { //LAUDA 1
+		dev_ctrl(port1, dev1, param1);
+	});
+
+	thread t2([port2, dev2_1, param2] { //ISMATEC 1
+		dev_ctrl(port2, dev2_1, param2);
+	});
+
+	thread t3([port3, dev2_2, param3] { //ISMATEC 2
+		dev_ctrl(port3, dev2_2, param3);
+	});
+
+	thread t4([port4, dev2_3, param4] { //ISMATEC 3
+		dev_ctrl(port4, dev2_3, param4);
+	});
+
+	t1.join();
+	t2.join();
+	t3.join();
+	t4.join();
 
 }
 

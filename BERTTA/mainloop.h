@@ -67,4 +67,6 @@ __declspec(dllexport) void MReadRS232_2(int enable5, int enable6, int enable7, i
 __declspec(dllexport) void MWriteRS232_2(int enable2, int enable3, int enable4, int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4);
 __declspec(dllexport) void ReadMoxa12(int enable1, int enable2, int enable3, int enable4, int * ports, double * params);
 __declspec(dllexport) void WriteMoxa12(int enable1, int enable2, int enable3, int enable4, int * ports, double * params);
+__declspec(dllexport) void ReadMoxa8(int enable1, int enable2, int enable3, int * ports, double * params);
+__declspec(dllexport) void WriteMoxa8(int enable1, int enable2, int enable3, int * ports, double * params);
 }
