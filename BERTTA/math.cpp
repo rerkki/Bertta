@@ -2037,7 +2037,7 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 		if (abs(T_sp_ - Tr) < treshold) {
 
 			if (elapsed > (time_set_ + time_wait_) * 60000) {
-				if(manual==0) step_ += 1;
+				if(manual==0 && T_sp[step_ + 1] > 0) step_ += 1;
 				T0_ = Tr;
 			}
 

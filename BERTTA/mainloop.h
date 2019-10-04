@@ -65,6 +65,6 @@ __declspec(dllexport) void ramp_v2(int shutdown, int reset, int enable, int coun
 __declspec(dllexport) void hei_ctrl(int port, int speed, int manual, int shutdown, int prev_status, int * status);
 __declspec(dllexport) void MReadRS232_2(int enable5, int enable6, int enable7, int enable8, int port1, int dev1, int port2, int dev2, int port3, int dev3, int port4, int dev4, int port5, int dev5, int port6, int dev6, int port7, int dev7, int port8, int dev8, double * params);
 __declspec(dllexport) void MWriteRS232_2(int enable2, int enable3, int enable4, int port1, int dev1, double param1, int port2, int dev2, double param2, int port3, int dev3, double param3, int port4, int dev4, double param4);
-__declspec(dllexport) void ReadMoxa12(int * ports, double * params);
-__declspec(dllexport) void WriteMoxa12(int * ports, double * params);
+__declspec(dllexport) void ReadMoxa12(int enable1, int enable2, int enable3, int enable4, int * ports, double * params);
+__declspec(dllexport) void WriteMoxa12(int enable1, int enable2, int enable3, int enable4, int * ports, double * params);
 }
