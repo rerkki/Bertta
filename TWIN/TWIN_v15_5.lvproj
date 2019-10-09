@@ -10,7 +10,10 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
+		<Item Name="Fail_Clock_1.vi" Type="VI" URL="../../BERTTA/x64/Debug/Fail_Clock_1.vi"/>
+		<Item Name="Fail_Clock_2.vi" Type="VI" URL="../../BERTTA/x64/Debug/Fail_Clock_2.vi"/>
 		<Item Name="TWIN_v15_5.vi" Type="VI" URL="../TWIN_v15_5.vi"/>
+		<Item Name="TWIN_v15_6.vi" Type="VI" URL="../TWIN_v15_6.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="__closeStorageFromObject.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/storage/Storage.llb/__closeStorageFromObject.vi"/>
@@ -436,6 +439,7 @@
 				<Item Name="Find First Error.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Find First Error.vi"/>
 				<Item Name="Find Tag.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Find Tag.vi"/>
 				<Item Name="Format Message String.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Format Message String.vi"/>
+				<Item Name="FormatTime String.vi" Type="VI" URL="/&lt;vilib&gt;/express/express execution control/ElapsedTimeBlock.llb/FormatTime String.vi"/>
 				<Item Name="General Error Handler Core CORE.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/General Error Handler Core CORE.vi"/>
 				<Item Name="General Error Handler.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/General Error Handler.vi"/>
 				<Item Name="Get Object Info.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/storage/Storage.llb/Get Object Info.vi"/>
@@ -491,6 +495,7 @@
 				<Item Name="sub Waveform Array To Dynamic.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/miscellaneous.llb/sub Waveform Array To Dynamic.vi"/>
 				<Item Name="subBuildTable.vi" Type="VI" URL="/&lt;vilib&gt;/express/express controls/BuildTableBlock.llb/subBuildTable.vi"/>
 				<Item Name="subDelayValues.vi" Type="VI" URL="/&lt;vilib&gt;/express/express signal manip/DelayValuesBlock.llb/subDelayValues.vi"/>
+				<Item Name="subElapsedTime.vi" Type="VI" URL="/&lt;vilib&gt;/express/express execution control/ElapsedTimeBlock.llb/subElapsedTime.vi"/>
 				<Item Name="subSubBuildTable.vi" Type="VI" URL="/&lt;vilib&gt;/express/express controls/BuildTableBlock.llb/subSubBuildTable.vi"/>
 				<Item Name="TagReturnType.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/TagReturnType.ctl"/>
 				<Item Name="TDMSAddBlankElem1d.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/tdmsutil.llb/TDMSAddBlankElem1d.vi"/>
@@ -585,6 +590,46 @@
 				<Property Name="TgtF_productName" Type="Str">TWIN_v15_5</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{702DE634-FFCF-493F-AE9C-5749A57FC182}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">TWIN_v15_5.exe</Property>
+				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
+			</Item>
+			<Item Name="TWIN_v15_6" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{2F4543A3-339C-4310-8163-6FF1F1C49746}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{BF7A384C-7A28-4DFF-B6A9-20D5AB511836}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{51700BEC-7F88-44DF-8F54-BCD7C4F0CC0F}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">TWIN_v15_6</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/TWIN_v15_6</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{B8193D15-8EA4-43B7-B757-945F7217D476}</Property>
+				<Property Name="Bld_version.build" Type="Int">2</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">TWIN_v15_6.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/TWIN_v15_6/TWIN_v15_6.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/TWIN_v15_6/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{839D9343-8CF0-4679-8C25-E1DC1F844E24}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/TWIN_v15_6.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">Kemira Oy</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">TWIN_v15_6</Property>
+				<Property Name="TgtF_internalName" Type="Str">TWIN_v15_6</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2019 Kemira Oy</Property>
+				<Property Name="TgtF_productName" Type="Str">TWIN_v15_6</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{037D7FA2-14BD-4B97-BA53-D44A2234DB55}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">TWIN_v15_6.exe</Property>
 				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
 			</Item>
 		</Item>
