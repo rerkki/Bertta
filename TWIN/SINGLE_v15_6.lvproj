@@ -558,7 +558,7 @@
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{BCC97E7D-7468-4613-A073-B7ECFD1FD4DD}</Property>
-				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.build" Type="Int">2</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">SINGLE_v15_6 TEST.exe</Property>
 				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/SINGLE_v15_6/SINGLE_v15_6 TEST.exe</Property>
@@ -581,6 +581,46 @@
 				<Property Name="TgtF_productName" Type="Str">SINGLE_v15_6</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{86F4788E-0746-4B7D-857C-42BEB5869A9F}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">SINGLE_v15_6 TEST.exe</Property>
+				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
+			</Item>
+			<Item Name="SINGLE_v15_62" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{D60F9C8B-1A18-434E-ACF5-E8459FBDFC4C}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{81FF2262-5B16-45BD-87F8-813648203030}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{88204593-250B-45D8-8857-7E72761D2B88}</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">SINGLE_v15_62</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../builds/NI_AB_PROJECTNAME/SINGLE_v15_62</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{6CCAF423-934C-4F66-B287-7BE979E19442}</Property>
+				<Property Name="Bld_version.build" Type="Int">1</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">SINGLE_v15_62.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../builds/NI_AB_PROJECTNAME/SINGLE_v15_62/SINGLE_v15_62.exe</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../builds/NI_AB_PROJECTNAME/SINGLE_v15_62/data</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{9AB1588B-599A-4D3D-8C04-29ACE41267A0}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/SINGLE_v15_6.vi</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">Kemira Oy</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">SINGLE_v15_62</Property>
+				<Property Name="TgtF_internalName" Type="Str">SINGLE_v15_62</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2019 Kemira Oy</Property>
+				<Property Name="TgtF_productName" Type="Str">SINGLE_v15_62</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{B05B9D34-E402-4913-B62F-DEF977A08393}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">SINGLE_v15_62.exe</Property>
 				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
 			</Item>
 		</Item>
